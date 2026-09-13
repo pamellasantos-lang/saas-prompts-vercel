@@ -56,19 +56,28 @@
   </div>
 
   <script>
+    // Insira a sua chave da Groq (gsk_...) entre as aspas:
     const API_KEY = "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";
 
-    // Busca dinâmica do modelo Llama ativo na sua conta Groq
+    // Busca apenas modelos de texto (exclui modelos de áudio como Whisper)
     async function obterModeloGroq(apiKey) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/models", {
           headers: { "Authorization": `Bearer ${apiKey}` }
         });
         const data = await response.json();
+        
         if (data.data && data.data.length > 0) {
-          const modeloLlama = data.data.find(m => m.id.includes("llama-3") || m.id.includes("llama3"));
-          if (modeloLlama) return modeloLlama.id;
-          return data.data[0].id;
+          // Filtra eliminando modelos de transcrição de áudio
+          const modelosTexto = data.data.filter(m => 
+            !m.id.toLowerCase().includes("whisper") && 
+            (m.id.toLowerCase().includes("llama") || m.id.toLowerCase().includes("mixtral") || m.id.toLowerCase().includes("gemma"))
+          );
+
+          // Prioriza modelos rápidos e estáveis
+          const preferencial = modelosTexto.find(m => m.id.includes("llama-3.1-8b") || m.id.includes("llama-3.3"));
+          if (preferencial) return preferencial.id;
+          if (modelosTexto.length > 0) return modelosTexto[0].id;
         }
       } catch (e) {
         console.warn("Utilizando modelo de fallback.", e);
