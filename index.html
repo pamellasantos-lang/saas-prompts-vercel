@@ -56,9 +56,9 @@
       <!-- Painel Modo Express (Link do Produto) -->
       <div id="painel-express" class="hidden space-y-4">
         <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, TikTok):</label>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, Amazon):</label>
           <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/produto-exemplo-123456" />
-          <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para gerar o roteiro e os prompts visuais.</p>
+          <p class="text-xs text-slate-400 mt-2">💡 Cole a URL do anúncio para extrair automaticamente título, especificações e objeções dos compradores.</p>
         </div>
       </div>
 
@@ -69,7 +69,7 @@
 
     <!-- Status de Carregamento -->
     <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-      <p class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
+      <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
     </div>
 
     <!-- Área do Resultado -->
@@ -140,10 +140,16 @@
       const btn = document.getElementById('btn');
       const resDiv = document.getElementById('resultado');
       const loadDiv = document.getElementById('loading');
+      const statusTexto = document.getElementById('status-texto');
 
       let produto = "";
       let estilo = "Achadinho Irresistível";
       let tom = "Entusiasta";
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      loadDiv.classList.remove('hidden');
+      resDiv.classList.add('hidden');
 
       if (modoAtual === 'estudio') {
         produto = document.getElementById('produto').value;
@@ -152,27 +158,47 @@
 
         if (!produto.trim()) {
           alert('⚠️ Por favor, insira os dados do produto.');
+          loadDiv.classList.add('hidden');
+          btn.disabled = false;
+          btn.classList.remove('opacity-50');
           return;
         }
+        statusTexto.innerText = "🤖 Conectando à IA e gerando seu roteiro... Aguarde!";
       } else {
-        const url = document.getElementById('url-produto').value;
-        if (!url.trim()) {
-          alert('⚠️ Por favor, cole o link do produto.');
+        const urlInput = document.getElementById('url-produto').value;
+        if (!urlInput.trim()) {
+          alert('⚠️ Por favor, cole a URL do produto.');
+          loadDiv.classList.add('hidden');
+          btn.disabled = false;
+          btn.classList.remove('opacity-50');
           return;
         }
-        produto = "Produto informado via URL: " + url;
-      }
 
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-      loadDiv.classList.remove('hidden');
-      resDiv.classList.add('hidden');
+        statusTexto.innerText = "🔍 Analisando e raspando dados da página do produto...";
+        
+        try {
+          const scrapeRes = await fetch(`/api/scrape?url=${encodeURIComponent(urlInput)}`);
+          const scrapeData = await scrapeRes.json();
+
+          if (scrapeRes.ok && scrapeData.extractedData) {
+            produto = scrapeData.extractedData;
+          } else {
+            console.warn("Falha no scraping, utilizando URL como fallback:", scrapeData.error);
+            produto = "Produto informado via URL: " + urlInput;
+          }
+        } catch (e) {
+          console.warn("Erro ao conectar à API de scraping:", e);
+          produto = "Produto informado via URL: " + urlInput;
+        }
+
+        statusTexto.innerText = "🤖 IA construindo roteiro focado nas objeções do produto...";
+      }
 
       const promptMaster = `
         Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
         Escreva o roteiro REAL de um vídeo curto de alta conversão (15 a 30 segundos) para o produto informado.
 
-        INFORMAÇÕES DO PRODUTO OU URL: ${produto}
+        INFORMAÇÕES EXTRAÍDAS DO PRODUTO: ${produto}
         ESTILO DO VÍDEO: ${estilo}
         TOM DA NARRAÇÃO: ${tom}
 
@@ -188,8 +214,8 @@
         **Cena 1 (0-3s) - Gancho Viral:**
         🗣️ Narração: (Escreva aqui a frase chocante ou curiosa para prender o espectador)
 
-        **Cena 2 (3-12s) - Demonstração & Solução:**
-        🗣️ Narração: (Escreva aqui a explicação persuasiva mostrando o benefício do produto)
+        **Cena 2 (3-12s) - Demonstração & Solução de Objeções:**
+        🗣️ Narração: (Escreva aqui a explicação persuasiva mostrando o benefício e resolvendo dúvidas do comprador)
 
         **Cena 3 (12-15s) - Chamada para Ação:**
         🗣️ Narração: (Escreva aqui a chamada final para clicar no link)
@@ -271,7 +297,6 @@
       btn.classList.remove('opacity-50');
     }
 
-    // Formata o container do prompt com quebra de linha perfeita e botão fixado no topo
     function adicionarBotoesDeCopiar(container) {
       const blocosCodigo = container.querySelectorAll('pre');
       blocosCodigo.forEach((pre) => {
@@ -284,8 +309,6 @@
         btnCopiar.onclick = () => {
           const codeEl = pre.querySelector('code');
           const textoOriginal = codeEl ? codeEl.innerText : pre.innerText;
-          
-          // Filtra o rótulo do botão caso o innerText acabe incluindo o texto do elemento filho
           const textoPrompt = textoOriginal.replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
 
           navigator.clipboard.writeText(textoPrompt).then(() => {
