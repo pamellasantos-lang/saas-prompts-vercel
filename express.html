@@ -272,23 +272,23 @@
 
       const promptMaster = `
         Você é um Estrategista de Vendas Diretas e Diretor de Criação de Vídeos de Alta Conversão.
-        Sua tarefa é analisar o produto fornecido e entregar OBRIGATORIAMENTE 3 blocos separados por "---".
+        Sua tarefa é analisar o produto fornecido e entregar OBRIGATORIAMENTE 3 blocos completos, separados por "---".
 
         PRODUTO A SER ANALISADO: ${produtoExtraido}
 
-        REGRA ABSOLUTA: NÃO pule a Análise de Mercado. Gere exatamente o formato abaixo:
+        REGRA ABSOLUTA: NÃO pule nenhuma seção. Gere exatamente o formato abaixo:
 
         ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
-        * **👍 Pontos Fortes:** (Descreva 2 diferenciais claros que farão o cliente comprar).
-        * **⚠️ Dores e Objeções:** (Descreva 2 dúvidas ou medos comuns de quem compra este tipo de produto).
-        * **🎯 Estratégia do Vídeo:** (Descreva em 1 parágrafo como o vídeo vai convencer o comprador e quebrar as objeções).
+        * **👍 Pontos Fortes:** (Descreva 2 diferenciais).
+        * **⚠️ Dores e Objeções:** (Descreva 2 medos do cliente).
+        * **🎯 Estratégia do Vídeo:** (Descreva como o vídeo vai converter).
 
         ---
 
         ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
-        **Cena 1 (0-3s) - Gancho:** (Fala impactante em português para segurar a atenção).
-        **Cena 2 (3-12s) - Demonstração:** (Fala narrando os benefícios e quebrando a principal objeção do cliente).
-        **Cena 3 (12-15s) - CTA:** (Chamada para ação direta: "clique no link", "compre agora", etc).
+        **Cena 1 (0-3s) - Gancho:** (Fala impactante).
+        **Cena 2 (3-12s) - Demonstração:** (Fala narrando os benefícios).
+        **Cena 3 (12-15s) - CTA:** (Chamada para ação).
 
         ---
 
@@ -324,10 +324,11 @@
             body: JSON.stringify({
               model: modeloId,
               messages: [
-                { role: "system", content: "Você é um gerador de roteiros e prompts de vídeo de alta conversão. Siga a estrutura exigida rigorosamente." },
+                { role: "system", content: "Você é um especialista. NUNCA pare de escrever pela metade. Entregue a resposta inteira, garantindo que os 3 blocos sejam gerados até o fim." },
                 { role: "user", content: promptMaster }
               ],
-              temperature: 0.4
+              temperature: 0.4,
+              max_tokens: 4000 // CORREÇÃO: Limite de tokens aumentado drasticamente para não cortar o texto!
             })
           });
           const data = await response.json();
