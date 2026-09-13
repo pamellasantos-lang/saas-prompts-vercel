@@ -3,24 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptCraft AI - Gerador de Roteiros e Prompts Virais</title>
+  <title>AdFlow - Ideias que viram vendas</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col justify-between">
 
-  <!-- Header / Navegação -->
-  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-extrabold bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent">
-        ⚡ PromptCraft AI
+  <!-- Header / Topo Limpo sem Links Redundantes -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      
+      <!-- Logo AdFlow Vetorial estilizado conforme a imagem -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 flex items-center justify-center">
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_10px_rgba(168,85,247,0.4)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="adflow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3B82F6" />
+                <stop offset="50%" stop-color="#8B5CF6" />
+                <stop offset="100%" stop-color="#D946EF" />
+              </linearGradient>
+              <linearGradient id="arrow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#06B6D4" />
+                <stop offset="100%" stop-color="#38BDF8" />
+              </linearGradient>
+            </defs>
+            <!-- Formato A -->
+            <path d="M 50 12 L 18 80 C 16 84 20 88 25 88 L 36 88 C 40 88 43 85 45 81 L 50 68 L 55 81 C 57 85 60 88 64 88 L 75 88 C 80 88 84 84 82 80 L 50 12 Z" fill="url(#adflow-grad)"/>
+            <!-- Símbolo de Play Interno -->
+            <polygon points="46,42 46,56 57,49" fill="#0F172A"/>
+            <!-- Seta Curvada Ascendente -->
+            <path d="M 28 65 Q 52 50 72 32 L 64 31 C 62 31 61 29 62 27 L 78 24 C 80 23 82 25 82 27 L 79 43 C 78 45 76 46 75 44 L 72 38 Q 54 55 28 65 Z" fill="url(#arrow-grad)"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-black tracking-tight leading-none text-white">
+            Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
+          </span>
+          <span class="text-[10px] font-medium text-slate-400 tracking-wider">Ideias que viram vendas</span>
+        </div>
       </a>
-      <nav class="hidden md:flex gap-6 text-sm font-semibold text-slate-300">
-        <a href="index.html" class="text-cyan-400">Início</a>
-        <a href="estudio.html" class="hover:text-white transition">Estúdio</a>
-        <a href="express.html" class="hover:text-white transition">Express (URL)</a>
-        <a href="influencer.html" class="hover:text-white transition">Influencer IA</a>
-      </nav>
-      <a href="express.html" class="px-4 py-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-xs rounded-xl hover:opacity-90 transition">
+
+      <!-- Botão de Ação Direta (Sem links horizontais poluindo o topo) -->
+      <a href="express.html" class="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-xs sm:text-sm rounded-xl hover:opacity-90 transition transform hover:scale-105 shadow-lg shadow-pink-500/20">
         🚀 Testar Grátis
       </a>
     </div>
@@ -34,10 +58,10 @@
         Para Vendedores, Afiliados e Criadores Faceless
       </span>
       <h1 class="text-4xl sm:text-6xl font-black leading-tight">
-        Transforme produtos em <span class="bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400 bg-clip-text text-transparent">vídeos virais</span> que vendem todos os dias.
+        Transforme produtos em <span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">vídeos virais</span> que vendem todos os dias.
       </h1>
       <p class="text-slate-400 text-base sm:text-lg">
-        Gere roteiros persuasivos em Português com quebra de objeções e prompts técnicos visuais em Inglês para Kling, Luma Machine, Midjourney e Runway em segundos.
+        O AdFlow cria roteiros persuasivos em Português com quebra de objeções e prompts visuais em Inglês para Kling AI, Luma Machine, Runway e Influencers IA em segundos.
       </p>
 
       <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
@@ -50,23 +74,23 @@
       </div>
     </section>
 
-    <!-- Três Pilares / Ferramentas -->
+    <!-- Módulos de Criação -->
     <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3">
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-pink-500/40 transition">
         <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎛️</div>
         <h3 class="text-lg font-bold">Modo Estúdio</h3>
         <p class="text-slate-400 text-sm">Personalize o estilo do vídeo (Unboxing, Review, Problema/Solução) e escolha o tom ideal da narração comercial.</p>
         <a href="estudio.html" class="text-xs text-pink-400 font-bold hover:underline inline-block pt-2">Ir para o Estúdio &rarr;</a>
       </div>
 
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3">
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-cyan-500/40 transition">
         <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center text-2xl font-bold">⚡</div>
         <h3 class="text-lg font-bold">Modo Express (URL)</h3>
         <p class="text-slate-400 text-sm">Cole o link da Shopee, Mercado Livre ou Amazon. O robô mina as avaliações e cria um roteiro focado em destruir objeções.</p>
         <a href="express.html" class="text-xs text-cyan-400 font-bold hover:underline inline-block pt-2">Usar Modo Express &rarr;</a>
       </div>
 
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3">
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-purple-500/40 transition">
         <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎭</div>
         <h3 class="text-lg font-bold">Influencer IA</h3>
         <p class="text-slate-400 text-sm">Crie ensaios fotográficos e vídeos hiper-realistas para modelos virtuais de IA vestindo roupas, calçados e acessórios.</p>
@@ -74,7 +98,7 @@
       </div>
     </section>
 
-    <!-- SEÇÃO: Radar de Produtos Virais em Alta -->
+    <!-- Radar de Produtos Virais em Alta -->
     <section class="bg-slate-800/40 p-6 sm:p-8 rounded-2xl border border-slate-700/80 space-y-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <div>
@@ -137,13 +161,11 @@
 
   </main>
 
-  <!-- Footer -->
   <footer class="border-t border-slate-800 py-6 text-center text-slate-500 text-xs">
-    <p>© 2026 PromptCraft AI - Todos os direitos reservados.</p>
+    <p>© 2026 AdFlow - Ideias que viram vendas. Todos os direitos reservados.</p>
   </footer>
 
   <script>
-    // Envia o texto pré-analisado direto para a página do Estúdio para gerar sem erros de scraping
     function gerarDireto(descricaoProduto) {
       window.location.href = `estudio.html?produto=${encodeURIComponent(descricaoProduto)}`;
     }
