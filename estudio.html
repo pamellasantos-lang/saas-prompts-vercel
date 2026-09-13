@@ -8,12 +8,13 @@
   <meta http-equiv="Expires" content="0" />
 
   <title>AdFlow - Modo Estúdio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     .prose blockquote {
       background-color: rgba(15, 23, 42, 0.7);
-      border-left-color: #06b6d4;
+      border-left-color: #ec4899;
       border-left-width: 4px;
       padding: 12px 16px;
       border-radius: 0 12px 12px 0;
@@ -23,7 +24,7 @@
       font-style: normal;
     }
     .prose h3 {
-      color: #38bdf8;
+      color: #f472b6;
       margin-top: 28px !important;
       margin-bottom: 12px !important;
       border-bottom: 1px solid rgba(51, 65, 85, 0.6);
@@ -35,22 +36,43 @@
 
   <div id="app-container" class="hidden max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
     
+    <!-- HEADER DA PÁGINA COM SALDOS DE TODOS OS MÓDULOS -->
     <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
       <a href="index.html" class="flex items-center gap-2 group" title="Voltar ao início">
         <span class="text-2xl font-black tracking-tight text-white group-hover:opacity-80 transition">
           Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
         </span>
       </a>
-      <div class="flex items-center gap-2">
+      
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- PAINEL SUPERIOR COM SALDO DOS 3 MÓDULOS -->
+        <div class="hidden sm:flex items-center gap-3 px-3.5 py-2 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-inner text-xs font-bold">
+          <span title="Créditos do Estúdio" class="flex items-center gap-1.5">
+            <span>🎛️</span>
+            <strong id="header-cred-estudio" class="text-pink-400 text-sm font-black">0</strong>
+          </span>
+          <span class="text-slate-700">|</span>
+          <span title="Créditos Express" class="flex items-center gap-1.5">
+            <span>⚡</span>
+            <strong id="header-cred-express" class="text-cyan-400 text-sm font-black">0</strong>
+          </span>
+          <span class="text-slate-700">|</span>
+          <span title="Créditos Influencer IA" class="flex items-center gap-1.5">
+            <span>🎭</span>
+            <strong id="header-cred-influencer" class="text-purple-400 text-sm font-black">0</strong>
+          </span>
+        </div>
+
         <button onclick="abrirPerfil()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-xl font-bold text-xs text-slate-200 transition flex items-center gap-2 shadow">
           👤 <span id="user-display-name">Minha Conta</span>
         </button>
         <button onclick="fazerLogout()" class="px-3 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-700 transition text-red-400 hover:text-red-300 flex items-center gap-1">
-          🚪 Sair
+          🚪 <span class="hidden sm:inline">Sair</span>
         </button>
       </div>
     </div>
 
+    <!-- NAVEGAÇÃO ENTRE MÓDULOS -->
     <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
       <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
         🎛️ Estúdio
@@ -63,45 +85,48 @@
       </a>
     </nav>
     
+    <!-- FORMULÁRIO DO MÓDULO ESTÚDIO -->
     <div class="space-y-5">
       <div>
-        <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
-        <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Cadeirinha de bebê para automóvel com reclinamento..."></textarea>
+        <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Produto ou Ideia do Anúncio:</label>
+        <input type="text" id="input-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" placeholder="Ex: Tênis de corrida com amortecimento em gel, Perfume masculino de luxo..." />
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🎬 Estilo do Vídeo:</label>
-          <select id="estilo" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-            <option>Review Sincero</option>
-            <option>Achadinho Irresistível</option>
-            <option>Problema vs Solução</option>
-            <option>Unboxing</option>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🎨 Estilo Visual & Iluminação:</label>
+          <select id="select-estilo" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors text-slate-200">
+            <option value="Cinematográfico Studio Premium (Iluminação Volumétrica 4K)">Cinematográfico Studio Premium</option>
+            <option value="Minimalista Clean Elegante (Fundo Neutro e Luz Suave)">Minimalista Clean</option>
+            <option value="Cyberpunk Neon Dark (Luzes de Neon Azul e Rosa)">Cyberpunk Neon Futuristic</option>
+            <option value="Estilo Vida Real / Organic UGC (Luz Natural de Janela)">Luz Natural / Estilo UGC</option>
           </select>
         </div>
+
         <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🗣️ Tom da Narração:</label>
-          <select id="tom" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-            <option>Entusiasta</option>
-            <option>Curioso/Alerta</option>
-            <option>Humorado</option>
-            <option>Direto ao Ponto</option>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🎥 Movimento de Câmera Principal:</label>
+          <select id="select-camera" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors text-slate-200">
+            <option value="Slow Dolly Zoom In (Aproximação lenta com foco nos detalhes)">Slow Dolly Zoom In</option>
+            <option value="Orbit 360 Pan (Rotação suave de 360 graus ao redor do produto)">Orbit 360 Pan</option>
+            <option value="Macro Extreme Close-Up (Super zoom em texturas e detalhes)">Macro Extreme Close-Up</option>
+            <option value="Fast Dynamic Tilt & Pan (Movimento rápido e comercial)">Dynamic Tilt & Pan</option>
           </select>
         </div>
       </div>
 
       <button onclick="gerarPrompt()" id="btn" class="w-full py-4 mt-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl hover:opacity-90 transform transition hover:scale-[1.02] shadow-lg">
-        🚀 Gerar Prompts Otimizados para Kling AI & Luma
+        🎛️ Gerar Roteiro & Prompts de Estúdio Otimizados
       </button>
     </div>
 
     <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-      <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e otimizando prompts de movimento para Kling & Luma... Aguarde!</p>
+      <p id="status-texto" class="text-pink-400 font-semibold animate-pulse">🤖 Renderizando parâmetros visuais de estúdio... Aguarde!</p>
     </div>
 
     <div id="resultado" class="mt-8 space-y-6 text-sm hidden"></div>
   </div>
 
+  <!-- MODAL DE PERFIL -->
   <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
       <div class="flex justify-between items-center border-b border-slate-700 pb-4">
@@ -146,182 +171,13 @@
     </div>
   </div>
 
-  <script>
-    const API_KEY = "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";
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const produtoParam = urlParams.get('produto');
-      if (produtoParam) {
-        document.getElementById('produto').value = produtoParam;
-        gerarPrompt();
-      }
-    });
-
-    async function obterModelosValidosGroq(apiKey) {
-      try {
-        const response = await fetch("https://api.groq.com/openai/v1/models", { headers: { "Authorization": `Bearer ${apiKey}` } });
-        const data = await response.json();
-        if (data && data.data && data.data.length > 0) {
-          const modelosFiltrados = data.data.map(m => m.id).filter(id => {
-            const lower = id.toLowerCase();
-            return !lower.includes("whisper") && !lower.includes("guard") && !lower.includes("vision") && !lower.includes("embed");
-          });
-          if (modelosFiltrados.length > 0) return modelosFiltrados;
-        }
-      } catch (e) { console.warn("Erro ao buscar modelos.", e); }
-      return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
-    }
-
-    async function gerarPrompt() {
-      const btn = document.getElementById('btn');
-      const resDiv = document.getElementById('resultado');
-      const loadDiv = document.getElementById('loading');
-      const produto = document.getElementById('produto').value;
-      const estilo = document.getElementById('estilo').value;
-      const tom = document.getElementById('tom').value;
-
-      if (!produto.trim()) {
-        alert('⚠️ Por favor, insira os dados do produto.');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-      loadDiv.classList.remove('hidden');
-      resDiv.classList.add('hidden');
-
-      const promptMaster = `
-        Você é um engenheiro de prompts especialista em IAs de geração de vídeo (Kling AI, Luma Dream Machine, Runway Gen-3).
-        Crie uma análise minuciosa de mercado, um roteiro comercial em português e prompts de vídeo em inglês otimizados com sintaxe de câmera e física de movimento para Kling e Luma.
-
-        DADOS DO PRODUTO: ${produto}
-        ESTILO: ${estilo}
-        TOM DA NARRAÇÃO: ${tom}
-
-        REGRAS DE FORMATO:
-        1. FALE ESTRITAMENTE SOBRE O PRODUTO MENCIONADO ACIMA.
-        2. SEPARE AS 3 SEÇÕES COM '---'.
-        3. OS PROMPTS DEVEM CONTER COMANDOS DE CÂMERA (Camera: Slow dolly in, Camera: Panning right, Camera: Orbit shot), LUZ DE ESTÚDIO, FÍSICA REALISTA E SUPORTE FORMATO 9:16 VERTICAL.
-
-        RETORNE ESTRITAMENTE NESTE FORMATO:
-
-        ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
-        * **👍 Pontos Fortes:** (2 destaques principais)
-        * **⚠️ Pontos Negativos & Objeções:** (2 principais dúvidas)
-        * **🎯 Estratégia de Venda:** (Como o vídeo converte)
-
-        ---
-
-        ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
-        **Cena 1 (0-3s) - Gancho Viral:**
-        🗣️ Narração: Frase chamativa em português nos primeiros 3 segundos.
-
-        **Cena 2 (3-12s) - Demonstração & Solução:**
-        🗣️ Narração: Explicação persuasiva em português destruindo as objeções.
-
-        **Cena 3 (12-15s) - Chamada para Ação:**
-        🗣️ Narração: Chamada em português para a conversão.
-
-        ---
-
-        ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA DREAM MACHINE
-
-        ### 🟢 Cena 1: Prompt Visual (Kling AI & Luma)
-        \`\`\`text
-        Vertical 9:16 video prompt for Kling AI / Luma Dream Machine. Close-up high-speed shot of ${produto}. Camera: Slow dolly zoom in towards the product details. Cinematic studio illumination, soft volumetric lighting, photorealistic material physics, 60fps slow-motion, 4k resolution, hyper-detailed rendering.
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 1):**
-        > Tradução e movimento de câmera explicados em português para a Cena 1.
-
-        ### 🔵 Cena 2: Prompt Visual (Kling AI & Luma)
-        \`\`\`text
-        Vertical 9:16 video prompt for Kling AI / Luma Dream Machine. Medium shot showcasing ${produto} in action resolving buyer objection. Camera: Smooth 360 orbit camera movement around the product. Realistic hands interaction, natural ambient lighting, hyper-realistic depth of field, 4k.
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 2):**
-        > Tradução e movimento de câmera explicados em português para a Cena 2.
-
-        ### 🟣 Cena 3: Prompt Visual (Kling AI & Luma)
-        \`\`\`text
-        Vertical 9:16 video prompt for Kling AI / Luma Dream Machine. High impact call-to-action scene showing ${produto} on clean aesthetic backdrop. Camera: Dynamic tilt-up shot. Vibrant neon highlights, cinematic color grading, photorealistic, 4k resolution.
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 3):**
-        > Tradução e movimento de câmera explicados em português para a Cena 3.
-      `;
-
-      let textoGerado = null;
-      let erroUltimo = "";
-      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
-
-      for (const modeloId of modelosDisponiveis) {
-        try {
-          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
-            body: JSON.stringify({
-              model: modeloId,
-              messages: [
-                { role: "system", content: "Você é um especialista em geração de prompts para vídeos por inteligência artificial." },
-                { role: "user", content: promptMaster }
-              ],
-              temperature: 0.4
-            })
-          });
-          const data = await response.json();
-          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
-            textoGerado = data.choices[0].message.content;
-            break;
-          } else { erroUltimo = data.error?.message || 'Erro desconhecido'; }
-        } catch (e) { erroUltimo = e.message; }
-      }
-
-      if (textoGerado) {
-        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompts otimizados para Kling AI & Luma com sucesso!</div>`;
-        const secoes = textoGerado.split('---');
-        let htmlResultado = avisoSucesso;
-        secoes.forEach(secao => {
-          if (secao.trim()) {
-            htmlResultado += `<div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert max-w-none">${marked.parse(secao.trim())}</div>`;
-          }
-        });
-        resDiv.innerHTML = htmlResultado;
-        adicionarBotoesDeCopiar(resDiv);
-        resDiv.classList.remove('hidden');
-        resDiv.scrollIntoView({ behavior: 'smooth' });
-      } else { alert('❌ Erro na API Groq: ' + erroUltimo); }
-
-      loadDiv.classList.add('hidden');
-      btn.disabled = false;
-      btn.classList.remove('opacity-50');
-    }
-
-    function adicionarBotoesDeCopiar(container) {
-      container.querySelectorAll('pre').forEach((pre) => {
-        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
-        const btnCopiar = document.createElement('button');
-        btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
-        btnCopiar.innerHTML = '📋 Copiar Prompt';
-        btnCopiar.onclick = () => {
-          const codeEl = pre.querySelector('code');
-          const textoPrompt = (codeEl ? codeEl.innerText : pre.innerText).replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
-          navigator.clipboard.writeText(textoPrompt).then(() => {
-            btnCopiar.innerHTML = '✅ Copiado!';
-            btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
-            setTimeout(() => {
-              btnCopiar.innerHTML = '📋 Copiar Prompt';
-              btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
-            }, 2000);
-          });
-        };
-        pre.appendChild(btnCopiar);
-      });
-    }
-  </script>
-
+  <!-- FIREBASE & LÓGICA DO APP -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const API_KEY = "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";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
@@ -349,20 +205,45 @@
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
 
+        let data;
         if (docSnap.exists()) {
-          const data = docSnap.data();
-          const nomeCompleto = data.nome || user.email.split('@')[0];
-          const primeiroNome = nomeCompleto.split(' ')[0];
-
-          document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
-          document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
-          document.getElementById('modal-email').innerText = data.email || user.email;
-          document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
-          document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
-          document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
-          document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+          data = docSnap.data();
+        } else {
+          data = {
+            email: user.email,
+            nome: user.displayName || user.email.split('@')[0],
+            plano: 'gratis',
+            creditos: { estudio: 1, express: 1, influencer: 1 },
+            criadoEm: new Date()
+          };
+          await setDoc(docRef, data);
         }
-      } catch (err) { console.error("Erro ao carregar dados:", err); }
+
+        const nomeCompleto = data.nome || user.email.split('@')[0];
+        const primeiroNome = nomeCompleto.split(' ')[0];
+
+        document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
+        document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
+        document.getElementById('modal-email').innerText = data.email || user.email;
+        document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
+        
+        document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
+        document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
+        document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+
+        if(document.getElementById('header-cred-estudio')) {
+          document.getElementById('header-cred-estudio').innerText = data.creditos?.estudio ?? 0;
+        }
+        if(document.getElementById('header-cred-express')) {
+          document.getElementById('header-cred-express').innerText = data.creditos?.express ?? 0;
+        }
+        if(document.getElementById('header-cred-influencer')) {
+          document.getElementById('header-cred-influencer').innerText = data.creditos?.influencer ?? 0;
+        }
+
+      } catch (err) { 
+        console.error("Erro ao carregar dados:", err); 
+      }
     }
 
     onAuthStateChanged(auth, (user) => { carregarPerfil(user); });
@@ -374,9 +255,218 @@
 
     window.abrirPerfil = () => document.getElementById('modal-perfil')?.classList.remove('hidden');
     window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
-    
     window.fazerLogout = function() {
       signOut(auth).then(() => { window.location.replace("index.html"); });
+    }
+
+    async function obterModelosValidosGroq(apiKey) {
+      try {
+        const response = await fetch("https://api.groq.com/openai/v1/models", { headers: { "Authorization": `Bearer ${apiKey}` } });
+        const data = await response.json();
+        if (data && data.data && data.data.length > 0) {
+          const modelosFiltrados = data.data.map(m => m.id).filter(id => {
+            const lower = id.toLowerCase();
+            return !lower.includes("whisper") && !lower.includes("guard") && !lower.includes("vision") && !lower.includes("embed");
+          });
+          if (modelosFiltrados.length > 0) return modelosFiltrados;
+        }
+      } catch (e) { console.warn("Erro ao buscar modelos.", e); }
+      return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+    }
+
+    window.gerarPrompt = async function() {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("⚠️ Você precisa estar logado para gerar prompts.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const produtoInput = document.getElementById('input-produto').value;
+      const estiloSelect = document.getElementById('select-estilo').value;
+      const cameraSelect = document.getElementById('select-camera').value;
+
+      if (!produtoInput.trim()) {
+        alert('⚠️ Por favor, informe o produto ou ideia do anúncio.');
+        return;
+      }
+
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      
+      if (!userDocSnap.exists()) {
+        alert("Erro ao carregar seu perfil. Tente recarregar a página.");
+        return;
+      }
+
+      const userData = userDocSnap.data();
+      const creditosEstudio = userData.creditos?.estudio ?? 0;
+
+      if (creditosEstudio <= 0) {
+        alert("⚠️ Seus créditos do módulo Estúdio acabaram! Faça um upgrade para continuar criando.");
+        window.location.href = "planos.html";
+        return;
+      }
+
+      const btn = document.getElementById('btn');
+      const resDiv = document.getElementById('resultado');
+      const loadDiv = document.getElementById('loading');
+      const statusTexto = document.getElementById('status-texto');
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      loadDiv.classList.remove('hidden');
+      resDiv.classList.add('hidden');
+      statusTexto.innerText = "🎛️ Configurando iluminação e parâmetros cinematográficos...";
+
+      const promptMaster = `
+        Você é um Diretor de Fotografia e Especialista em Vídeos Comerciais para IA (Kling AI e Luma Dream Machine).
+        Sua tarefa é criar um roteiro e prompts visuais no formato de Estúdio Cinematográfico.
+
+        PRODUTO: ${produtoInput}
+        ESTILO VISUAL: ${estiloSelect}
+        MOVIMENTO DE CÂMERA: ${cameraSelect}
+
+        Siga ESTE FORMATO EXATO, substituindo os colchetes [ ]:
+
+        ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
+        * **👍 Pontos Fortes:** [2 pontos de apelo visual do produto]
+        * **⚠️ Dores e Objeções:** [2 objeções do comprador que o vídeo vai quebrar]
+        * **🎯 Estratégia do Vídeo:** [Estratégia visual de conversão]
+
+        ---
+
+        ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
+        **Cena 1 (0-3s) - Gancho Visual:** [Fala em português chamando atenção]
+        **Cena 2 (3-12s) - Demonstração de Estúdio:** [Fala em português apresentando os diferenciais]
+        **Cena 3 (12-15s) - Fechamento Comercial:** [Chamada para ação em português]
+
+        ---
+
+        ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA
+        ### 🟢 Cena 1: Prompt Visual (Abertura de Impacto)
+        \`\`\`text
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. ${cameraSelect}. ${estiloSelect}, studio lighting, 4k render, photorealistic. [Descreva a Cena 1 em INGLÊS aqui]
+        \`\`\`
+        > 🇧🇷 **Tradução:** [Tradução do prompt acima para português em texto normal]
+
+        ### 🔵 Cena 2: Prompt Visual (Detalhes & Demonstração)
+        \`\`\`text
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. ${estiloSelect}, macro view, natural physics, crisp details, 4k. [Descreva a Cena 2 em INGLÊS aqui]
+        \`\`\`
+        > 🇧🇷 **Tradução:** [Tradução do prompt acima para português em texto normal]
+
+        ### 🟣 Cena 3: Prompt Visual (Call to Action)
+        \`\`\`text
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Aesthetic studio product shot, premium backdrop, dynamic finish, 4k. [Descreva a Cena 3 em INGLÊS aqui]
+        \`\`\`
+        > 🇧🇷 **Tradução:** [Tradução do prompt acima para português em texto normal]
+      `;
+
+      let textoGerado = null;
+      let erroUltimo = "";
+      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
+
+      for (const modeloId of modelosDisponiveis) {
+        try {
+          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+            body: JSON.stringify({
+              model: modeloId,
+              messages: [
+                { role: "system", content: "Você é um especialista em prompts de estúdio cinematográfico. Siga o template exatamente." },
+                { role: "user", content: promptMaster }
+              ],
+              temperature: 0.4,
+              max_tokens: 4000
+            })
+          });
+          const data = await response.json();
+          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
+            textoGerado = data.choices[0].message.content;
+            break;
+          } else { erroUltimo = data.error?.message || 'Erro desconhecido'; }
+        } catch (e) { erroUltimo = e.message; }
+      }
+
+      if (textoGerado) {
+        const secoes = textoGerado.split('---');
+        
+        if(secoes.length >= 3) {
+          const novoSaldo = Math.max(0, creditosEstudio - 1);
+          try {
+            await updateDoc(userDocRef, { "creditos.estudio": novoSaldo });
+            document.getElementById('cred-estudio').innerText = novoSaldo;
+            if(document.getElementById('header-cred-estudio')) {
+              document.getElementById('header-cred-estudio').innerText = novoSaldo;
+            }
+          } catch (dbErr) { console.error("Erro ao atualizar créditos:", dbErr); }
+        }
+
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompts de Estúdio gerados com sucesso!</div>`;
+        
+        const instrucoesUso = `
+          <div class="mb-6 p-5 bg-gradient-to-r from-pink-900/40 to-purple-900/40 border border-pink-500/30 rounded-2xl shadow-lg">
+            <h4 class="text-pink-400 font-bold text-lg mb-3 flex items-center gap-2">💡 Como criar seus vídeos de estúdio:</h4>
+            <ul class="text-slate-300 text-sm space-y-3">
+              <li class="flex items-start gap-2">
+                <span class="bg-pink-500/20 text-pink-300 px-2 rounded font-bold text-xs mt-0.5">1</span>
+                <span>Copie os prompts em <strong>inglês</strong> (nas caixas de código abaixo).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-pink-500/20 text-pink-300 px-2 rounded font-bold text-xs mt-0.5">2</span>
+                <span>Abra o <a href="https://klingai.com/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline font-bold">Kling AI</a> ou <a href="https://lumalabs.ai/dream-machine" target="_blank" class="text-purple-400 hover:text-purple-300 underline font-bold">Luma Dream Machine</a>.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-pink-500/20 text-pink-300 px-2 rounded font-bold text-xs mt-0.5">3</span>
+                <span>Cole o prompt e suba uma imagem limpa do produto para manter a fidelidade perfeita.</span>
+              </li>
+            </ul>
+          </div>
+        `;
+
+        let htmlResultado = avisoSucesso + instrucoesUso;
+        
+        secoes.forEach(secao => {
+          if (secao.trim()) {
+            htmlResultado += `<div class="bg-slate-950/90 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert prose-p:leading-relaxed prose-li:marker:text-pink-400 max-w-none">${marked.parse(secao.trim())}</div>`;
+          }
+        });
+        
+        resDiv.innerHTML = htmlResultado;
+        adicionarBotoesDeCopiar(resDiv);
+        resDiv.classList.remove('hidden');
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+      } else { 
+        alert('❌ Erro na API Groq: ' + erroUltimo); 
+      }
+
+      loadDiv.classList.add('hidden');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+    };
+
+    function adicionarBotoesDeCopiar(container) {
+      container.querySelectorAll('pre').forEach((pre) => {
+        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-pink-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
+        const btnCopiar = document.createElement('button');
+        btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+        btnCopiar.innerHTML = '📋 Copiar Prompt';
+        btnCopiar.onclick = () => {
+          const codeEl = pre.querySelector('code');
+          const textoPrompt = (codeEl ? codeEl.innerText : pre.innerText).replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
+          navigator.clipboard.writeText(textoPrompt).then(() => {
+            btnCopiar.innerHTML = '✅ Copiado!';
+            btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
+            setTimeout(() => {
+              btnCopiar.innerHTML = '📋 Copiar Prompt';
+              btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+            }, 2000);
+          });
+        };
+        pre.appendChild(btnCopiar);
+      });
     }
   </script>
 </body>
