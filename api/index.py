@@ -5,7 +5,6 @@ import google.generativeai as genai
 app = Flask(__name__)
 
 @app.route('/api/generate', methods=['POST', 'OPTIONS'])
-@app.route('/generate', methods=['POST', 'OPTIONS'])
 def generate():
     if request.method == 'OPTIONS':
         return '', 200
@@ -60,6 +59,3 @@ def generate():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-# Aponta a entrada do servidor para o Flask
-handler = app
