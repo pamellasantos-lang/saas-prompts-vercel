@@ -82,6 +82,7 @@
     <div id="resultado" class="mt-8 space-y-6 text-sm hidden"></div>
   </div>
 
+  <!-- MODAL DE PERFIL -->
   <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
       <div class="flex justify-between items-center border-b border-slate-700 pb-4">
@@ -126,8 +127,81 @@
     </div>
   </div>
 
-  <script>
+  <!-- FIREBASE & LÓGICA DO APP COM DESCONTO DE CRÉDITOS -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
     const API_KEY = "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";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
+      authDomain: "adflow-1e5b8.firebaseapp.com",
+      projectId: "adflow-1e5b8",
+      storageBucket: "adflow-1e5b8.firebasestorage.app",
+      messagingSenderId: "517881206433",
+      appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const container = document.getElementById('app-container');
+
+    async function carregarPerfil(user) {
+      if (!user) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      if (container) container.classList.remove('hidden');
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        let data;
+        if (docSnap.exists()) {
+          data = docSnap.data();
+        } else {
+          data = {
+            email: user.email,
+            nome: user.displayName || user.email.split('@')[0],
+            plano: 'gratis',
+            creditos: { estudio: 1, express: 1, influencer: 1 },
+            criadoEm: new Date()
+          };
+          await setDoc(docRef, data);
+        }
+
+        const nomeCompleto = data.nome || user.email.split('@')[0];
+        const primeiroNome = nomeCompleto.split(' ')[0];
+
+        document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
+        document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
+        document.getElementById('modal-email').innerText = data.email || user.email;
+        document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
+        document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
+        document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
+        document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+      } catch (err) { 
+        console.error("Erro ao carregar dados:", err); 
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => { carregarPerfil(user); });
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        carregarPerfil(auth.currentUser);
+      }
+    });
+
+    window.abrirPerfil = () => document.getElementById('modal-perfil')?.classList.remove('hidden');
+    window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
+    window.fazerLogout = function() {
+      signOut(auth).then(() => { window.location.replace("index.html"); });
+    }
 
     async function obterModelosValidosGroq(apiKey) {
       try {
@@ -144,17 +218,43 @@
       return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
     }
 
-    async function gerarPrompt() {
-      const btn = document.getElementById('btn');
-      const resDiv = document.getElementById('resultado');
-      const loadDiv = document.getElementById('loading');
-      const statusTexto = document.getElementById('status-texto');
-      const urlInput = document.getElementById('url-produto').value;
+    // FUNÇÃO PRINCIPAL DE GERAÇÃO COM TRAVA E DESCONTO DE CRÉDITOS
+    window.gerarPrompt = async function() {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("⚠️ Você precisa estar logado para gerar prompts.");
+        window.location.href = "login.html";
+        return;
+      }
 
+      const urlInput = document.getElementById('url-produto').value;
       if (!urlInput.trim()) {
         alert('⚠️ Por favor, cole a URL do produto.');
         return;
       }
+
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      
+      if (!userDocSnap.exists()) {
+        alert("Erro ao carregar seu perfil. Tente recarregar a página.");
+        return;
+      }
+
+      const userData = userDocSnap.data();
+      const creditosExpress = userData.creditos?.express ?? 0;
+
+      // VERIFICAÇÃO DE SALDO DE CRÉDITOS
+      if (creditosExpress <= 0) {
+        alert("⚠️ Seus créditos do módulo Express acabaram! Faça um upgrade para continuar criando vídeos.");
+        window.location.href = "planos.html";
+        return;
+      }
+
+      const btn = document.getElementById('btn');
+      const resDiv = document.getElementById('resultado');
+      const loadDiv = document.getElementById('loading');
+      const statusTexto = document.getElementById('status-texto');
 
       btn.disabled = true;
       btn.classList.add('opacity-50');
@@ -252,6 +352,17 @@
       }
 
       if (textoGerado) {
+        // DESCONTO DE 1 CRÉDITO NO FIRESTORE APÓS SUCESSO
+        const novoSaldo = Math.max(0, creditosExpress - 1);
+        try {
+          await updateDoc(userDocRef, {
+            "creditos.express": novoSaldo
+          });
+          document.getElementById('cred-express').innerText = novoSaldo;
+        } catch (dbErr) {
+          console.error("Erro ao atualizar créditos:", dbErr);
+        }
+
         const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompts otimizados para Kling AI & Luma com sucesso!</div>`;
         const secoes = textoGerado.split('---');
         let htmlResultado = avisoSucesso;
@@ -264,12 +375,14 @@
         adicionarBotoesDeCopiar(resDiv);
         resDiv.classList.remove('hidden');
         resDiv.scrollIntoView({ behavior: 'smooth' });
-      } else { alert('❌ Erro na API Groq: ' + erroUltimo); }
+      } else { 
+        alert('❌ Erro na API Groq: ' + erroUltimo); 
+      }
 
       loadDiv.classList.add('hidden');
       btn.disabled = false;
       btn.classList.remove('opacity-50');
-    }
+    };
 
     function adicionarBotoesDeCopiar(container) {
       container.querySelectorAll('pre').forEach((pre) => {
@@ -291,68 +404,6 @@
         };
         pre.appendChild(btnCopiar);
       });
-    }
-  </script>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
-      authDomain: "adflow-1e5b8.firebaseapp.com",
-      projectId: "adflow-1e5b8",
-      storageBucket: "adflow-1e5b8.firebasestorage.app",
-      messagingSenderId: "517881206433",
-      appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const container = document.getElementById('app-container');
-
-    async function carregarPerfil(user) {
-      if (!user) {
-        window.location.replace("login.html");
-        return;
-      }
-
-      if (container) container.classList.remove('hidden');
-
-      try {
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const nomeCompleto = data.nome || user.email.split('@')[0];
-          const primeiroNome = nomeCompleto.split(' ')[0];
-
-          document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
-          document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
-          document.getElementById('modal-email').innerText = data.email || user.email;
-          document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
-          document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
-          document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
-          document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
-        }
-      } catch (err) { console.error("Erro ao carregar dados:", err); }
-    }
-
-    onAuthStateChanged(auth, (user) => { carregarPerfil(user); });
-    window.addEventListener('pageshow', (event) => {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        carregarPerfil(auth.currentUser);
-      }
-    });
-
-    window.abrirPerfil = () => document.getElementById('modal-perfil')?.classList.remove('hidden');
-    window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
-    
-    window.fazerLogout = function() {
-      signOut(auth).then(() => { window.location.replace("index.html"); });
     }
   </script>
 </body>
