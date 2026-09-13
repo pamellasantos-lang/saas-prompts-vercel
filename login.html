@@ -14,7 +14,7 @@
 
   <div class="max-w-md w-full bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-slate-700/80 z-10">
     
-    <!-- Logo Vetorial -->
+    <!-- Logo Vetorial AdFlow -->
     <div class="flex justify-center mb-6">
       <a href="index.html" class="flex items-center gap-3 group">
         <div class="w-10 h-10 flex items-center justify-center">
@@ -72,12 +72,13 @@
     </div>
   </div>
 
-  <!-- Firebase Scripts (Módulo) -->
+  <!-- Firebase Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-    // SUAS CHAVES REAIS DO FIREBASE
+    // Suas credenciais reais do Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
       authDomain: "adflow-1e5b8.firebaseapp.com",
@@ -87,30 +88,30 @@
       appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
     };
 
-    // Inicializar Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    // Se o usuário já estiver logado, manda ele pro Estúdio direto
+    // Se o usuário já estiver logado, redireciona diretamente para o Estúdio
     onAuthStateChanged(auth, (user) => {
       if (user) {
         window.location.href = "estudio.html";
       }
     });
 
-    let isLogin = true; // Controle de estado (Login vs Cadastro)
+    let isLogin = true;
 
     window.toggleMode = function() {
       isLogin = !isLogin;
       document.getElementById('form-title').innerText = isLogin ? "Acesse sua conta" : "Crie sua conta";
-      document.getElementById('form-subtitle').innerText = isLogin ? "Entre para gerar seus roteiros virais." : "Ganhe acesso às ferramentas de IA.";
+      document.getElementById('form-subtitle').innerText = isLogin ? "Entre para gerar seus roteiros virais." : "Ganhe 1 teste grátis em todas as ferramentas.";
       document.getElementById('submit-btn').innerText = isLogin ? "Entrar" : "Criar Conta";
       document.getElementById('toggle-text').innerText = isLogin ? "Ainda não tem conta?" : "Já possui conta?";
       document.getElementById('toggle-btn').innerText = isLogin ? "Criar conta grátis" : "Fazer Login";
       document.getElementById('error-message').classList.add('hidden');
     }
 
-    document.getElementById('auth-form').addEventListener('submit', (e) => {
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       
       const email = document.getElementById('email').value;
@@ -123,10 +124,9 @@
       errorMsg.classList.add('hidden');
 
       if (isLogin) {
-        // Lógica de Login
         signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            window.location.href = "estudio.html"; // Redireciona com sucesso
+          .then(() => {
+            window.location.href = "estudio.html";
           })
           .catch((error) => {
             errorMsg.innerText = "Erro: " + authErrorMessage(error.code);
@@ -135,21 +135,33 @@
             btn.disabled = false;
           });
       } else {
-        // Lógica de Cadastro
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            window.location.href = "estudio.html"; // Cadastro com sucesso
-          })
-          .catch((error) => {
-            errorMsg.innerText = "Erro: " + authErrorMessage(error.code);
-            errorMsg.classList.remove('hidden');
-            btn.innerText = "Criar Conta";
-            btn.disabled = false;
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+
+          // Cria a ficha do novo usuário no Firestore liberando 1 teste grátis por ferramenta
+          await setDoc(doc(db, "users", user.uid), {
+            email: user.email,
+            plano: "gratis",
+            creditos: {
+              estudio: 1,
+              express: 1,
+              influencer: 1
+            },
+            radarExpiraEm: null,
+            criadoEm: new Date()
           });
+
+          window.location.href = "estudio.html";
+        } catch (error) {
+          errorMsg.innerText = "Erro: " + authErrorMessage(error.code);
+          errorMsg.classList.remove('hidden');
+          btn.innerText = "Criar Conta";
+          btn.disabled = false;
+        }
       }
     });
 
-    // Tradução dos erros do Firebase
     function authErrorMessage(code) {
       switch(code) {
         case 'auth/invalid-email': return 'E-mail inválido.';
@@ -158,7 +170,7 @@
         case 'auth/email-already-in-use': return 'Este e-mail já está em uso.';
         case 'auth/weak-password': return 'A senha deve ter pelo menos 6 caracteres.';
         case 'auth/invalid-credential': return 'E-mail ou senha incorretos.';
-        default: return 'Ocorreu um erro inesperado.';
+        default: return 'Ocorreu um erro ao autenticar.';
       }
     }
   </script>
