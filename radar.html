@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <title>AdFlow - Radar de Mineração de Mercado</title>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    .prose blockquote {
+      background-color: rgba(15, 23, 42, 0.7);
+      border-left-color: #38bdf8;
+      border-left-width: 4px;
+      padding: 12px 16px;
+      border-radius: 0 12px 12px 0;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      color: #e2e8f0;
+      font-style: normal;
+    }
+    .prose h3 {
+      color: #38bdf8;
+      margin-top: 28px !important;
+      margin-bottom: 12px !important;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+      padding-bottom: 6px;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+
+  <div id="app-container" class="hidden max-w-4xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
+    
+    <!-- HEADER DA PÁGINA COM SALDOS DE TODOS OS MÓDULOS -->
+    <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
+      <a href="index.html" class="flex items-center gap-2 group" title="Voltar ao início">
+        <span class="text-2xl font-black tracking-tight text-white group-hover:opacity-80 transition">
+          Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
+        </span>
+      </a>
+      
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- PAINEL SUPERIOR COM SALDO DOS 3 MÓDULOS -->
+        <div class="hidden sm:flex items-center gap-3 px-3.5 py-2 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-inner text-xs font-bold">
+          <span title="Créditos do Estúdio" class="flex items-center gap-1.5">
+            <span>🎛️</span>
+            <strong id="header-cred-estudio" class="text-pink-400 text-sm font-black">0</strong>
+          </span>
+          <span class="text-slate-700">|</span>
+          <span title="Créditos Express" class="flex items-center gap-1.5">
+            <span>⚡</span>
+            <strong id="header-cred-express" class="text-cyan-400 text-sm font-black">0</strong>
+          </span>
+          <span class="text-slate-700">|</span>
+          <span title="Créditos Influencer IA" class="flex items-center gap-1.5">
+            <span>🎭</span>
+            <strong id="header-cred-influencer" class="text-purple-400 text-sm font-black">0</strong>
+          </span>
+        </div>
+
+        <button onclick="abrirPerfil()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-xl font-bold text-xs text-slate-200 transition flex items-center gap-2 shadow">
+          👤 <span id="user-display-name">Minha Conta</span>
+        </button>
+        <button onclick="fazerLogout()" class="px-3 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-700 transition text-red-400 hover:text-red-300 flex items-center gap-1">
+          🚪 <span class="hidden sm:inline">Sair</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- NAVEGAÇÃO ENTRE MÓDULOS -->
+    <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
+      <a href="radar.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-500 text-white shadow">
+        📡 Radar de Mineração
+      </a>
+      <a href="express.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        ⚡ Express (URL)
+      </a>
+      <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        🎛️ Estúdio
+      </a>
+      <a href="influencer.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        🎭 Influencer IA
+      </a>
+    </nav>
+    
+    <!-- FORMULÁRIO DO RADAR DE MINERAÇÃO -->
+    <div class="space-y-6">
+      
+      <div class="bg-gradient-to-r from-purple-900/30 to-slate-900 p-4 rounded-2xl border border-purple-500/30">
+        <h2 class="text-lg font-black text-white flex items-center gap-2">
+          📡 Mineração em Tempo Real por Plataforma
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">
+          Descubra quais produtos estão explodindo em vendas, suas principais objeções e crie os prompts para Kling AI & Luma instantaneamente.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🛒 Selecione a Plataforma:</label>
+          <select id="select-plataforma" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors text-slate-200">
+            <option value="Shopee Brasil">🟠 Shopee Brasil (Mais Vendidos & Virais)</option>
+            <option value="Mercado Livre Brasil">🟡 Mercado Livre (Tendências de Alta Conversão)</option>
+            <option value="Amazon Brasil">🔵 Amazon Brasil (Mais Desejados & Mais Vendidos)</option>
+            <option value="TikTok Shop / Virais do TikTok">🎵 TikTok Shop & Virais de E-commerce</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🎯 Selecione o Nicho:</label>
+          <select id="select-nicho" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors text-slate-200">
+            <option value="Maternidade & Bebês">🍼 Maternidade & Bebês</option>
+            <option value="Beleza, Skincare & Cosmeticos">💄 Beleza & Skincare</option>
+            <option value="Casa, Cozinha & Utilitarios">🏠 Casa & Utilitários</option>
+            <option value="Tecnologia & Eletronicos">📱 Eletrônicos & Acessórios</option>
+            <option value="Saude, Fitness & Emagrecimento">💪 Saúde & Fitness</option>
+            <option value="Moda & Acessorios">👗 Moda & Acessórios</option>
+          </select>
+        </div>
+      </div>
+
+      <button onclick="minerarProdutos()" id="btn-minerar" class="w-full py-4 bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-500 font-black rounded-xl hover:opacity-95 transform transition hover:scale-[1.01] shadow-xl text-white">
+        🔍 Escanear & Extrair Produtos Mais Vendidos
+      </button>
+
+    </div>
+
+    <!-- CARREGAMENTO -->
+    <div id="loading" class="hidden text-center mt-6 p-6 bg-slate-900/50 rounded-xl border border-slate-700 space-y-2">
+      <div class="w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <p id="status-texto" class="text-cyan-400 font-semibold text-sm">📡 Varrendo dados de mercado e identificando produtos campeões...</p>
+    </div>
+
+    <!-- RESULTADO DA MINERAÇÃO -->
+    <div id="resultado" class="mt-8 space-y-6 text-sm hidden"></div>
+
+  </div>
+
+  <!-- MODAL DE PERFIL -->
+  <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
+      <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+        <div>
+          <h3 class="text-xl font-bold text-white" id="modal-nome">Carregando...</h3>
+          <p class="text-xs text-slate-400" id="modal-email">---</p>
+        </div>
+        <button onclick="fecharPerfil()" class="text-slate-400 hover:text-white font-bold text-lg p-1">✕</button>
+      </div>
+
+      <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700/80 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Plano Atual:</span>
+          <span id="modal-plano" class="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs font-bold uppercase">GRÁTIS</span>
+        </div>
+        <hr class="border-slate-800">
+        <h4 class="text-xs font-bold text-slate-300 uppercase">Criações Disponíveis:</h4>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Estúdio</span>
+            <strong id="cred-estudio" class="text-pink-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Express</span>
+            <strong id="cred-express" class="text-cyan-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Influencer</span>
+            <strong id="cred-influencer" class="text-purple-400 text-sm">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <a href="planos.html" class="block w-full py-3.5 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-center text-xs rounded-xl shadow hover:opacity-90 transition">
+          ⚡ Ver / Mudar de Plano
+        </a>
+        <button onclick="fecharPerfil()" class="w-full py-3 bg-slate-700 hover:bg-slate-600 font-bold text-xs rounded-xl transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE & LÓGICA DO RADAR -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const API_KEY = "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";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
+      authDomain: "adflow-1e5b8.firebaseapp.com",
+      projectId: "adflow-1e5b8",
+      storageBucket: "adflow-1e5b8.firebasestorage.app",
+      messagingSenderId: "517881206433",
+      appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const container = document.getElementById('app-container');
+
+    async function carregarPerfil(user) {
+      if (!user) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      if (container) container.classList.remove('hidden');
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        let data;
+        if (docSnap.exists()) {
+          data = docSnap.data();
+        } else {
+          data = {
+            email: user.email,
+            nome: user.displayName || user.email.split('@')[0],
+            plano: 'gratis',
+            creditos: { estudio: 1, express: 1, influencer: 1 },
+            criadoEm: new Date()
+          };
+          await setDoc(docRef, data);
+        }
+
+        const nomeCompleto = data.nome || user.email.split('@')[0];
+        const primeiroNome = nomeCompleto.split(' ')[0];
+
+        // Se o plano for grátis, não deixa o cara ver o radar e manda pro dashboard
+        if (data.plano === 'gratis' || !data.plano) {
+          alert("O Radar de Mineração é exclusivo para planos pagos. Redirecionando para seu painel...");
+          window.location.href = "dashboard.html";
+          return;
+        }
+
+        document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
+        document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
+        document.getElementById('modal-email').innerText = data.email || user.email;
+        document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
+        
+        document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
+        document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
+        document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+
+        if(document.getElementById('header-cred-estudio')) document.getElementById('header-cred-estudio').innerText = data.creditos?.estudio ?? 0;
+        if(document.getElementById('header-cred-express')) document.getElementById('header-cred-express').innerText = data.creditos?.express ?? 0;
+        if(document.getElementById('header-cred-influencer')) document.getElementById('header-cred-influencer').innerText = data.creditos?.influencer ?? 0;
+
+      } catch (err) { 
+        console.error("Erro ao carregar dados:", err); 
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => { carregarPerfil(user); });
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        carregarPerfil(auth.currentUser);
+      }
+    });
+
+    window.abrirPerfil = () => document.getElementById('modal-perfil')?.classList.remove('hidden');
+    window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
+    window.fazerLogout = function() {
+      signOut(auth).then(() => { window.location.replace("index.html"); });
+    }
+
+    async function obterModelosValidosGroq(apiKey) {
+      try {
+        const response = await fetch("https://api.groq.com/openai/v1/models", { headers: { "Authorization": `Bearer ${apiKey}` } });
+        const data = await response.json();
+        if (data && data.data && data.data.length > 0) {
+          const modelosFiltrados = data.data.map(m => m.id).filter(id => {
+            const lower = id.toLowerCase();
+            return !lower.includes("whisper") && !lower.includes("guard") && !lower.includes("vision") && !lower.includes("embed");
+          });
+          if (modelosFiltrados.length > 0) return modelosFiltrados;
+        }
+      } catch (e) { console.warn("Erro ao buscar modelos.", e); }
+      return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+    }
+
+    window.minerarProdutos = async function() {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("⚠️ Você precisa estar logado.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const plataforma = document.getElementById('select-plataforma').value;
+      const nicho = document.getElementById('select-nicho').value;
+
+      const btn = document.getElementById('btn-minerar');
+      const resDiv = document.getElementById('resultado');
+      const loadDiv = document.getElementById('loading');
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      loadDiv.classList.remove('hidden');
+      resDiv.classList.add('hidden');
+
+      const promptMaster = `
+        Você é o Radar de Inteligência de Mercado E-commerce da plataforma AdFlow.
+        Sua missão é identificar os 3 PRODUTOS MAIS VENDIDOS E CAMPEÕES DE CONVERSÃO da plataforma "${plataforma}" no nicho de "${nicho}".
+
+        ENTREGUE OBRIGATORIAMENTE OS 3 PRODUTOS SEPARADOS POR '---'.
+
+        Siga ESTE FORMATO EXATO para cada produto:
+
+        ## 🚀 PRODUTO CAMPEÃO #[Número do Produto de 1 a 3] - [NOME DO PRODUTO]
+        * **🔥 Tendência de Vendas:** (Descreva por que está vendendo muito agora)
+        * **💡 Maior Apelo de Venda:** (Qual a maior dor que ele resolve?)
+        * **⚠️ Principal Objeção:** (Qual a maior dúvida/medo de quem compra?)
+        * **🗣️ Gancho Viral Sugerido:** "(Escreva uma frase inicial em português altamente magnética para vídeos estilo TikTok)"
+
+        ### 🎬 Prompts Recomendados para Kling AI / Luma:
+        \`\`\`text
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product shot of [NOME DO PRODUTO EM INGLÊS]. Camera: Orbiting macro camera motion, volumetric studio lighting, photorealistic 60fps render, crisp reflections, 4k.
+        \`\`\`
+        > 🇧🇷 **Tradução:** [Escreva a tradução do prompt acima para o português, como texto normal sem usar blocos de código]
+      `;
+
+      let textoGerado = null;
+      let erroUltimo = "";
+      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
+
+      for (const modeloId of modelosDisponiveis) {
+        try {
+          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+            body: JSON.stringify({
+              model: modeloId,
+              messages: [
+                { role: "system", content: "Você é um Radar de Mineração de Mercado de e-commerce. Responda rigorosamente com os 3 produtos campeões no formato exigido, substituindo os colchetes pelo conteúdo adequado." },
+                { role: "user", content: promptMaster }
+              ],
+              temperature: 0.5,
+              max_tokens: 4000
+            })
+          });
+          const data = await response.json();
+          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
+            textoGerado = data.choices[0].message.content;
+            break;
+          } else { erroUltimo = data.error?.message || 'Erro desconhecido'; }
+        } catch (e) { erroUltimo = e.message; }
+      }
+
+      if (textoGerado) {
+        const secoes = textoGerado.split('---');
+        const avisoSucesso = `<div class="p-4 bg-purple-500/20 border border-purple-500 text-purple-300 rounded-xl text-center font-bold mb-4 text-sm animate-pulse">📡 Mineração concluída para ${plataforma} (${nicho})!</div>`;
+        let htmlResultado = avisoSucesso;
+        
+        secoes.forEach(secao => {
+          if (secao.trim()) {
+            htmlResultado += `<div class="bg-slate-950/90 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert prose-p:leading-relaxed prose-li:marker:text-cyan-400 max-w-none">${marked.parse(secao.trim())}</div>`;
+          }
+        });
+        
+        resDiv.innerHTML = htmlResultado;
+        adicionarBotoesDeCopiar(resDiv);
+        resDiv.classList.remove('hidden');
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+      } else { 
+        alert('❌ Erro no Radar: ' + erroUltimo); 
+      }
+
+      loadDiv.classList.add('hidden');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+    };
+
+    function adicionarBotoesDeCopiar(container) {
+      container.querySelectorAll('pre').forEach((pre) => {
+        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
+        const btnCopiar = document.createElement('button');
+        btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+        btnCopiar.innerHTML = '📋 Copiar Prompt';
+        btnCopiar.onclick = () => {
+          const codeEl = pre.querySelector('code');
+          const textoPrompt = (codeEl ? codeEl.innerText : pre.innerText).replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
+          navigator.clipboard.writeText(textoPrompt).then(() => {
+            btnCopiar.innerHTML = '✅ Copiado!';
+            btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
+            setTimeout(() => {
+              btnCopiar.innerHTML = '📋 Copiar Prompt';
+              btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+            }, 2000);
+          });
+        };
+        pre.appendChild(btnCopiar);
+      });
+    }
+  </script>
+</body>
+</html>
