@@ -49,55 +49,68 @@
 
   <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
 
-    <!-- Hero Section (Introdução) -->
+    <!-- Hero Section (Sem os botões duplicados) -->
     <section class="text-center space-y-6 max-w-3xl mx-auto">
       <span class="px-3 py-1 bg-pink-500/10 text-pink-400 border border-pink-500/30 rounded-full text-xs font-bold uppercase tracking-wider">
         Para Vendedores, Afiliados e Criadores Faceless
       </span>
-      <h1 class="text-4xl sm:text-6xl font-black leading-tight">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-black leading-tight">
         Transforme produtos em <span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">vídeos virais</span> que vendem todos os dias.
       </h1>
       <p class="text-slate-400 text-base sm:text-lg">
         O AdFlow cria roteiros persuasivos com quebra de objeções e prompts visuais para IAs em segundos, além de rastrear os produtos que mais vendem no Brasil.
       </p>
-
-      <!-- Botões de Ação Principais -->
-      <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-        <a href="express.html" class="px-8 py-4 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl text-center shadow-lg hover:scale-105 transition">
-          ⚡ Gerar por Link do Produto
-        </a>
-        <a href="estudio.html" class="px-8 py-4 bg-slate-800 border border-slate-700 font-bold rounded-xl text-center hover:bg-slate-700 transition">
-          🎛️ Acessar Modo Estúdio
-        </a>
-      </div>
     </section>
 
-    <!-- Módulos de Criação (Voltaram para cima, como vitrine principal) -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-pink-500/40 transition">
-        <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎛️</div>
-        <h3 class="text-lg font-bold">Modo Estúdio</h3>
-        <p class="text-slate-400 text-sm">Personalize o estilo do vídeo (Unboxing, Review, Problema/Solução) e escolha o tom ideal da narração comercial.</p>
-        <a href="estudio.html" class="text-xs text-pink-400 font-bold hover:underline inline-block pt-2">Ir para o Estúdio &rarr;</a>
-      </div>
+    <!-- Módulos de Criação com Imagens Visuais -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      
+      <!-- Card Modo Estúdio -->
+      <a href="estudio.html" class="group flex flex-col bg-slate-800/60 rounded-2xl border border-slate-700/80 hover:border-pink-500/50 transition-all overflow-hidden shadow-lg hover:shadow-pink-500/20 hover:-translate-y-1">
+        <div class="h-44 w-full relative overflow-hidden bg-slate-800">
+          <!-- Imagem Ilustrativa: Setup / Estúdio -->
+          <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?auto=format&fit=crop&w=600&q=80" alt="Modo Estúdio" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition duration-500 group-hover:scale-105">
+          <div class="absolute bottom-3 left-3 w-12 h-12 bg-pink-500/90 text-white rounded-xl flex items-center justify-center text-2xl font-bold backdrop-blur-sm shadow-lg">🎛️</div>
+        </div>
+        <div class="p-6 space-y-3 flex flex-col flex-1">
+          <h3 class="text-xl font-bold text-slate-100 group-hover:text-pink-400 transition">Modo Estúdio</h3>
+          <p class="text-slate-400 text-sm leading-relaxed flex-1">Personalize o estilo do vídeo (Unboxing, Review, Problema/Solução) e escolha o tom ideal da narração comercial.</p>
+          <span class="text-xs text-pink-400 font-bold group-hover:underline inline-block pt-2">Ir para o Estúdio &rarr;</span>
+        </div>
+      </a>
 
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-cyan-500/40 transition">
-        <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center text-2xl font-bold">⚡</div>
-        <h3 class="text-lg font-bold">Modo Express (URL)</h3>
-        <p class="text-slate-400 text-sm">Cole o link da Shopee, Mercado Livre ou Amazon. O robô mina as avaliações e cria um roteiro focado em destruir objeções.</p>
-        <a href="express.html" class="text-xs text-cyan-400 font-bold hover:underline inline-block pt-2">Usar Modo Express &rarr;</a>
-      </div>
+      <!-- Card Modo Express -->
+      <a href="express.html" class="group flex flex-col bg-slate-800/60 rounded-2xl border border-slate-700/80 hover:border-cyan-500/50 transition-all overflow-hidden shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
+        <div class="h-44 w-full relative overflow-hidden bg-slate-800">
+          <!-- Imagem Ilustrativa: Tecnologia / Dados / E-commerce -->
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Modo Express" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition duration-500 group-hover:scale-105">
+          <div class="absolute bottom-3 left-3 w-12 h-12 bg-cyan-500/90 text-white rounded-xl flex items-center justify-center text-2xl font-bold backdrop-blur-sm shadow-lg">⚡</div>
+        </div>
+        <div class="p-6 space-y-3 flex flex-col flex-1">
+          <h3 class="text-xl font-bold text-slate-100 group-hover:text-cyan-400 transition">Modo Express (URL)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed flex-1">Cole o link da Shopee, Mercado Livre ou Amazon. O robô mina as avaliações e cria um roteiro focado em destruir objeções.</p>
+          <span class="text-xs text-cyan-400 font-bold group-hover:underline inline-block pt-2">Usar Modo Express &rarr;</span>
+        </div>
+      </a>
 
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-purple-500/40 transition">
-        <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎭</div>
-        <h3 class="text-lg font-bold">Influencer IA</h3>
-        <p class="text-slate-400 text-sm">Crie ensaios fotográficos e vídeos hiper-realistas para modelos virtuais de IA vestindo roupas, calçados e acessórios.</p>
-        <a href="influencer.html" class="text-xs text-purple-400 font-bold hover:underline inline-block pt-2">Criar Influencer IA &rarr;</a>
-      </div>
+      <!-- Card Influencer IA -->
+      <a href="influencer.html" class="group flex flex-col bg-slate-800/60 rounded-2xl border border-slate-700/80 hover:border-purple-500/50 transition-all overflow-hidden shadow-lg hover:shadow-purple-500/20 hover:-translate-y-1">
+        <div class="h-44 w-full relative overflow-hidden bg-slate-800">
+          <!-- Imagem Ilustrativa: Modelo de Moda / Influenciadora -->
+          <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=600&q=80" alt="Influencer IA" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition duration-500 group-hover:scale-105">
+          <div class="absolute bottom-3 left-3 w-12 h-12 bg-purple-500/90 text-white rounded-xl flex items-center justify-center text-2xl font-bold backdrop-blur-sm shadow-lg">🎭</div>
+        </div>
+        <div class="p-6 space-y-3 flex flex-col flex-1">
+          <h3 class="text-xl font-bold text-slate-100 group-hover:text-purple-400 transition">Influencer IA</h3>
+          <p class="text-slate-400 text-sm leading-relaxed flex-1">Crie ensaios fotográficos e vídeos hiper-realistas para modelos virtuais de IA vestindo roupas, calçados e acessórios.</p>
+          <span class="text-xs text-purple-400 font-bold group-hover:underline inline-block pt-2">Criar Influencer IA &rarr;</span>
+        </div>
+      </a>
+
     </section>
 
-    <!-- Radar de Produtos Virais (MOVIDO PARA BAIXO COMO UPSELL COM PAYWALL) -->
-    <section class="bg-slate-800/40 p-6 sm:p-8 rounded-3xl border border-slate-700/80 space-y-6 relative overflow-hidden">
+    <!-- Radar de Produtos Virais (UPSELL COM PAYWALL) -->
+    <section class="bg-slate-800/40 p-6 sm:p-8 rounded-3xl border border-slate-700/80 space-y-6 relative overflow-hidden mt-12">
       
       <!-- Cabeçalho do Radar -->
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
