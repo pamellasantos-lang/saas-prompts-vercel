@@ -38,8 +38,9 @@
           Entrar / Cadastrar
         </a>
 
+        <!-- Aponta para o dashboard.html quando logado -->
         <div id="user-logged-menu" class="hidden flex items-center gap-4">
-          <a href="estudio.html" class="hidden sm:block text-sm font-bold text-slate-300 hover:text-white transition">Ir para o App</a>
+          <a href="dashboard.html" class="hidden sm:block text-sm font-bold text-slate-300 hover:text-white transition">Ir para o App</a>
           <button onclick="abrirModal()" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl border border-slate-700 transition">
             <span class="text-xl">👤</span>
             <span id="header-user-name" class="text-sm font-bold truncate max-w-[120px]">Minha Conta</span>
@@ -84,6 +85,9 @@
         </div>
 
         <div class="pt-2 space-y-3 flex flex-col">
+          <a href="dashboard.html" class="w-full py-3 bg-slate-800 hover:bg-slate-700 font-bold text-sm text-center rounded-xl transition text-white border border-slate-700">
+            📊 Ir para o Meu Painel
+          </a>
           <a href="planos.html" class="w-full py-3.5 bg-gradient-to-r from-pink-600 to-cyan-500 hover:opacity-90 font-bold text-sm text-center rounded-xl transition text-white shadow-lg shadow-pink-500/20 flex justify-center items-center gap-2">
             ⚡ Ver / Mudar de Plano
           </a>
@@ -114,7 +118,7 @@
       
       <!-- Botões de Ação com Teste Grátis em Destaque -->
       <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-        <a href="login.html" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 hover:opacity-95 font-black text-base rounded-2xl shadow-xl shadow-purple-500/25 transform hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+        <a href="login.html" id="hero-btn-principal" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 hover:opacity-95 font-black text-base rounded-2xl shadow-xl shadow-purple-500/25 transform hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
           <span>🎁</span> Testar Grátis Agora
         </a>
         <a href="planos.html" class="w-full sm:w-auto px-8 py-4 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 font-bold rounded-2xl transition text-slate-200">
@@ -122,7 +126,6 @@
         </a>
       </div>
 
-      <!-- Garantia / Micro-copy abaixo dos botões -->
       <p class="text-xs text-slate-400 flex items-center justify-center gap-4">
         <span>✓ Ganhe 1 criação grátis em cada módulo</span>
         <span>•</span>
@@ -163,10 +166,10 @@
           </div>
           <h3 class="text-xl font-bold">Gerador Express</h3>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Precisa de um vídeo pronto em 30 segundos? Escolha o nicho do seu produto e o tipo de anúncio. A IA entrega a estrutura exata para copypaste instantâneo.
+            Precisa de um vídeo pronto em 30 segundos? Cole o link do seu produto. A IA entrega a estrutura exata para copypaste instantâneo.
           </p>
           <ul class="text-xs text-slate-400 space-y-1.5 pt-2 border-t border-slate-700/50">
-            <li class="flex items-center gap-2">✅ Criação em apenas 1 clique</li>
+            <li class="flex items-center gap-2">✅ Extração automática de URL</li>
             <li class="flex items-center gap-2">✅ Formato ideal para TikTok e Reels</li>
           </ul>
         </div>
@@ -194,12 +197,12 @@
           <span class="px-3 py-1 bg-pink-500/20 text-pink-300 border border-pink-500/40 rounded-full text-xs font-bold uppercase tracking-wide">
             Recurso Exclusivo
           </span>
-          <h3 class="text-2xl sm:text-3xl font-black">Radar de Mineração por URL</h3>
+          <h3 class="text-2xl sm:text-3xl font-black">Radar de Mineração por Plataforma</h3>
           <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Cole a URL de qualquer produto ou página de vendas concorrente. Nossa ferramenta extrai automaticamente as maiores dore e objeções dos clientes e transforma tudo em roteiros e prompts perfeitos para quebrar objeções no vídeo.
+            Descubra os produtos virais mais vendidos na Shopee, Mercado Livre, Amazon e TikTok Shop. Nossa ferramenta mapeia tendências e transforma tudo em roteiros e prompts prontos para conversão.
           </p>
           <div class="pt-2">
-            <a href="login.html" class="inline-flex items-center gap-2 font-bold text-xs text-pink-400 hover:text-pink-300 transition">
+            <a href="login.html" id="radar-cta-link" class="inline-flex items-center gap-2 font-bold text-xs text-pink-400 hover:text-pink-300 transition">
               <span>Testar Mineração Grátis</span> ➔
             </a>
           </div>
@@ -210,9 +213,9 @@
             <span>Radar_Minerador.js</span>
             <span class="text-emerald-400">● Ativo</span>
           </div>
-          <p class="text-slate-400">> Analisando URL do Produto...</p>
-          <p class="text-purple-400">> Objeções Encontradas: "Tenho medo de não funcionar", "Preço elevado"</p>
-          <p class="text-cyan-400">> Prompt Gerado: Vídeo focado em prova social + efeito antes e depois no Kling AI.</p>
+          <p class="text-slate-400">> Escaneando Shopee & TikTok Shop...</p>
+          <p class="text-purple-400">> Produtos Campeões: "Mochila Maternidade Multifuncional", "Sérum Clareador"</p>
+          <p class="text-cyan-400">> Prompts Gerados: Vídeo focado em prova social + efeito antes/depois no Kling AI.</p>
         </div>
       </div>
 
@@ -225,7 +228,7 @@
         Junte-se a criadores e afiliados que estão utilizando o AdFlow para multiplicar suas conversões com IA.
       </p>
       <div>
-        <a href="login.html" class="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 hover:opacity-95 font-black rounded-2xl shadow-xl shadow-purple-500/20 transition text-white">
+        <a href="login.html" id="cta-final-link" class="inline-block px-10 py-4 bg-gradient-to-r from-pink-500 via-purple-600 to-cyan-500 hover:opacity-95 font-black rounded-2xl shadow-xl shadow-purple-500/20 transition text-white">
           🎁 Criar Minha Conta Grátis
         </a>
       </div>
@@ -269,10 +272,24 @@
     onAuthStateChanged(auth, async (user) => {
       const btnEntrar = document.getElementById('btn-entrar-padrao');
       const menuLogged = document.getElementById('user-logged-menu');
+      const heroBtnPrincipal = document.getElementById('hero-btn-principal');
+      const radarCtaLink = document.getElementById('radar-cta-link');
+      const ctaFinalLink = document.getElementById('cta-final-link');
 
       if (user) {
         if (btnEntrar) btnEntrar.classList.add('hidden');
         if (menuLogged) menuLogged.classList.remove('hidden');
+
+        // Se o usuário está logado, direciona os botões principais para o dashboard.html
+        if (heroBtnPrincipal) {
+          heroBtnPrincipal.href = "dashboard.html";
+          heroBtnPrincipal.innerHTML = "<span>📊</span> Acessar Meu Painel";
+        }
+        if (radarCtaLink) radarCtaLink.href = "dashboard.html";
+        if (ctaFinalLink) {
+          ctaFinalLink.href = "dashboard.html";
+          ctaFinalLink.innerText = "📊 Ir para o Meu Painel";
+        }
 
         try {
           const docRef = doc(db, "users", user.uid);
