@@ -9,9 +9,7 @@
 
   <title>AdFlow - Modo Express</title>
   
-  <!-- AQUI ESTÁ A CORREÇÃO VISUAL: Adicionado o plugin Typography -->
   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-  
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     .prose blockquote {
@@ -272,7 +270,6 @@
 
       statusTexto.innerText = "🤖 Analisando o mercado e gerando seus prompts...";
 
-      // AQUI ESTÁ A CORREÇÃO DA IA: Instruções blindadas e obrigatórias
       const promptMaster = `
         Você é um Estrategista de Vendas Diretas e Diretor de Criação de Vídeos de Alta Conversão.
         Sua tarefa é analisar o produto fornecido e entregar OBRIGATORIAMENTE 3 blocos separados por "---".
@@ -298,21 +295,21 @@
         ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA
         ### 🟢 Cena 1: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k. [DESCREVA O PRODUTO E A CENA AQUI EM INGLÊS BASEADO NA CENA 1]
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k. [Continue a descrição em INGLÊS aqui baseado na Cena 1]
         \`\`\`
-        > 🇧🇷 **Tradução:** [Tradução exata do prompt da Cena 1]
+        > 🇧🇷 **Tradução:** Escreva a tradução do prompt acima para o PORTUGUÊS aqui. NÃO use blocos de código ou markdown para a tradução. Escreva como texto normal.
 
         ### 🔵 Cena 2: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k. [DESCREVA O PRODUTO E A CENA AQUI EM INGLÊS BASEADO NA CENA 2]
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k. [Continue a descrição em INGLÊS aqui baseado na Cena 2]
         \`\`\`
-        > 🇧🇷 **Tradução:** [Tradução exata do prompt da Cena 2]
+        > 🇧🇷 **Tradução:** Escreva a tradução do prompt acima para o PORTUGUÊS aqui. NÃO use blocos de código ou markdown para a tradução. Escreva como texto normal.
 
         ### 🟣 Cena 3: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k. [DESCREVA O PRODUTO E A CENA AQUI EM INGLÊS BASEADO NA CENA 3]
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k. [Continue a descrição em INGLÊS aqui baseado na Cena 3]
         \`\`\`
-        > 🇧🇷 **Tradução:** [Tradução exata do prompt da Cena 3]
+        > 🇧🇷 **Tradução:** Escreva a tradução do prompt acima para o PORTUGUÊS aqui. NÃO use blocos de código ou markdown para a tradução. Escreva como texto normal.
       `;
 
       let textoGerado = null;
@@ -342,7 +339,6 @@
       }
 
       if (textoGerado) {
-        // Verifica se a IA gerou os 3 blocos (se gerou menos, não cobra o crédito do cliente)
         const secoes = textoGerado.split('---');
         
         if(secoes.length >= 3) {
