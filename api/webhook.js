@@ -25,9 +25,15 @@ export default async function handler(req, res) {
     
     const cliente = payload.Customer || payload.customer;
     const produto = payload.Product || payload.product;
+    const assinatura = payload.Subscription || payload.subscription;
     
     const emailComprador = cliente.email;
-    const nomeProduto = produto.product_name.toLowerCase(); 
+    
+    // Pega o nome do produto, ou o nome do plano se for uma assinatura múltipla
+    let nomeOferta = produto.product_name.toLowerCase(); 
+    if (assinatura && assinatura.plan && assinatura.plan.name) {
+      nomeOferta = assinatura.plan.name.toLowerCase();
+    }
 
     try {
       const usersRef = db.collection('users');
@@ -44,31 +50,31 @@ export default async function handler(req, res) {
       let creditosAtuais = userData.creditos || { estudio: 0, express: 0, influencer: 0 };
       let novoPlano = userData.plano || 'gratis';
 
-      // 🛑 REGRA IMPORTANTE: Os nomes lá na Kiwify DEVEM conter essas palavras-chave!
-      if (nomeProduto.includes('básico') || nomeProduto.includes('basico')) {
+      // Identifica o que foi comprado com base no nome
+      if (nomeOferta.includes('básico') || nomeOferta.includes('basico')) {
         novoPlano = 'basico';
         creditosAtuais.estudio += 10;
         creditosAtuais.express += 10;
         creditosAtuais.influencer += 10;
       } 
-      else if (nomeProduto.includes('intermediário') || nomeProduto.includes('intermediario')) {
+      else if (nomeOferta.includes('intermediário') || nomeOferta.includes('intermediario')) {
         novoPlano = 'intermediario';
         creditosAtuais.estudio += 30;
         creditosAtuais.express += 30;
         creditosAtuais.influencer += 30;
       } 
-      else if (nomeProduto.includes('avançado') || nomeProduto.includes('avancado')) {
+      else if (nomeOferta.includes('avançado') || nomeOferta.includes('avancado')) {
         novoPlano = 'avancado';
         creditosAtuais.estudio += 100;
         creditosAtuais.express += 100;
         creditosAtuais.influencer += 100;
       } 
-      else if (nomeProduto.includes('10 créditos')) {
+      else if (nomeOferta.includes('10 créditos')) {
         creditosAtuais.estudio += 10;
         creditosAtuais.express += 10;
         creditosAtuais.influencer += 10;
       } 
-      else if (nomeProduto.includes('20 créditos')) {
+      else if (nomeOferta.includes('20 créditos')) {
         creditosAtuais.estudio += 20;
         creditosAtuais.express += 20;
         creditosAtuais.influencer += 20;
@@ -79,7 +85,7 @@ export default async function handler(req, res) {
         creditos: creditosAtuais
       });
 
-      console.log(`✅ ${emailComprador} atualizado. Produto: ${nomeProduto}`);
+      console.log(`✅ ${emailComprador} atualizado. Oferta: ${nomeOferta}`);
       return res.status(200).send('Webhook processado.');
 
     } catch (error) {
