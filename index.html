@@ -3,253 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptCraft AI - Modo Estúdio</title>
+  <title>PromptCraft AI - Gerador de Roteiros e Prompts Virais</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <style>
-    .prose blockquote {
-      background-color: rgba(15, 23, 42, 0.7);
-      border-left-color: #06b6d4;
-      border-left-width: 4px;
-      padding: 12px 16px;
-      border-radius: 0 12px 12px 0;
-      margin-top: 10px;
-      margin-bottom: 24px;
-      color: #e2e8f0;
-      font-style: normal;
-    }
-    .prose h3 {
-      color: #38bdf8;
-      margin-top: 28px !important;
-      margin-bottom: 12px !important;
-      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
-      padding-bottom: 6px;
-    }
-  </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-900 text-white min-h-screen flex flex-col justify-between">
 
-  <div class="max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
-    <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent">⚡ PromptCraft AI</h1>
-    <p class="text-center text-slate-400 text-sm mt-2 mb-6">Gere roteiros virais e prompts visuais para TikTok, Shopee e Influencers IA.</p>
+  <!-- Header / Navegação -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent">
+        ⚡ PromptCraft AI
+      </a>
+      <nav class="hidden md:flex gap-6 text-sm font-semibold text-slate-300">
+        <a href="index.html" class="text-cyan-400">Início</a>
+        <a href="estudio.html" class="hover:text-white transition">Estúdio</a>
+        <a href="express.html" class="hover:text-white transition">Express (URL)</a>
+        <a href="influencer.html" class="hover:text-white transition">Influencer IA</a>
+      </nav>
+      <a href="express.html" class="px-4 py-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-xs rounded-xl hover:opacity-90 transition">
+        🚀 Testar Grátis
+      </a>
+    </div>
+  </header>
 
-    <!-- Navegação por Páginas (Header Links) -->
-    <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
-      <a href="index.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
-        🎛️ Estúdio
-      </a>
-      <a href="express.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
-        ⚡ Express (URL)
-      </a>
-      <a href="influencer.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
-        🎭 Influencer IA
-      </a>
-    </nav>
-    
-    <div class="space-y-5">
-      <div>
-        <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
-        <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Cadeirinha de bebê para automóvel com reclinamento..."></textarea>
+  <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
+
+    <!-- Hero Section -->
+    <section class="text-center space-y-6 max-w-3xl mx-auto">
+      <span class="px-3 py-1 bg-pink-500/10 text-pink-400 border border-pink-500/30 rounded-full text-xs font-bold uppercase tracking-wider">
+        Para Vendedores, Afiliados e Criadores Faceless
+      </span>
+      <h1 class="text-4xl sm:text-6xl font-black leading-tight">
+        Transforme produtos em <span class="bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400 bg-clip-text text-transparent">vídeos virais</span> que vendem todos os dias.
+      </h1>
+      <p class="text-slate-400 text-base sm:text-lg">
+        Gere roteiros persuasivos em Português com quebra de objeções e prompts técnicos visuais em Inglês para Kling, Luma Machine, Midjourney e Runway em segundos.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
+        <a href="express.html" class="px-8 py-4 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl text-center shadow-lg hover:scale-105 transition">
+          ⚡ Gerar por Link do Produto
+        </a>
+        <a href="estudio.html" class="px-8 py-4 bg-slate-800 border border-slate-700 font-bold rounded-xl text-center hover:bg-slate-700 transition">
+          🎛️ Acessar Modo Estúdio
+        </a>
+      </div>
+    </section>
+
+    <!-- Três Pilares / Ferramentas -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3">
+        <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎛️</div>
+        <h3 class="text-lg font-bold">Modo Estúdio</h3>
+        <p class="text-slate-400 text-sm">Personalize o estilo do vídeo (Unboxing, Review, Problema/Solução) e escolha o tom ideal da narração comercial.</p>
+        <a href="estudio.html" class="text-xs text-pink-400 font-bold hover:underline inline-block pt-2">Ir para o Estúdio &rarr;</a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🎬 Estilo do Vídeo:</label>
-          <select id="estilo" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-            <option>Review Sincero</option>
-            <option>Achadinho Irresistível</option>
-            <option>Problema vs Solução</option>
-            <option>Unboxing</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🗣️ Tom da Narração:</label>
-          <select id="tom" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-            <option>Entusiasta</option>
-            <option>Curioso/Alerta</option>
-            <option>Humorado</option>
-            <option>Direto ao Ponto</option>
-          </select>
-        </div>
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3">
+        <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center text-2xl font-bold">⚡</div>
+        <h3 class="text-lg font-bold">Modo Express (URL)</h3>
+        <p class="text-slate-400 text-sm">Cole o link da Shopee, Mercado Livre ou Amazon. O robô mina as avaliações e cria um roteiro focado em destruir objeções.</p>
+        <a href="express.html" class="text-xs text-cyan-400 font-bold hover:underline inline-block pt-2">Usar Modo Express &rarr;</a>
       </div>
 
-      <button onclick="gerarPrompt()" id="btn" class="w-full py-4 mt-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl hover:opacity-90 transform transition hover:scale-[1.02] shadow-lg">
-        🚀 Gerar Roteiro e Prompts
-      </button>
-    </div>
+      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3">
+        <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎭</div>
+        <h3 class="text-lg font-bold">Influencer IA</h3>
+        <p class="text-slate-400 text-sm">Crie ensaios fotográficos e vídeos hiper-realistas para modelos virtuais de IA vestindo roupas, calçados e acessórios.</p>
+        <a href="influencer.html" class="text-xs text-purple-400 font-bold hover:underline inline-block pt-2">Criar Influencer IA &rarr;</a>
+      </div>
+    </section>
 
-    <!-- Status de Carregamento -->
-    <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-      <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
-    </div>
+    <!-- SEÇÃO: Radar de Produtos Virais em Alta -->
+    <section class="bg-slate-800/40 p-6 sm:p-8 rounded-2xl border border-slate-700/80 space-y-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">🔥 Radar de Produtos Virais</h2>
+          <p class="text-xs text-slate-400">Produtos com alta demanda de vendas na Shopee, TikTok e Mercado Livre.</p>
+        </div>
+        <span class="text-xs font-semibold px-2.5 py-1 bg-pink-500/20 text-pink-400 rounded-full border border-pink-500/30">Atualizado Semanalmente</span>
+      </div>
 
-    <!-- Área do Resultado -->
-    <div id="resultado" class="mt-8 space-y-6 text-sm hidden">
-    </div>
-  </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Produto 1 -->
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded border border-orange-500/30">Shopee Virais</span>
+            <h3 class="font-bold text-sm text-slate-200">Mini Seladora de Embalagens Portátil</h3>
+            <p class="text-xs text-slate-400">Veda sacos plásticos em segundos por aquecimento a pilha.</p>
+          </div>
+          <button onclick="gerarDireto('Mini Seladora de Embalagens Portátil a Pilha. Veda sacos de salgadinho e alimentos em segundos por aquecimento.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
+            ⚡ Gerar em 1 Clique
+          </button>
+        </div>
+
+        <!-- Produto 2 -->
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded border border-cyan-500/30">TikTok Trends</span>
+            <h3 class="font-bold text-sm text-slate-200">Projetor Luminária Astronauta Galáxia</h3>
+            <p class="text-xs text-slate-400">Luminária laser com efeitos nebulosos 3D e controle remoto.</p>
+          </div>
+          <button onclick="gerarDireto('Projetor Luminaria Astronauta Galaxia Laser com efeitos de nebulosa 3D para quarto, controle remoto e timer.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
+            ⚡ Gerar em 1 Clique
+          </button>
+        </div>
+
+        <!-- Produto 3 -->
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded border border-yellow-500/30">Mercado Livre</span>
+            <h3 class="font-bold text-sm text-slate-200">Cadeirinha Infantil ISOFIX (9-36kg)</h3>
+            <p class="text-xs text-slate-400">Assento veicular seguro com cinto de 5 pontos e reclinamento.</p>
+          </div>
+          <button onclick="gerarDireto('Cadeirinha de Bebe para Automovel com sistema ISOFIX, cinto de segurança de 5 pontos, reclinavel para crianças de 9kg a 36kg.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
+            ⚡ Gerar em 1 Clique
+          </button>
+        </div>
+
+        <!-- Produto 4 -->
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
+          <div class="space-y-2">
+            <span class="text-[10px] font-bold px-2 py-0.5 bg-pink-500/20 text-pink-400 rounded border border-pink-500/30">TikTok Virais</span>
+            <h3 class="font-bold text-sm text-slate-200">Escova Secadora Modeladora 3 em 1</h3>
+            <p class="text-xs text-slate-400">Seca, alisa e dá volume em minutos com revestimento cerâmico.</p>
+          </div>
+          <button onclick="gerarDireto('Escova Secadora Modeladora 3 em 1 Multifuncional com revestimento ceramico, alisa, seca e da volume rapidamente.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
+            ⚡ Gerar em 1 Clique
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 py-6 text-center text-slate-500 text-xs">
+    <p>© 2026 PromptCraft AI - Todos os direitos reservados.</p>
+  </footer>
 
   <script>
-    const API_KEY = "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";
-
-    async function obterModelosValidosGroq(apiKey) {
-      try {
-        const response = await fetch("https://api.groq.com/openai/v1/models", {
-          headers: { "Authorization": `Bearer ${apiKey}` }
-        });
-        const data = await response.json();
-        if (data && data.data && data.data.length > 0) {
-          const modelosFiltrados = data.data.map(m => m.id).filter(id => {
-            const lower = id.toLowerCase();
-            return !lower.includes("whisper") && !lower.includes("guard") && !lower.includes("vision") && !lower.includes("embed");
-          });
-          if (modelosFiltrados.length > 0) return modelosFiltrados;
-        }
-      } catch (e) {
-        console.warn("Erro ao buscar modelos.", e);
-      }
-      return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
-    }
-
-    async function gerarPrompt() {
-      const btn = document.getElementById('btn');
-      const resDiv = document.getElementById('resultado');
-      const loadDiv = document.getElementById('loading');
-      const produto = document.getElementById('produto').value;
-      const estilo = document.getElementById('estilo').value;
-      const tom = document.getElementById('tom').value;
-
-      if (!produto.trim()) {
-        alert('⚠️ Por favor, insira os dados do produto.');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-      loadDiv.classList.remove('hidden');
-      resDiv.classList.add('hidden');
-
-      const promptMaster = `
-        Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
-        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais técnicos em inglês para o produto.
-
-        DADOS DO PRODUTO: ${produto}
-        ESTILO: ${estilo}
-        TOM DA NARRAÇÃO: ${tom}
-
-        REGRAS ABSOLUTAS:
-        1. SEPARE AS 3 SEÇÕES USANDO O DELIMITADOR '---'.
-        2. NÃO USE COLCHETES [ ].
-
-        FORMATO:
-        ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
-        * **👍 Pontos Fortes:** (2 destaques reais)
-        * **⚠️ Pontos Negativos & Objeções:** (2 dúvidas ou queixas comuns)
-        * **🎯 Estratégia de Venda:** (Como o roteiro vence as objeções)
-
-        ---
-
-        ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
-        **Cena 1 (0-3s) - Gancho Viral:**
-        🗣️ Narração: Frase chamativa em português nos primeiros 3 segundos.
-
-        **Cena 2 (3-12s) - Demonstração & Solução:**
-        🗣️ Narração: Explicação persuasiva em português destruindo objeções.
-
-        **Cena 3 (12-15s) - Chamada para Ação:**
-        🗣️ Narração: Chamada final clara em português.
-
-        ---
-
-        ## 🎬 PROMPTS VISUAIS (PRONTOS PARA COPIAR E COLAR)
-
-        ### 🟢 Cena 1: Prompt Visual (Gancho Inicial)
-        \`\`\`text
-        Detailed technical prompt in English for initial scene showing the exact product, 4k resolution, 9:16 vertical ratio, photorealistic, cinematic lighting
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 1):**
-        > Tradução e detalhes em português do prompt da Cena 1.
-
-        ### 🔵 Cena 2: Prompt Visual (Demonstração e Benefícios)
-        \`\`\`text
-        Detailed technical prompt in English showing product in use, close-up details, 4k, 9:16 vertical ratio
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 2):**
-        > Tradução e detalhes em português do prompt da Cena 2.
-
-        ### 🟣 Cena 3: Prompt Visual (Chamada para Ação)
-        \`\`\`text
-        Detailed technical prompt in English for call-to-action scene with product, 4k, 9:16 vertical ratio
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 3):**
-        > Tradução e detalhes em português do prompt da Cena 3.
-      `;
-
-      let textoGerado = null;
-      let erroUltimo = "";
-      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
-
-      for (const modeloId of modelosDisponiveis) {
-        try {
-          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
-            body: JSON.stringify({
-              model: modeloId,
-              messages: [
-                { role: "system", content: "Você é um gerador de roteiros comerciais. Jamais produza colchetes ou marcadores genéricos." },
-                { role: "user", content: promptMaster }
-              ],
-              temperature: 0.4
-            })
-          });
-          const data = await response.json();
-          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
-            textoGerado = data.choices[0].message.content;
-            break;
-          } else { erroUltimo = data.error?.message || 'Erro desconhecido'; }
-        } catch (e) { erroUltimo = e.message; }
-      }
-
-      if (textoGerado) {
-        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
-        const secoes = textoGerado.split('---');
-        let htmlResultado = avisoSucesso;
-        secoes.forEach(secao => {
-          if (secao.trim()) {
-            htmlResultado += `<div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert max-w-none">${marked.parse(secao.trim())}</div>`;
-          }
-        });
-        resDiv.innerHTML = htmlResultado;
-        adicionarBotoesDeCopiar(resDiv);
-        resDiv.classList.remove('hidden');
-        resDiv.scrollIntoView({ behavior: 'smooth' });
-      } else { alert('❌ Erro na API Groq: ' + erroUltimo); }
-
-      loadDiv.classList.add('hidden');
-      btn.disabled = false;
-      btn.classList.remove('opacity-50');
-    }
-
-    function adicionarBotoesDeCopiar(container) {
-      container.querySelectorAll('pre').forEach((pre) => {
-        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
-        const btnCopiar = document.createElement('button');
-        btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
-        btnCopiar.innerHTML = '📋 Copiar Prompt';
-        btnCopiar.onclick = () => {
-          const codeEl = pre.querySelector('code');
-          const textoPrompt = (codeEl ? codeEl.innerText : pre.innerText).replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
-          navigator.clipboard.writeText(textoPrompt).then(() => {
-            btnCopiar.innerHTML = '✅ Copiado!';
-            btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
-            setTimeout(() => {
-              btnCopiar.innerHTML = '📋 Copiar Prompt';
-              btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
-            }, 2000);
-          });
-        };
-        pre.appendChild(btnCopiar);
-      });
+    // Envia o texto pré-analisado direto para a página do Estúdio para gerar sem erros de scraping
+    function gerarDireto(descricaoProduto) {
+      window.location.href = `estudio.html?produto=${encodeURIComponent(descricaoProduto)}`;
     }
   </script>
 </body>
