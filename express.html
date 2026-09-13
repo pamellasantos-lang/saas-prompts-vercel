@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromptCraft AI - Modo Express</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    .prose blockquote {
+      background-color: rgba(15, 23, 42, 0.7);
+      border-left-color: #06b6d4;
+      border-left-width: 4px;
+      padding: 12px 16px;
+      border-radius: 0 12px 12px 0;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      color: #e2e8f0;
+      font-style: normal;
+    }
+    .prose h3 {
+      color: #38bdf8;
+      margin-top: 28px !important;
+      margin-bottom: 12px !important;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+      padding-bottom: 6px;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+
+  <div class="max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
+    <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent">⚡ PromptCraft AI</h1>
+    <p class="text-center text-slate-400 text-sm mt-2 mb-6">Gere roteiros virais e prompts visuais para TikTok, Shopee e Influencers IA.</p>
+
+    <!-- Navegação por Páginas (Header Links) -->
+    <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
+      <a href="index.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        🎛️ Estúdio
+      </a>
+      <a href="express.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
+        ⚡ Express (URL)
+      </a>
+      <a href="influencer.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        🎭 Influencer IA
+      </a>
+    </nav>
+    
+    <div class="space-y-5">
+      <div>
+        <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, Amazon):</label>
+        <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/cadeirinha-de-bebe-para-auto..." />
+        <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para extrair automaticamente título, objeções e gerar os prompts.</p>
+      </div>
+
+      <button onclick="gerarPrompt()" id="btn" class="w-full py-4 mt-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl hover:opacity-90 transform transition hover:scale-[1.02] shadow-lg">
+        🚀 Extrair & Gerar Roteiro
+      </button>
+    </div>
+
+    <!-- Radar de Produtos Virais -->
+    <div class="mt-10 pt-8 border-t border-slate-700/80">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">🔥 Radar de Produtos Virais</h2>
+          <p class="text-xs text-slate-400">Produtos com alta taxa de conversão na Shopee e TikTok Shop nesta semana.</p>
+        </div>
+        <span class="text-xs font-semibold px-2.5 py-1 bg-pink-500/20 text-pink-400 rounded-full border border-pink-500/30">Atualizado</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded border border-orange-500/30">Shopee Virais</span>
+              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +45k vendas</span>
+            </div>
+            <h3 class="font-bold text-sm text-slate-200">Mini Seladora de Embalagens Portátil</h3>
+            <p class="text-xs text-slate-400 mt-1">Veda sacos plásticos em segundos por aquecimento a pilha.</p>
+          </div>
+          <button onclick="usarProdutoEmAlta('https://shopee.com.br/mini-seladora-de-embalagens-portatil-pilha')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
+            ⚡ Gerar Roteiro em 1 Clique
+          </button>
+        </div>
+
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded border border-cyan-500/30">TikTok Trends</span>
+              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +12k vendas</span>
+            </div>
+            <h3 class="font-bold text-sm text-slate-200">Projetor Luminária Astronauta Galáxia</h3>
+            <p class="text-xs text-slate-400 mt-1">Luminária laser com efeitos nebulosos e controle remoto.</p>
+          </div>
+          <button onclick="usarProdutoEmAlta('https://shopee.com.br/projetor-luminaria-astronauta-galaxia-laser')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
+            ⚡ Gerar Roteiro em 1 Clique
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status de Carregamento -->
+    <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
+      <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
+    </div>
+
+    <!-- Área do Resultado -->
+    <div id="resultado" class="mt-8 space-y-6 text-sm hidden">
+    </div>
+  </div>
+
+  <script>
+    const API_KEY = "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";
+
+    function usarProdutoEmAlta(url) {
+      document.getElementById('url-produto').value = url;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      gerarPrompt();
+    }
+
+    async function obterModelosValidosGroq(apiKey) {
+      try {
+        const response = await fetch("https://api.groq.com/openai/v1/models", { headers: { "Authorization": `Bearer ${apiKey}` } });
+        const data = await response.json();
+        if (data && data.data && data.data.length > 0) {
+          const modelosFiltrados = data.data.map(m => m.id).filter(id => {
+            const lower = id.toLowerCase();
+            return !lower.includes("whisper") && !lower.includes("guard") && !lower.includes("vision") && !lower.includes("embed");
+          });
+          if (modelosFiltrados.length > 0) return modelosFiltrados;
+        }
+      } catch (e) { console.warn("Erro ao buscar modelos.", e); }
+      return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+    }
+
+    async function gerarPrompt() {
+      const btn = document.getElementById('btn');
+      const resDiv = document.getElementById('resultado');
+      const loadDiv = document.getElementById('loading');
+      const statusTexto = document.getElementById('status-texto');
+      const urlInput = document.getElementById('url-produto').value;
+
+      if (!urlInput.trim()) {
+        alert('⚠️ Por favor, cole a URL do produto.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      loadDiv.classList.remove('hidden');
+      resDiv.classList.add('hidden');
+      statusTexto.innerText = "🔍 Minando avaliações, pontos fortes e objeções do link...";
+
+      let produtoExtraido = "";
+      try {
+        const scrapeRes = await fetch(`/api/scrape?url=${encodeURIComponent(urlInput)}`);
+        const scrapeData = await scrapeRes.json();
+        produtoExtraido = scrapeRes.ok && scrapeData.extractedData ? scrapeData.extractedData : "PRODUTO: " + urlInput;
+      } catch (e) { produtoExtraido = "PRODUTO: " + urlInput; }
+
+      statusTexto.innerText = "🤖 Estruturando a quebra de objeções e roteiro...";
+
+      const promptMaster = `
+        Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
+        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais técnicos em inglês.
+
+        DADOS EXTRAÍDOS DO PRODUTO: ${produtoExtraido}
+
+        REGRAS ABSOLUTAS:
+        1. SEPARE AS 3 SEÇÕES USANDO O DELIMITADOR '---'.
+        2. NÃO USE COLCHETES [ ].
+
+        FORMATO:
+        ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
+        * **👍 Pontos Fortes:** (2 destaques reais)
+        * **⚠️ Pontos Negativos & Objeções:** (2 dúvidas ou queixas comuns)
+        * **🎯 Estratégia de Venda:** (Como o roteiro vence as objeções)
+
+        ---
+
+        ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
+        **Cena 1 (0-3s) - Gancho Viral:**
+        🗣️ Narração: Frase chamativa em português nos primeiros 3 segundos.
+
+        **Cena 2 (3-12s) - Demonstração & Solução:**
+        🗣️ Narração: Explicação persuasiva em português destruindo objeções.
+
+        **Cena 3 (12-15s) - Chamada para Ação:**
+        🗣️ Narração: Chamada final clara em português.
+
+        ---
+
+        ## 🎬 PROMPTS VISUAIS (PRONTOS PARA COPIAR E COLAR)
+
+        ### 🟢 Cena 1: Prompt Visual (Gancho Inicial)
+        \`\`\`text
+        Detailed technical prompt in English for initial scene showing the exact product, 4k resolution, 9:16 vertical ratio, photorealistic, cinematic lighting
+        \`\`\`
+        > 🇧🇷 **Tradução em Português (Cena 1):**
+        > Tradução e detalhes em português do prompt da Cena 1.
+
+        ### 🔵 Cena 2: Prompt Visual (Demonstração e Benefícios)
+        \`\`\`text
+        Detailed technical prompt in English showing product in use, close-up details, 4k, 9:16 vertical ratio
+        \`\`\`
+        > 🇧🇷 **Tradução em Português (Cena 2):**
+        > Tradução e detalhes em português do prompt da Cena 2.
+
+        ### 🟣 Cena 3: Prompt Visual (Chamada para Ação)
+        \`\`\`text
+        Detailed technical prompt in English for call-to-action scene with product, 4k, 9:16 vertical ratio
+        \`\`\`
+        > 🇧🇷 **Tradução em Português (Cena 3):**
+        > Tradução e detalhes em português do prompt da Cena 3.
+      `;
+
+      let textoGerado = null;
+      let erroUltimo = "";
+      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
+
+      for (const modeloId of modelosDisponiveis) {
+        try {
+          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+            body: JSON.stringify({
+              model: modeloId,
+              messages: [
+                { role: "system", content: "Você é um gerador de roteiros comerciais de alta conversão." },
+                { role: "user", content: promptMaster }
+              ],
+              temperature: 0.4
+            })
+          });
+          const data = await response.json();
+          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
+            textoGerado = data.choices[0].message.content;
+            break;
+          } else { erroUltimo = data.error?.message || 'Erro desconhecido'; }
+        } catch (e) { erroUltimo = e.message; }
+      }
+
+      if (textoGerado) {
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
+        const secoes = textoGerado.split('---');
+        let htmlResultado = avisoSucesso;
+        secoes.forEach(secao => {
+          if (secao.trim()) {
+            htmlResultado += `<div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert max-w-none">${marked.parse(secao.trim())}</div>`;
+          }
+        });
+        resDiv.innerHTML = htmlResultado;
+        adicionarBotoesDeCopiar(resDiv);
+        resDiv.classList.remove('hidden');
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+      } else { alert('❌ Erro na API Groq: ' + erroUltimo); }
+
+      loadDiv.classList.add('hidden');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+    }
+
+    function adicionarBotoesDeCopiar(container) {
+      container.querySelectorAll('pre').forEach((pre) => {
+        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
+        const btnCopiar = document.createElement('button');
+        btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+        btnCopiar.innerHTML = '📋 Copiar Prompt';
+        btnCopiar.onclick = () => {
+          const codeEl = pre.querySelector('code');
+          const textoPrompt = (codeEl ? codeEl.innerText : pre.innerText).replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
+          navigator.clipboard.writeText(textoPrompt).then(() => {
+            btnCopiar.innerHTML = '✅ Copiado!';
+            btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
+            setTimeout(() => {
+              btnCopiar.innerHTML = '📋 Copiar Prompt';
+              btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+            }, 2000);
+          });
+        };
+        pre.appendChild(btnCopiar);
+      });
+    }
+  </script>
+</body>
+</html>
