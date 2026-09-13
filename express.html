@@ -270,46 +270,49 @@
 
       statusTexto.innerText = "🤖 Analisando o mercado e gerando seus prompts...";
 
+      // NOVO PROMPT MASTER BLINDADO
       const promptMaster = `
-        Você é um Estrategista de Vendas Diretas e Diretor de Criação de Vídeos de Alta Conversão.
-        Sua tarefa é analisar o produto fornecido e entregar OBRIGATORIAMENTE 3 blocos completos, separados por "---".
+        Você é um Diretor de Criação de Vídeos de E-commerce.
+        Sua tarefa é preencher o template abaixo baseado no produto fornecido.
 
-        PRODUTO A SER ANALISADO: ${produtoExtraido}
+        DADOS EXTRAÍDOS DO PRODUTO: ${produtoExtraido}
 
-        REGRA ABSOLUTA: NÃO pule nenhuma seção. Gere exatamente o formato abaixo:
+        REGRA DE OURO: Se os "Dados Extraídos" informarem que a página não foi encontrada ou exigiu login, NÃO peça mais informações. Em vez disso, DEDUZA o tipo de produto pela URL ou INVENTE um roteiro altamente conversivo para um produto de e-commerce genérico incrível. NUNCA diga que faltam dados.
+
+        Siga ESTE FORMATO EXATO, substituindo APENAS o texto que está entre colchetes [ ] pelo seu conteúdo. Não escreva nada fora desta estrutura:
 
         ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
-        * **👍 Pontos Fortes:** (Descreva 2 diferenciais).
-        * **⚠️ Dores e Objeções:** (Descreva 2 medos do cliente).
-        * **🎯 Estratégia do Vídeo:** (Descreva como o vídeo vai converter).
+        * **👍 Pontos Fortes:** [Escreva 2 pontos fortes]
+        * **⚠️ Dores e Objeções:** [Escreva 2 dores do cliente]
+        * **🎯 Estratégia do Vídeo:** [Escreva a estratégia de conversão]
 
         ---
 
         ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
-        **Cena 1 (0-3s) - Gancho:** (Fala impactante).
-        **Cena 2 (3-12s) - Demonstração:** (Fala narrando os benefícios).
-        **Cena 3 (12-15s) - CTA:** (Chamada para ação).
+        **Cena 1 (0-3s) - Gancho:** [Escreva a fala de impacto em português]
+        **Cena 2 (3-12s) - Demonstração:** [Escreva a fala narrando os benefícios]
+        **Cena 3 (12-15s) - CTA:** [Escreva a chamada para ação]
 
         ---
 
         ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA
         ### 🟢 Cena 1: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k. [Continue a descrição em INGLÊS aqui baseado na Cena 1]
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k. [Descreva a Cena 1 em INGLÊS aqui]
         \`\`\`
-        > 🇧🇷 **Tradução:** Escreva a tradução do prompt acima para o PORTUGUÊS aqui. NÃO use blocos de código ou markdown para a tradução. Escreva como texto normal.
+        > 🇧🇷 **Tradução:** [Escreva a tradução exata do prompt acima para o português, como texto normal sem usar blocos de código]
 
         ### 🔵 Cena 2: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k. [Continue a descrição em INGLÊS aqui baseado na Cena 2]
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k. [Descreva a Cena 2 em INGLÊS aqui]
         \`\`\`
-        > 🇧🇷 **Tradução:** Escreva a tradução do prompt acima para o PORTUGUÊS aqui. NÃO use blocos de código ou markdown para a tradução. Escreva como texto normal.
+        > 🇧🇷 **Tradução:** [Escreva a tradução exata do prompt acima para o português, como texto normal sem usar blocos de código]
 
         ### 🟣 Cena 3: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k. [Continue a descrição em INGLÊS aqui baseado na Cena 3]
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k. [Descreva a Cena 3 em INGLÊS aqui]
         \`\`\`
-        > 🇧🇷 **Tradução:** Escreva a tradução do prompt acima para o PORTUGUÊS aqui. NÃO use blocos de código ou markdown para a tradução. Escreva como texto normal.
+        > 🇧🇷 **Tradução:** [Escreva a tradução exata do prompt acima para o português, como texto normal sem usar blocos de código]
       `;
 
       let textoGerado = null;
@@ -324,11 +327,11 @@
             body: JSON.stringify({
               model: modeloId,
               messages: [
-                { role: "system", content: "Você é um especialista. NUNCA pare de escrever pela metade. Entregue a resposta inteira, garantindo que os 3 blocos sejam gerados até o fim." },
+                { role: "system", content: "Você é um especialista. Aja como solicitado, substituindo os colchetes pelo conteúdo. Jamais pule uma seção." },
                 { role: "user", content: promptMaster }
               ],
               temperature: 0.4,
-              max_tokens: 4000 // CORREÇÃO: Limite de tokens aumentado drasticamente para não cortar o texto!
+              max_tokens: 4000
             })
           });
           const data = await response.json();
@@ -342,6 +345,7 @@
       if (textoGerado) {
         const secoes = textoGerado.split('---');
         
+        // Verifica se conseguiu formatar corretamente antes de descontar crédito
         if(secoes.length >= 3) {
           const novoSaldo = Math.max(0, creditosExpress - 1);
           try {
