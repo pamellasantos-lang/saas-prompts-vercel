@@ -8,7 +8,10 @@
   <meta http-equiv="Expires" content="0" />
 
   <title>AdFlow - Modo Express</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- AQUI ESTÁ A CORREÇÃO VISUAL: Adicionado o plugin Typography -->
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     .prose blockquote {
@@ -218,7 +221,6 @@
       return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
     }
 
-    // FUNÇÃO PRINCIPAL DE GERAÇÃO COM TRAVA E DESCONTO DE CRÉDITOS
     window.gerarPrompt = async function() {
       const user = auth.currentUser;
       if (!user) {
@@ -244,7 +246,6 @@
       const userData = userDocSnap.data();
       const creditosExpress = userData.creditos?.express ?? 0;
 
-      // VERIFICAÇÃO DE SALDO DE CRÉDITOS
       if (creditosExpress <= 0) {
         alert("⚠️ Seus créditos do módulo Express acabaram! Faça um upgrade para continuar criando vídeos.");
         window.location.href = "planos.html";
@@ -260,69 +261,58 @@
       btn.classList.add('opacity-50');
       loadDiv.classList.remove('hidden');
       resDiv.classList.add('hidden');
-      statusTexto.innerText = "🔍 Minando avaliações e otimizando movimentos para Kling AI & Luma...";
+      statusTexto.innerText = "🔍 Minando avaliações e extraindo dados...";
 
       let produtoExtraido = "";
       try {
         const scrapeRes = await fetch(`/api/scrape?url=${encodeURIComponent(urlInput)}`);
         const scrapeData = await scrapeRes.json();
-        produtoExtraido = scrapeRes.ok && scrapeData.extractedData ? scrapeData.extractedData : "PRODUTO: " + urlInput;
-      } catch (e) { produtoExtraido = "PRODUTO: " + urlInput; }
+        produtoExtraido = scrapeRes.ok && scrapeData.extractedData ? scrapeData.extractedData : "URL DO PRODUTO: " + urlInput;
+      } catch (e) { produtoExtraido = "URL DO PRODUTO: " + urlInput; }
 
-      statusTexto.innerText = "🤖 Estruturando parâmetros de vídeo 9:16 e rotação de câmera...";
+      statusTexto.innerText = "🤖 Analisando o mercado e gerando seus prompts...";
 
+      // AQUI ESTÁ A CORREÇÃO DA IA: Instruções blindadas e obrigatórias
       const promptMaster = `
-        Você é um especialista em geração de vídeo por inteligência artificial (Kling AI e Luma Dream Machine).
-        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais de vídeo em inglês com comandos de movimento de câmera avançados.
+        Você é um Estrategista de Vendas Diretas e Diretor de Criação de Vídeos de Alta Conversão.
+        Sua tarefa é analisar o produto fornecido e entregar OBRIGATORIAMENTE 3 blocos separados por "---".
 
-        DADOS EXTRAÍDOS DO PRODUTO: ${produtoExtraido}
+        PRODUTO A SER ANALISADO: ${produtoExtraido}
 
-        REGRAS ABSOLUTAS:
-        1. SEPARE AS 3 SEÇÕES COM '---'.
-        2. OS PROMPTS DEVEM SER NO FORMATO 9:16 E INCLUIR MOVEMENT TAGS (Camera: Dolly in, Camera: Orbit 360, Camera: Pan left).
+        REGRA ABSOLUTA: NÃO pule a Análise de Mercado. Gere exatamente o formato abaixo:
 
-        FORMATO:
         ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
-        * **👍 Pontos Fortes:** (2 destaques reais)
-        * **⚠️ Pontos Negativos & Objeções:** (2 dúvidas comuns)
-        * **🎯 Estratégia de Venda:** (Como o vídeo vence objeções)
+        * **👍 Pontos Fortes:** (Descreva 2 diferenciais claros que farão o cliente comprar).
+        * **⚠️ Dores e Objeções:** (Descreva 2 dúvidas ou medos comuns de quem compra este tipo de produto).
+        * **🎯 Estratégia do Vídeo:** (Descreva em 1 parágrafo como o vídeo vai convencer o comprador e quebrar as objeções).
 
         ---
 
         ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
-        **Cena 1 (0-3s) - Gancho Viral:**
-        🗣️ Narração: Frase chamativa em português nos primeiros 3 segundos.
-
-        **Cena 2 (3-12s) - Demonstração & Solução:**
-        🗣️ Narração: Explicação persuasiva em português destruindo objeções.
-
-        **Cena 3 (12-15s) - Chamada para Ação:**
-        🗣️ Narração: Chamada final clara em português.
+        **Cena 1 (0-3s) - Gancho:** (Fala impactante em português para segurar a atenção).
+        **Cena 2 (3-12s) - Demonstração:** (Fala narrando os benefícios e quebrando a principal objeção do cliente).
+        **Cena 3 (12-15s) - CTA:** (Chamada para ação direta: "clique no link", "compre agora", etc).
 
         ---
 
-        ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA DREAM MACHINE
-
-        ### 🟢 Cena 1: Prompt Visual (Kling AI & Luma)
+        ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA
+        ### 🟢 Cena 1: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k.
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k. [DESCREVA O PRODUTO E A CENA AQUI EM INGLÊS BASEADO NA CENA 1]
         \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 1):**
-        > Tradução e movimento de câmera explicados em português para a Cena 1.
+        > 🇧🇷 **Tradução:** [Tradução exata do prompt da Cena 1]
 
-        ### 🔵 Cena 2: Prompt Visual (Kling AI & Luma)
+        ### 🔵 Cena 2: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k.
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k. [DESCREVA O PRODUTO E A CENA AQUI EM INGLÊS BASEADO NA CENA 2]
         \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 2):**
-        > Tradução e movimento de câmera explicados em português para a Cena 2.
+        > 🇧🇷 **Tradução:** [Tradução exata do prompt da Cena 2]
 
-        ### 🟣 Cena 3: Prompt Visual (Kling AI & Luma)
+        ### 🟣 Cena 3: Prompt Visual
         \`\`\`text
-        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k.
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k. [DESCREVA O PRODUTO E A CENA AQUI EM INGLÊS BASEADO NA CENA 3]
         \`\`\`
-        > 🇧🇷 **Tradução em Português (Cena 3):**
-        > Tradução e movimento de câmera explicados em português para a Cena 3.
+        > 🇧🇷 **Tradução:** [Tradução exata do prompt da Cena 3]
       `;
 
       let textoGerado = null;
@@ -337,7 +327,7 @@
             body: JSON.stringify({
               model: modeloId,
               messages: [
-                { role: "system", content: "Você é um gerador de roteiros e prompts de vídeo de alta conversão." },
+                { role: "system", content: "Você é um gerador de roteiros e prompts de vídeo de alta conversão. Siga a estrutura exigida rigorosamente." },
                 { role: "user", content: promptMaster }
               ],
               temperature: 0.4
@@ -352,25 +342,26 @@
       }
 
       if (textoGerado) {
-        // DESCONTO DE 1 CRÉDITO NO FIRESTORE APÓS SUCESSO
-        const novoSaldo = Math.max(0, creditosExpress - 1);
-        try {
-          await updateDoc(userDocRef, {
-            "creditos.express": novoSaldo
-          });
-          document.getElementById('cred-express').innerText = novoSaldo;
-        } catch (dbErr) {
-          console.error("Erro ao atualizar créditos:", dbErr);
+        // Verifica se a IA gerou os 3 blocos (se gerou menos, não cobra o crédito do cliente)
+        const secoes = textoGerado.split('---');
+        
+        if(secoes.length >= 3) {
+          const novoSaldo = Math.max(0, creditosExpress - 1);
+          try {
+            await updateDoc(userDocRef, { "creditos.express": novoSaldo });
+            document.getElementById('cred-express').innerText = novoSaldo;
+          } catch (dbErr) { console.error("Erro ao atualizar créditos:", dbErr); }
         }
 
-        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompts otimizados para Kling AI & Luma com sucesso!</div>`;
-        const secoes = textoGerado.split('---');
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Estratégia e Prompts gerados com sucesso!</div>`;
         let htmlResultado = avisoSucesso;
+        
         secoes.forEach(secao => {
           if (secao.trim()) {
-            htmlResultado += `<div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert max-w-none">${marked.parse(secao.trim())}</div>`;
+            htmlResultado += `<div class="bg-slate-950/90 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert prose-p:leading-relaxed prose-li:marker:text-cyan-400 max-w-none">${marked.parse(secao.trim())}</div>`;
           }
         });
+        
         resDiv.innerHTML = htmlResultado;
         adicionarBotoesDeCopiar(resDiv);
         resDiv.classList.remove('hidden');
