@@ -72,8 +72,8 @@
       <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
     </div>
 
-    <!-- Área do Resultado -->
-    <div id="resultado" class="mt-8 space-y-4 text-sm bg-slate-900 p-6 rounded-xl border border-slate-700 hidden prose prose-invert prose-p:leading-relaxed">
+    <!-- Área do Resultado (Container de Cards) -->
+    <div id="resultado" class="mt-8 space-y-6 text-sm hidden">
     </div>
   </div>
 
@@ -202,17 +202,15 @@
         ESTILO: ${estilo}
         TOM DA NARRAÇÃO: ${tom}
 
-        REGRAS ABSOLUTAS:
+        REGRAS ABSOLUTAS DE FORMATO:
         1. FALE ESTRITAMENTE SOBRE O PRODUTO MENCIONADO ACIMA.
-        2. NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO COMO "digite aqui".
-        3. EXIBA UMA SEÇÃO INICIAL DE OBJEÇÕES E PONTOS FORTE IDENTIFICADOS.
-        4. ESCREVA A NARRAÇÃO COMPLETA EM PORTUGUÊS BRASILEIRO.
-        5. ESCREVA OS PROMPTS VISUAIS TÉCNICOS EM INGLÊS (4k, 9:16 vertical ratio, photorealistic, cinematic lighting).
+        2. SEPARE CADA UMA DAS 3 SEÇÕES USANDO O DELIMITADOR EXATO '---'.
+        3. NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO COMO "digite aqui".
 
-        RETORNE ESTRITAMENTE NESTE FORMATO MARKDOWN:
+        RETORNE ESTRITAMENTE NESTE FORMATO:
 
         ## 🔍 OBJEÇÕES & INSIGHTS MINERADOS
-        - **Principais Objeções/Dúvidas do Comprador:** (Liste 2 medos ou dúvidas comuns sobre este produto)
+        - **Principais Objeções/Dúvidas:** (Liste 2 medos reais sobre este produto)
         - **Ponto Forte de Destaque:** (Liste o maior benefício percebido)
 
         ---
@@ -291,8 +289,23 @@
       }
 
       if (textoGerado) {
-        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-6 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
-        resDiv.innerHTML = avisoSucesso + marked.parse(textoGerado);
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
+        
+        // Divide o resultado em caixas separadas usando o separador ---
+        const secoes = textoGerado.split('---');
+        let htmlResultado = avisoSucesso;
+
+        secoes.forEach(secao => {
+          if (secao.trim()) {
+            htmlResultado += `
+              <div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert prose-p:leading-relaxed max-w-none">
+                ${marked.parse(secao.trim())}
+              </div>
+            `;
+          }
+        });
+
+        resDiv.innerHTML = htmlResultado;
         adicionarBotoesDeCopiar(resDiv);
         resDiv.classList.remove('hidden');
         resDiv.scrollIntoView({ behavior: 'smooth' });
@@ -308,7 +321,7 @@
     function adicionarBotoesDeCopiar(container) {
       const blocosCodigo = container.querySelectorAll('pre');
       blocosCodigo.forEach((pre) => {
-        pre.className = 'relative bg-slate-950 p-4 pt-12 rounded-xl border border-slate-700 my-4 text-xs font-mono text-slate-200 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
+        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-4 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
         
         const btnCopiar = document.createElement('button');
         btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
