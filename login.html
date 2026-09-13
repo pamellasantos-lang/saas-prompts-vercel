@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdFlow - Área de Membros</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+
+  <!-- Efeito de fundo visual -->
+  <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-pink-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-cyan-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+
+  <div class="max-w-md w-full bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-slate-700/80 z-10">
+    
+    <!-- Logo Vetorial -->
+    <div class="flex justify-center mb-6">
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 flex items-center justify-center">
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-[0_0_10px_rgba(168,85,247,0.4)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="adflow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3B82F6" />
+                <stop offset="50%" stop-color="#8B5CF6" />
+                <stop offset="100%" stop-color="#D946EF" />
+              </linearGradient>
+              <linearGradient id="arrow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#06B6D4" />
+                <stop offset="100%" stop-color="#38BDF8" />
+              </linearGradient>
+            </defs>
+            <path d="M 50 12 L 18 80 C 16 84 20 88 25 88 L 36 88 C 40 88 43 85 45 81 L 50 68 L 55 81 C 57 85 60 88 64 88 L 75 88 C 80 88 84 84 82 80 L 50 12 Z" fill="url(#adflow-grad)"/>
+            <polygon points="46,42 46,56 57,49" fill="#0F172A"/>
+            <path d="M 28 65 Q 52 50 72 32 L 64 31 C 62 31 61 29 62 27 L 78 24 C 80 23 82 25 82 27 L 79 43 C 78 45 76 46 75 44 L 72 38 Q 54 55 28 65 Z" fill="url(#arrow-grad)"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-black tracking-tight leading-none text-white">
+            Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <h2 id="form-title" class="text-2xl font-bold text-center mb-2">Acesse sua conta</h2>
+    <p id="form-subtitle" class="text-slate-400 text-sm text-center mb-8">Entre para gerar seus roteiros virais.</p>
+
+    <!-- Formulário -->
+    <form id="auth-form" class="space-y-4">
+      <div>
+        <label class="block text-sm font-semibold mb-2 text-slate-300">E-mail</label>
+        <input type="email" id="email" required class="w-full p-3.5 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-purple-400 transition-colors" placeholder="seu@email.com" />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-2 text-slate-300">Senha</label>
+        <input type="password" id="password" required minlength="6" class="w-full p-3.5 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-purple-400 transition-colors" placeholder="••••••••" />
+      </div>
+      
+      <!-- Mensagem de Erro -->
+      <p id="error-message" class="text-red-400 text-xs hidden text-center font-bold"></p>
+
+      <button type="submit" id="submit-btn" class="w-full py-4 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl hover:opacity-90 transform transition hover:scale-[1.02] shadow-lg mt-4">
+        Entrar
+      </button>
+    </form>
+
+    <!-- Alternar entre Login e Cadastro -->
+    <div class="mt-6 text-center text-sm text-slate-400">
+      <span id="toggle-text">Ainda não tem conta?</span>
+      <button onclick="toggleMode()" id="toggle-btn" class="text-cyan-400 font-bold hover:underline ml-1">Criar conta grátis</button>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts (Módulo) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+    // SUAS CHAVES REAIS DO FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
+      authDomain: "adflow-1e5b8.firebaseapp.com",
+      projectId: "adflow-1e5b8",
+      storageBucket: "adflow-1e5b8.firebasestorage.app",
+      messagingSenderId: "517881206433",
+      appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
+    };
+
+    // Inicializar Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Se o usuário já estiver logado, manda ele pro Estúdio direto
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "estudio.html";
+      }
+    });
+
+    let isLogin = true; // Controle de estado (Login vs Cadastro)
+
+    window.toggleMode = function() {
+      isLogin = !isLogin;
+      document.getElementById('form-title').innerText = isLogin ? "Acesse sua conta" : "Crie sua conta";
+      document.getElementById('form-subtitle').innerText = isLogin ? "Entre para gerar seus roteiros virais." : "Ganhe acesso às ferramentas de IA.";
+      document.getElementById('submit-btn').innerText = isLogin ? "Entrar" : "Criar Conta";
+      document.getElementById('toggle-text').innerText = isLogin ? "Ainda não tem conta?" : "Já possui conta?";
+      document.getElementById('toggle-btn').innerText = isLogin ? "Criar conta grátis" : "Fazer Login";
+      document.getElementById('error-message').classList.add('hidden');
+    }
+
+    document.getElementById('auth-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('submit-btn');
+      const errorMsg = document.getElementById('error-message');
+      
+      btn.innerText = "Carregando...";
+      btn.disabled = true;
+      errorMsg.classList.add('hidden');
+
+      if (isLogin) {
+        // Lógica de Login
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            window.location.href = "estudio.html"; // Redireciona com sucesso
+          })
+          .catch((error) => {
+            errorMsg.innerText = "Erro: " + authErrorMessage(error.code);
+            errorMsg.classList.remove('hidden');
+            btn.innerText = "Entrar";
+            btn.disabled = false;
+          });
+      } else {
+        // Lógica de Cadastro
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            window.location.href = "estudio.html"; // Cadastro com sucesso
+          })
+          .catch((error) => {
+            errorMsg.innerText = "Erro: " + authErrorMessage(error.code);
+            errorMsg.classList.remove('hidden');
+            btn.innerText = "Criar Conta";
+            btn.disabled = false;
+          });
+      }
+    });
+
+    // Tradução dos erros do Firebase
+    function authErrorMessage(code) {
+      switch(code) {
+        case 'auth/invalid-email': return 'E-mail inválido.';
+        case 'auth/user-not-found': return 'Usuário não encontrado.';
+        case 'auth/wrong-password': return 'Senha incorreta.';
+        case 'auth/email-already-in-use': return 'Este e-mail já está em uso.';
+        case 'auth/weak-password': return 'A senha deve ter pelo menos 6 caracteres.';
+        case 'auth/invalid-credential': return 'E-mail ou senha incorretos.';
+        default: return 'Ocorreu um erro inesperado.';
+      }
+    }
+  </script>
+</body>
+</html>
