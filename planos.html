@@ -231,18 +231,19 @@
       }
     });
 
-    // Mapeamento dos Links da Kiwify (Deixe assim por enquanto, depois você cola os reais aqui)
+    // Mapeamento dos Links Reais da Kiwify
     const linksKiwify = {
-      'plano_basico': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
-      'plano_intermediario': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
-      'plano_avancado': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
-      'avulso_10': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
-      'avulso_20': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI'
+      'plano_basico': 'https://pay.kiwify.com.br/YfGyFrc',
+      'plano_intermediario': 'https://pay.kiwify.com.br/l5B1AJJ',
+      'plano_avancado': 'https://pay.kiwify.com.br/uVjoyH6',
+      'avulso_10': 'https://pay.kiwify.com.br/zgj7hbn',
+      'avulso_20': 'https://pay.kiwify.com.br/oIysFY7'
     };
 
     window.comprar = function(item) {
       const user = auth.currentUser;
       
+      // Se não estiver logado, manda pro login antes de comprar
       if (!user) {
         alert("Crie sua conta ou faça login antes de assinar!");
         window.location.href = "login.html";
@@ -250,13 +251,8 @@
       }
 
       const linkCheckout = linksKiwify[item];
-      
-      if (linkCheckout.includes("COLOQUE_SEU_LINK_AQUI")) {
-        alert(`Você selecionou: ${item.toUpperCase()}.\nEm breve redirecionaremos para a página de checkout seguro!`);
-        return;
-      }
 
-      // Redireciona e preenche o e-mail automaticamente na Kiwify
+      // Redireciona e preenche o e-mail do usuário no checkout da Kiwify
       window.location.href = `${linkCheckout}?email=${encodeURIComponent(user.email)}`;
     }
   </script>
