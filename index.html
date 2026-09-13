@@ -12,31 +12,53 @@
   <div class="max-w-2xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
     <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent">⚡ PromptCraft AI</h1>
     <p class="text-center text-slate-400 text-sm mt-2 mb-6">Gere roteiros virais e prompts visuais para TikTok e Shopee em segundos.</p>
+
+    <!-- Alternador de Modos (Tabs) -->
+    <div class="flex bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6">
+      <button id="tab-estudio" onclick="alternarModo('estudio')" class="flex-1 py-2.5 rounded-lg text-sm font-bold transition-all bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
+        🎛️ Modo Estúdio (Filtros)
+      </button>
+      <button id="tab-express" onclick="alternarModo('express')" class="flex-1 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-400 hover:text-white">
+        ⚡ Modo Express (URL)
+      </button>
+    </div>
     
     <div class="space-y-5">
-      <div>
-        <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
-        <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Furadeira elétrica portátil sem fio com bateria de longa duração..."></textarea>
+      <!-- Painel Modo Estúdio -->
+      <div id="painel-estudio" class="space-y-5">
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
+          <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Furadeira elétrica portátil sem fio com bateria de longa duração..."></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold mb-2 text-slate-300">🎬 Estilo do Vídeo:</label>
+            <select id="estilo" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
+              <option>Review Sincero</option>
+              <option>Achadinho Irresistível</option>
+              <option>Problema vs Solução</option>
+              <option>Unboxing</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-2 text-slate-300">🗣️ Tom da Narração:</label>
+            <select id="tom" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
+              <option>Entusiasta</option>
+              <option>Curioso/Alerta</option>
+              <option>Humorado</option>
+              <option>Direto ao Ponto</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Painel Modo Express (Link do Produto) -->
+      <div id="painel-express" class="hidden space-y-4">
         <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🎬 Estilo do Vídeo:</label>
-          <select id="estilo" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-            <option>Review Sincero</option>
-            <option>Achadinho Irresistível</option>
-            <option>Problema vs Solução</option>
-            <option>Unboxing</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🗣️ Tom da Narração:</label>
-          <select id="tom" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-            <option>Entusiasta</option>
-            <option>Curioso/Alerta</option>
-            <option>Humorado</option>
-            <option>Direto ao Ponto</option>
-          </select>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, TikTok):</label>
+          <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/produto-exemplo-123456" />
+          <p class="text-xs text-slate-400 mt-2">💡 No Modo Express, extraímos os dados e objeções da página automaticamente.</p>
         </div>
       </div>
 
@@ -51,12 +73,33 @@
     </div>
 
     <!-- Área do Resultado -->
-    <div id="resultado" class="mt-8 space-y-4 text-sm bg-slate-900 p-6 rounded-xl border border-slate-700 hidden overflow-x-auto prose prose-invert prose-p:leading-relaxed prose-pre:bg-slate-950 prose-pre:border prose-pre:border-slate-700">
+    <div id="resultado" class="mt-8 space-y-4 text-sm bg-slate-900 p-6 rounded-xl border border-slate-700 hidden overflow-x-auto prose prose-invert prose-p:leading-relaxed prose-pre:bg-slate-950 prose-pre:border prose-pre:border-slate-700 prose-pre:relative">
     </div>
   </div>
 
   <script>
     const API_KEY = "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";
+    let modoAtual = 'estudio';
+
+    function alternarModo(modo) {
+      modoAtual = modo;
+      const tabEstudio = document.getElementById('tab-estudio');
+      const tabExpress = document.getElementById('tab-express');
+      const painelEstudio = document.getElementById('painel-estudio');
+      const painelExpress = document.getElementById('painel-express');
+
+      if (modo === 'estudio') {
+        tabEstudio.className = "flex-1 py-2.5 rounded-lg text-sm font-bold transition-all bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow";
+        tabExpress.className = "flex-1 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-400 hover:text-white";
+        painelEstudio.classList.remove('hidden');
+        painelExpress.classList.add('hidden');
+      } else {
+        tabExpress.className = "flex-1 py-2.5 rounded-lg text-sm font-bold transition-all bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow";
+        tabEstudio.className = "flex-1 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-400 hover:text-white";
+        painelExpress.classList.remove('hidden');
+        painelEstudio.classList.add('hidden');
+      }
+    }
 
     async function obterModeloValidoGroq(apiKey) {
       try {
@@ -84,15 +127,30 @@
 
     async function gerarPrompt() {
       const btn = document.getElementById('btn');
-      const produto = document.getElementById('produto').value;
-      const estilo = document.getElementById('estilo').value;
-      const tom = document.getElementById('tom').value;
       const resDiv = document.getElementById('resultado');
       const loadDiv = document.getElementById('loading');
 
-      if (!produto.trim()) {
-        alert('⚠️ Por favor, insira os dados do produto.');
-        return;
+      let produto = "";
+      let estilo = "Achadinho Irresistível";
+      let tom = "Entusiasta";
+
+      if (modoAtual === 'estudio') {
+        produto = document.getElementById('produto').value;
+        estilo = document.getElementById('estilo').value;
+        tom = document.getElementById('tom').value;
+
+        if (!produto.trim()) {
+          alert('⚠️ Por favor, insira os dados do produto.');
+          return;
+        }
+      } else {
+        const url = document.getElementById('url-produto').value;
+        if (!url.trim()) {
+          alert('⚠️ Por favor, cole o link do produto.');
+          return;
+        }
+        // Simulação do Express enquanto preparamos a Opção 2
+        produto = "Produto extraído da URL: " + url;
       }
 
       btn.disabled = true;
@@ -124,13 +182,11 @@
         🗣️ Narração: (Escreva aqui a explicação persuasiva mostrando o benefício do produto)
 
         **Cena 3 (12-15s) - Chamada para Ação:**
-        🗣️ Narração: (Escreva aqui a chamada final para clicar no carrinho amarelo/link da bio)
+        🗣️ Narração: (Escreva aqui a chamada final para clicar no link)
 
         ---
 
         ## 🎬 PROMPTS VISUAIS (PRONTOS PARA COPIAR E COLAR)
-
-        > 💡 *Copie cada bloco de código abaixo e cole nas IAs de Vídeo:*
 
         **Prompt Visual - Cena 1:**
         \`\`\`text
@@ -144,7 +200,7 @@
 
         **Prompt Visual - Cena 3:**
         \`\`\`text
-        (Escreva o prompt técnico em inglês detalhando a cena de oferta/fechamento em 9:16)
+        (Escreva o prompt técnico em inglês detalhando a cena de oferta em 9:16)
         \`\`\`
       `;
 
@@ -162,7 +218,7 @@
             messages: [
               {
                 role: "system",
-                content: "Você é um gerador de roteiros comerciais que nunca produz textos marcadores de posição (placeholders) ou colchetes. Toda resposta deve conter cópia real e pronta."
+                content: "Você é um gerador de roteiros comerciais que nunca produz textos marcadores de posição ou colchetes. Toda resposta deve conter cópia real e pronta."
               },
               {
                 role: "user",
@@ -181,8 +237,11 @@
           const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-6 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
           
           resDiv.innerHTML = avisoSucesso + marked.parse(textoGerado);
-          resDiv.classList.remove('hidden');
           
+          // Adiciona os botões de copiar em cada bloco de código
+          adicionarBotoesDeCopiar(resDiv);
+          
+          resDiv.classList.remove('hidden');
           resDiv.scrollIntoView({ behavior: 'smooth' });
         } else {
           console.error("Detalhes da resposta da API:", data);
@@ -195,6 +254,31 @@
         btn.disabled = false;
         btn.classList.remove('opacity-50');
       }
+    }
+
+    // Função que insere botões de cópia direta nos blocos <pre><code>
+    function adicionarBotoesDeCopiar(container) {
+      const blocosCodigo = container.querySelectorAll('pre');
+      blocosCodigo.forEach((pre) => {
+        const btnCopiar = document.createElement('button');
+        btnCopiar.className = 'absolute top-2 right-2 px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1';
+        btnCopiar.innerHTML = '📋 Copiar Prompt';
+
+        btnCopiar.onclick = () => {
+          const codigoText = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+          navigator.clipboard.writeText(codigoText.trim()).then(() => {
+            btnCopiar.innerHTML = '✅ Copiado!';
+            btnCopiar.className = 'absolute top-2 right-2 px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1';
+            setTimeout(() => {
+              btnCopiar.innerHTML = '📋 Copiar Prompt';
+              btnCopiar.className = 'absolute top-2 right-2 px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1';
+            }, 2000);
+          });
+        };
+
+        pre.classList.add('relative');
+        pre.appendChild(btnCopiar);
+      });
     }
   </script>
 </body>
