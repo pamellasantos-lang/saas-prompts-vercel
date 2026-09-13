@@ -34,26 +34,28 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
 
-  <!-- CONTEÚDO INICIA OCULTO ('hidden') E SÓ É EXIBIDO APÓS CONFIRMAÇÃO DO FIREBASE -->
+  <!-- CONTEÚDO INICIA OCULTO E SÓ É EXIBIDO APÓS CONFIRMAÇÃO DO FIREBASE -->
   <div id="app-container" class="hidden max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
     
-    <!-- Topo / Cabeçalho com Logout -->
+    <!-- Topo / Cabeçalho com Logo Clicável e Área de Membro -->
     <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
-      <a href="index.html" class="flex items-center gap-2">
-        <span class="text-2xl font-black tracking-tight text-white">
+      <a href="index.html" class="flex items-center gap-2 group" title="Voltar ao início">
+        <span class="text-2xl font-black tracking-tight text-white group-hover:opacity-80 transition">
           Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
         </span>
       </a>
-      <button onclick="fazerLogout()" class="px-4 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-700 transition text-red-400 hover:text-red-300 flex items-center gap-1">
-        🚪 Sair
-      </button>
+      <div class="flex items-center gap-2">
+        <button onclick="abrirPerfil()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-xl font-bold text-xs text-slate-200 transition flex items-center gap-2 shadow">
+          👤 <span id="user-display-name">Minha Conta</span>
+        </button>
+        <button onclick="fazerLogout()" class="px-3 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-700 transition text-red-400 hover:text-red-300 flex items-center gap-1">
+          🚪 Sair
+        </button>
+      </div>
     </div>
 
-    <!-- Navegação Superior Entre Páginas -->
+    <!-- Navegação Entre Ferramentas (Sem a opção Início) -->
     <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
-      <a href="index.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
-        🏠 Início
-      </a>
       <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         🎛️ Estúdio
       </a>
@@ -115,6 +117,51 @@
     </div>
   </div>
 
+  <!-- Modal Área do Membro / Meu Plano -->
+  <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
+      <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+        <div>
+          <h3 class="text-xl font-bold text-white" id="modal-nome">Carregando...</h3>
+          <p class="text-xs text-slate-400" id="modal-email">---</p>
+        </div>
+        <button onclick="fecharPerfil()" class="text-slate-400 hover:text-white font-bold text-lg p-1">✕</button>
+      </div>
+
+      <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700/80 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Plano Atual:</span>
+          <span id="modal-plano" class="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs font-bold uppercase">GRÁTIS</span>
+        </div>
+        <hr class="border-slate-800">
+        <h4 class="text-xs font-bold text-slate-300 uppercase">Criações Disponíveis:</h4>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Estúdio</span>
+            <strong id="cred-estudio" class="text-pink-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Express</span>
+            <strong id="cred-express" class="text-cyan-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Influencer</span>
+            <strong id="cred-influencer" class="text-purple-400 text-sm">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <a href="planos.html" class="block w-full py-3.5 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-center text-xs rounded-xl shadow hover:opacity-90 transition">
+          ⚡ Ver / Mudar de Plano
+        </a>
+        <button onclick="fecharPerfil()" class="w-full py-3 bg-slate-700 hover:bg-slate-600 font-bold text-xs rounded-xl transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const API_KEY = "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";
 
@@ -167,7 +214,6 @@
         REGRAS DE FORMATO:
         1. SEPARE AS 3 SEÇÕES USANDO O DELIMITADOR '---'.
         2. NÃO USE COLCHETES [ ].
-        3. OS PROMPTS TÉCNICOS DEVEM SER EM INGLÊS EXTREMAMENTE DETALHADOS (8k resolution, photorealistic skin texture, fabric weave details, 85mm lens, f/1.8 depth of field, 9:16 aspect ratio).
 
         FORMATO EXATO:
 
@@ -268,10 +314,11 @@
     }
   </script>
 
-  <!-- BLINDAGEM DE SEGURANÇA COM REVERIFICAÇÃO DE CACHE E BOTÃO VOLTAR -->
+  <!-- FIREBASE AUTH & ÁREA DO MEMBRO -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
@@ -284,26 +331,52 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
     const container = document.getElementById('app-container');
 
-    function validarAcesso(user) {
+    async function carregarPerfil(user) {
       if (!user) {
         window.location.replace("login.html");
-      } else {
-        if (container) container.classList.remove('hidden');
+        return;
+      }
+
+      if (container) container.classList.remove('hidden');
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const nomeCompleto = data.nome || user.email.split('@')[0];
+          const primeiroNome = nomeCompleto.split(' ')[0];
+
+          document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
+          document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
+          document.getElementById('modal-email').innerText = data.email || user.email;
+          document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
+          document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
+          document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
+          document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+        }
+      } catch (err) {
+        console.error("Erro ao carregar dados do usuário:", err);
       }
     }
 
     onAuthStateChanged(auth, (user) => {
-      validarAcesso(user);
+      carregarPerfil(user);
     });
 
     window.addEventListener('pageshow', (event) => {
       if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        validarAcesso(auth.currentUser);
+        carregarPerfil(auth.currentUser);
       }
     });
 
+    window.abrirPerfil = () => document.getElementById('modal-perfil')?.classList.remove('hidden');
+    window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
+    
     window.fazerLogout = function() {
       signOut(auth).then(() => {
         window.location.replace("index.html");
