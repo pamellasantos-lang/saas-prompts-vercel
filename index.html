@@ -81,6 +81,14 @@
     const API_KEY = "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";
     let modoAtual = 'estudio';
 
+    // Lista de contingência dos modelos ativos da Groq
+    const MODELOS_GROQ = [
+      "llama-3.3-70b-versatile",
+      "llama3-8b-8192",
+      "llama3-70b-8192",
+      "mixtral-8x7b-32768"
+    ];
+
     function alternarModo(modo) {
       modoAtual = modo;
       const tabEstudio = document.getElementById('tab-estudio');
@@ -99,30 +107,6 @@
         painelExpress.classList.remove('hidden');
         painelEstudio.classList.add('hidden');
       }
-    }
-
-    // Seleção estrita focada apenas em modelos da família Llama 3 para chat
-    async function obterModeloValidoGroq(apiKey) {
-      try {
-        const response = await fetch("https://api.groq.com/openai/v1/models", {
-          headers: { "Authorization": `Bearer ${apiKey}` }
-        });
-        const data = await response.json();
-        
-        if (data.data && data.data.length > 0) {
-          const modeloLlama = data.data.find(m => {
-            const id = m.id.toLowerCase();
-            return (id.includes("llama-3") || id.includes("llama3")) && 
-                   !id.includes("guard") && 
-                   !id.includes("vision");
-          });
-
-          if (modeloLlama) return modeloLlama.id;
-        }
-      } catch (e) {
-        console.warn("Falha ao listar modelos.", e);
-      }
-      return "llama-3.1-8b-instant";
     }
 
     async function gerarPrompt() {
@@ -203,55 +187,60 @@
         \`\`\`
       `;
 
-      try {
-        const modeloId = await obterModeloValidoGroq(API_KEY);
+      let textoGerado = null;
+      let erroUltimo = "";
 
-        const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${API_KEY}`
-          },
-          body: JSON.stringify({
-            model: modeloId,
-            messages: [
-              {
-                role: "system",
-                content: "Você é um gerador de roteiros comerciais que nunca produz textos marcadores de posição ou colchetes. Toda resposta deve conter cópia real e pronta."
-              },
-              {
-                role: "user",
-                content: promptMaster
-              }
-            ],
-            temperature: 0.6
-          })
-        });
+      // Executa tentativa iterativa pelos modelos válidos da Groq
+      for (const modeloId of MODELOS_GROQ) {
+        try {
+          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${API_KEY}`
+            },
+            body: JSON.stringify({
+              model: modeloId,
+              messages: [
+                {
+                  role: "system",
+                  content: "Você é um gerador de roteiros comerciais que nunca produz textos marcadores de posição ou colchetes. Toda resposta deve conter cópia real e pronta."
+                },
+                {
+                  role: "user",
+                  content: promptMaster
+                }
+              ],
+              temperature: 0.6
+            })
+          });
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (response.ok && data.choices && data.choices[0].message.content) {
-          const textoGerado = data.choices[0].message.content;
-          
-          const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-6 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
-          
-          resDiv.innerHTML = avisoSucesso + marked.parse(textoGerado);
-          
-          adicionarBotoesDeCopiar(resDiv);
-          
-          resDiv.classList.remove('hidden');
-          resDiv.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          console.error("Detalhes da resposta da API:", data);
-          alert('❌ Erro da API: ' + (data.error?.message || 'Erro desconhecido.'));
+          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
+            textoGerado = data.choices[0].message.content;
+            break; // Requisição bem-sucedida, encerra a busca
+          } else {
+            erroUltimo = data.error?.message || 'Erro desconhecido';
+          }
+        } catch (e) {
+          erroUltimo = e.message;
         }
-      } catch (error) {
-        alert('❌ Erro de conexão com a API da Groq: ' + error.message);
-      } finally {
-        loadDiv.classList.add('hidden');
-        btn.disabled = false;
-        btn.classList.remove('opacity-50');
       }
+
+      if (textoGerado) {
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-6 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
+        resDiv.innerHTML = avisoSucesso + marked.parse(textoGerado);
+        adicionarBotoesDeCopiar(resDiv);
+        resDiv.classList.remove('hidden');
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert('❌ Erro na API Groq: ' + erroUltimo);
+      }
+
+      loadDiv.classList.add('hidden');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
     }
 
     function adicionarBotoesDeCopiar(container) {
