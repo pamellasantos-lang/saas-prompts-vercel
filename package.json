@@ -1,0 +1,8 @@
+{
+  "name": "adflow-saas",
+  "version": "1.0.0",
+  "description": "AdFlow SaaS Application",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}
