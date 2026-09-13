@@ -5,13 +5,13 @@ import google.generativeai as genai
 app = Flask(__name__)
 
 @app.route('/api/generate', methods=['POST', 'OPTIONS'])
+@app.route('/generate', methods=['POST', 'OPTIONS'])
 def generate():
-    # Permite a comunicação entre o site e a API
     if request.method == 'OPTIONS':
         return '', 200
         
     try:
-        data = request.get_json()
+        data = request.get_json() or {}
         produto = data.get('produto', '')
         estilo = data.get('estilo', 'Review Sincero')
         tom = data.get('tom', 'Entusiasta')
@@ -56,9 +56,10 @@ def generate():
         """
 
         response = model.generate_content(prompt_master)
-        
-        # Devolve a resposta estruturada para o site
         return jsonify({'result': response.text})
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+# Aponta a entrada do servidor para o Flask
+handler = app
