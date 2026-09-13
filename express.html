@@ -36,22 +36,32 @@
 
   <div id="app-container" class="hidden max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
     
+    <!-- HEADER DA PÁGINA COM O NOVO BADGE DE CRÉDITOS -->
     <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
       <a href="index.html" class="flex items-center gap-2 group" title="Voltar ao início">
         <span class="text-2xl font-black tracking-tight text-white group-hover:opacity-80 transition">
           Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
         </span>
       </a>
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- NOVA CAIXA INFORMATIVA DE CRÉDITOS -->
+        <div title="Seus Créditos Express" class="flex items-center gap-1.5 px-3 py-2 bg-slate-900/80 border border-cyan-500/30 rounded-xl cursor-help shadow-inner hidden sm:flex">
+          <span class="text-xs">⚡</span>
+          <span class="text-xs font-bold text-slate-300">Saldo:</span>
+          <strong id="header-creditos-badge" class="text-cyan-400 text-sm font-black">0</strong>
+        </div>
+
         <button onclick="abrirPerfil()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-xl font-bold text-xs text-slate-200 transition flex items-center gap-2 shadow">
           👤 <span id="user-display-name">Minha Conta</span>
         </button>
         <button onclick="fazerLogout()" class="px-3 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-700 transition text-red-400 hover:text-red-300 flex items-center gap-1">
-          🚪 Sair
+          🚪 <span class="hidden sm:inline">Sair</span>
         </button>
       </div>
     </div>
 
+    <!-- NAVEGAÇÃO -->
     <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
       <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         🎛️ Estúdio
@@ -179,13 +189,22 @@
         const nomeCompleto = data.nome || user.email.split('@')[0];
         const primeiroNome = nomeCompleto.split(' ')[0];
 
+        // Atualiza UI Geral
         document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
         document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
         document.getElementById('modal-email').innerText = data.email || user.email;
         document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
+        
+        // Atualiza os Créditos no Modal
         document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
         document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
         document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+
+        // Atualiza o Crédito na Caixa Superior (Header)
+        if(document.getElementById('header-creditos-badge')) {
+          document.getElementById('header-creditos-badge').innerText = data.creditos?.express ?? 0;
+        }
+
       } catch (err) { 
         console.error("Erro ao carregar dados:", err); 
       }
@@ -348,13 +367,17 @@
           const novoSaldo = Math.max(0, creditosExpress - 1);
           try {
             await updateDoc(userDocRef, { "creditos.express": novoSaldo });
+            
+            // Atualiza os créditos nos 2 lugares em tempo real!
             document.getElementById('cred-express').innerText = novoSaldo;
+            if(document.getElementById('header-creditos-badge')) {
+              document.getElementById('header-creditos-badge').innerText = novoSaldo;
+            }
           } catch (dbErr) { console.error("Erro ao atualizar créditos:", dbErr); }
         }
 
         const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Estratégia e Prompts gerados com sucesso!</div>`;
         
-        // CAIXA DE INSTRUÇÕES COM UX APRIMORADA
         const instrucoesUso = `
           <div class="mb-6 p-5 bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-cyan-500/30 rounded-2xl shadow-lg">
             <h4 class="text-cyan-400 font-bold text-lg mb-3 flex items-center gap-2">💡 Como criar seus vídeos agora:</h4>
