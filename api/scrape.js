@@ -19,38 +19,62 @@ export default async function handler(req, res) {
   }
 
   try {
-    const targetUrl = url.startsWith('http') ? url : `https://${url}`;
-    
-    // Leitor inteligente para renderizar páginas dinâmicas e converter em texto limpo
-    const response = await fetch(`https://r.jina.ai/${targetUrl}`, {
-      headers: {
-        'Accept': 'application/json',
-        'X-No-Cache': 'true'
-      }
-    });
+    const rawUrl = url.trim();
+    const cleanUrl = rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`;
 
-    if (!response.ok) {
-      throw new Error(`Falha ao ler a página (${response.status})`);
+    // Extrai o nome do produto diretamente da estrutura do link (URL Slug)
+    let urlSlugTitle = "";
+    try {
+      const parsedUrl = new URL(cleanUrl);
+      const pathSegments = parsedUrl.pathname.split('/').filter(Boolean);
+      
+      // Procura o trecho do texto do produto na URL (ex: /cadeira-para-auto-cosco...)
+      const slugSegment = pathSegments.find(s => s.length > 5 && !s.startsWith('MLB') && !s.startsWith('i.'));
+      if (slugSegment) {
+        urlSlugTitle = decodeURIComponent(slugSegment)
+          .replace(/[-_]/g, ' ')
+          .replace(/\b(sp|br|p|item|product)\b/gi, '')
+          .trim();
+      }
+    } catch (e) {
+      console.warn("Erro ao extrair slug da URL", e);
     }
 
-    const data = await response.json();
-    const rawContent = data.data?.content || '';
+    // Leitura complementar via scraping
+    let scrapedText = "";
+    try {
+      const response = await fetch(`https://r.jina.ai/${cleanUrl}`, {
+        headers: {
+          'Accept': 'application/json',
+          'X-No-Cache': 'true'
+        }
+      });
 
-    // Filtra e limpa scripts, links e marcadores desnecessários
-    const cleanContent = rawContent
-      .replace(/!\[.*?\]\(.*?\)/g, '')
-      .replace(/\[.*?\]\(.*?\)/g, '')
-      .replace(/\s+/g, ' ')
-      .trim()
-      .substring(0, 3000);
+      if (response.ok) {
+        const data = await response.json();
+        const content = data.data?.content || '';
+        scrapedText = content
+          .replace(/!\[.*?\]\(.*?\)/g, '')
+          .replace(/\[.*?\]\(.*?\)/g, '')
+          .replace(/\s+/g, ' ')
+          .substring(0, 2000);
+      }
+    } catch (e) {
+      console.warn("Falha ao raspar via proxy", e);
+    }
+
+    // Prioriza o nome extraído do link se a raspagem trouxer conteúdos irrelevantes
+    const finalProductInfo = urlSlugTitle 
+      ? `PRODUTO IDENTIFICADO NO LINK: ${urlSlugTitle}\nDETALHES ADICIONAIS: ${scrapedText}`
+      : `DETALHES DO PRODUTO: ${scrapedText || cleanUrl}`;
 
     return res.status(200).json({
       success: true,
-      extractedData: cleanContent || `Produto extraído da URL: ${targetUrl}`
+      productName: urlSlugTitle,
+      extractedData: finalProductInfo
     });
 
   } catch (error) {
-    console.error("Erro no scraping:", error);
-    return res.status(500).json({ error: 'Erro ao extrair dados da URL: ' + error.message });
+    return res.status(500).json({ error: 'Erro ao processar URL: ' + error.message });
   }
 }
