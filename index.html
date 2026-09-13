@@ -56,7 +56,7 @@
   </div>
 
   <script>
-    // ⚠️ COLE A SUA CHAVE DA GROQ AQUI (COMEÇA COM gsk_):
+    // Cole a sua chave da Groq (gsk_...) entre as aspas na linha abaixo caso precise re-inserir:
     const API_KEY = "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";
 
     async function gerarPrompt() {
@@ -69,11 +69,6 @@
 
       if (!produto.trim()) {
         alert('⚠️ Por favor, insira os dados do produto.');
-        return;
-      }
-
-      if (!API_KEY.startsWith("gsk_")) {
-        alert('⚠️ A chave inserida não parece válida. Vá no console.groq.com e gere uma chave que comece com "gsk_".');
         return;
       }
 
@@ -115,7 +110,6 @@
       `;
 
       try {
-        // Chamada para a API da Groq (Llama 3.1)
         const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
           method: 'POST',
           headers: { 
@@ -123,7 +117,7 @@
             'Authorization': `Bearer ${API_KEY}`
           },
           body: JSON.stringify({
-            model: "llama-3.1-70b-versatile",
+            model: "llama-3.3-70b-versatile",
             messages: [
               {
                 role: "user",
