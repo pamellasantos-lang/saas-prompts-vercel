@@ -40,16 +40,16 @@
         </div>
       </a>
 
-      <!-- Botão de Ação Direta -->
-      <a href="express.html" class="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-xs sm:text-sm rounded-xl hover:opacity-90 transition transform hover:scale-105 shadow-lg shadow-pink-500/20">
-        🚀 Testar Grátis
+      <!-- Botão de Login / Área de Membros -->
+      <a href="#" onclick="alert('Sistema de login em desenvolvimento (Fase 3)')" class="px-5 py-2.5 border border-slate-600 font-bold text-xs sm:text-sm rounded-xl hover:bg-slate-800 transition shadow-lg">
+        👤 Entrar
       </a>
     </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
 
-    <!-- Hero Section (Limpa, focada na mensagem) -->
+    <!-- Hero Section (Introdução) -->
     <section class="text-center space-y-6 max-w-3xl mx-auto">
       <span class="px-3 py-1 bg-pink-500/10 text-pink-400 border border-pink-500/30 rounded-full text-xs font-bold uppercase tracking-wider">
         Para Vendedores, Afiliados e Criadores Faceless
@@ -58,36 +58,12 @@
         Transforme produtos em <span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">vídeos virais</span> que vendem todos os dias.
       </h1>
       <p class="text-slate-400 text-base sm:text-lg">
-        O AdFlow cria roteiros persuasivos em Português com quebra de objeções e prompts visuais em Inglês para Kling AI, Luma Machine, Runway e Influencers IA em segundos.
+        O AdFlow cria roteiros persuasivos com quebra de objeções e prompts visuais para IAs em segundos, além de rastrear os produtos que mais vendem no Brasil.
       </p>
     </section>
 
-    <!-- Módulos de Criação -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-pink-500/40 transition">
-        <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎛️</div>
-        <h3 class="text-lg font-bold">Modo Estúdio</h3>
-        <p class="text-slate-400 text-sm">Personalize o estilo do vídeo (Unboxing, Review, Problema/Solução) e escolha o tom ideal da narração comercial.</p>
-        <a href="estudio.html" class="text-xs text-pink-400 font-bold hover:underline inline-block pt-2">Ir para o Estúdio &rarr;</a>
-      </div>
-
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-cyan-500/40 transition">
-        <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center text-2xl font-bold">⚡</div>
-        <h3 class="text-lg font-bold">Modo Express (URL)</h3>
-        <p class="text-slate-400 text-sm">Cole o link da Shopee, Mercado Livre ou Amazon. O robô mina as avaliações e cria um roteiro focado em destruir objeções.</p>
-        <a href="express.html" class="text-xs text-cyan-400 font-bold hover:underline inline-block pt-2">Usar Modo Express &rarr;</a>
-      </div>
-
-      <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-purple-500/40 transition">
-        <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎭</div>
-        <h3 class="text-lg font-bold">Influencer IA</h3>
-        <p class="text-slate-400 text-sm">Crie ensaios fotográficos e vídeos hiper-realistas para modelos virtuais de IA vestindo roupas, calçados e acessórios.</p>
-        <a href="influencer.html" class="text-xs text-purple-400 font-bold hover:underline inline-block pt-2">Criar Influencer IA &rarr;</a>
-      </div>
-    </section>
-
-    <!-- Radar de Produtos Virais em Alta -->
-    <section class="bg-slate-800/40 p-6 sm:p-8 rounded-3xl border border-slate-700/80 space-y-6">
+    <!-- Radar de Produtos Virais (MOVIDO PARA CIMA + PAYWALL) -->
+    <section class="bg-slate-800/40 p-6 sm:p-8 rounded-3xl border border-slate-700/80 space-y-6 relative overflow-hidden">
       
       <!-- Cabeçalho do Radar -->
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -95,121 +71,98 @@
           <h2 class="text-2xl font-black text-white flex items-center gap-2">🔥 Radar de Mineração</h2>
           <p class="text-sm text-slate-400 mt-1">Produtos validados com alto volume de vendas na última semana. Escolha o seu nicho.</p>
         </div>
-        
-        <!-- Filtros de Nicho (Visuais para agregar valor) -->
         <div class="flex flex-wrap gap-2">
-          <button class="px-3 py-1.5 bg-slate-700 text-white text-xs font-bold rounded-lg hover:bg-slate-600 transition">Todos</button>
-          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg hover:text-white transition">💄 Beleza</button>
-          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg hover:text-white transition">🏠 Casa</button>
-          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg hover:text-white transition">🔌 Tech</button>
+          <button class="px-3 py-1.5 bg-slate-700 text-white text-xs font-bold rounded-lg opacity-50 cursor-not-allowed">Todos</button>
+          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg opacity-50 cursor-not-allowed">💄 Beleza</button>
+          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg opacity-50 cursor-not-allowed">🔌 Tech</button>
         </div>
       </div>
 
-      <!-- Grid de Produtos -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+      <!-- PAYWALL (Bloqueio Visual) -->
+      <div class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900/80 backdrop-blur-sm pt-10">
+        <div class="bg-slate-800 border border-slate-700 p-8 rounded-2xl shadow-2xl text-center max-w-md mx-4 transform transition-all hover:scale-105">
+          <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-purple-500/30">
+            <span class="text-2xl">🔒</span>
+          </div>
+          <h3 class="text-2xl font-black text-white mb-2">Ferramenta VIP Bloqueada</h3>
+          <p class="text-slate-400 text-sm mb-6">
+            Poupe horas de pesquisa! Descubra os produtos mais quentes e lucrativos do momento com um clique. Acesso liberado no <strong>Plano Básico</strong>.
+          </p>
+          <button onclick="alert('Integração de pagamento em breve!')" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-400 text-slate-900 font-extrabold rounded-xl hover:opacity-90 transition-all shadow-lg shadow-emerald-500/20">
+            Desbloquear por apenas R$ 19,90/mês
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid de Produtos (Ficam embaçados ao fundo) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2 select-none pointer-events-none opacity-40 blur-[2px]">
         
-        <!-- Produto 1: Seladora -->
-        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-orange-500/50 transition-all flex flex-col overflow-hidden group">
+        <!-- Produto 1 (Fake BG) -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 flex flex-col overflow-hidden">
           <div class="h-40 w-full relative overflow-hidden bg-slate-800">
-            <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80" alt="Seladora" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
-            <div class="absolute top-2 left-2 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase">Shopee</div>
-            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">🏠 Casa</div>
+            <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80" alt="Seladora" class="object-cover w-full h-full opacity-80">
+            <div class="absolute top-2 left-2 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded">Shopee</div>
           </div>
           <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
             <div>
-              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Mini Seladora de Embalagens Portátil</h3>
-              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
-                <span class="animate-pulse">📈</span> +2.140 vendas (7 dias)
-              </div>
-            </div>
-            <div class="flex gap-2 pt-2">
-              <a href="https://shopee.com.br/search?keyword=mini%20seladora%20embalagem" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
-                🔗
-              </a>
-              <button onclick="gerarDireto('Mini Seladora de Embalagens Portátil a Pilha. Veda sacos de salgadinho e alimentos em segundos por aquecimento.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
-                ⚡ Criar Roteiro
-              </button>
+              <h3 class="font-bold text-sm text-slate-100">Mini Seladora de Embalagens Portátil</h3>
+              <div class="mt-2 inline-flex items-center bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold">+2.140 vendas</div>
             </div>
           </div>
         </div>
 
-        <!-- Produto 2: Projetor Galáxia -->
-        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-cyan-500/50 transition-all flex flex-col overflow-hidden group">
+        <!-- Produto 2 (Fake BG) -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 flex flex-col overflow-hidden">
           <div class="h-40 w-full relative overflow-hidden bg-slate-800">
-            <img src="https://images.unsplash.com/photo-1614729939124-03290b8ffa58?auto=format&fit=crop&w=400&q=80" alt="Projetor" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
-            <div class="absolute top-2 left-2 bg-black text-white text-[10px] font-black px-2 py-1 rounded shadow-lg flex items-center gap-1 border border-slate-700">
-              <span class="text-cyan-400">🎵</span> TikTok Shop
-            </div>
-            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">🔌 Tech</div>
+            <img src="https://images.unsplash.com/photo-1614729939124-03290b8ffa58?auto=format&fit=crop&w=400&q=80" alt="Projetor" class="object-cover w-full h-full opacity-80">
+            <div class="absolute top-2 left-2 bg-black text-white text-[10px] font-black px-2 py-1 rounded">TikTok Shop</div>
           </div>
           <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
             <div>
-              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Projetor Luminária Astronauta Galáxia 3D</h3>
-              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
-                <span class="animate-pulse">📈</span> +4.500 vendas (7 dias)
-              </div>
-            </div>
-            <div class="flex gap-2 pt-2">
-              <a href="https://shopee.com.br/search?keyword=projetor%20astronauta%20galaxia" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
-                🔗
-              </a>
-              <button onclick="gerarDireto('Projetor Luminaria Astronauta Galaxia Laser com efeitos de nebulosa 3D para quarto, controle remoto e timer.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
-                ⚡ Criar Roteiro
-              </button>
+              <h3 class="font-bold text-sm text-slate-100">Projetor Luminária Astronauta</h3>
+              <div class="mt-2 inline-flex items-center bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold">+4.500 vendas</div>
             </div>
           </div>
         </div>
+        
+        <!-- Produto 3 (Fake BG) -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 flex flex-col overflow-hidden hidden sm:flex">
+          <div class="h-40 w-full relative overflow-hidden bg-slate-800"></div>
+          <div class="p-4 flex-1"></div>
+        </div>
+        
+        <!-- Produto 4 (Fake BG) -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 flex flex-col overflow-hidden hidden lg:flex">
+          <div class="h-40 w-full relative overflow-hidden bg-slate-800"></div>
+          <div class="p-4 flex-1"></div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Produto 3: Escova Secadora -->
-        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col overflow-hidden group">
-          <div class="h-40 w-full relative overflow-hidden bg-slate-800">
-            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80" alt="Escova" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
-            <div class="absolute top-2 left-2 bg-yellow-500 text-slate-900 text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase">Mercado Livre</div>
-            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">💄 Beleza</div>
-          </div>
-          <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
-            <div>
-              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Escova Secadora Modeladora 3 em 1 de Cerâmica</h3>
-              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
-                <span class="animate-pulse">📈</span> +3.820 vendas (7 dias)
-              </div>
-            </div>
-            <div class="flex gap-2 pt-2">
-              <a href="https://lista.mercadolivre.com.br/escova-secadora-3-em-1" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
-                🔗
-              </a>
-              <button onclick="gerarDireto('Escova Secadora Modeladora 3 em 1 Multifuncional com revestimento ceramico, alisa, seca e da volume rapidamente.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
-                ⚡ Criar Roteiro
-              </button>
-            </div>
-          </div>
+    <!-- Módulos de Criação (Movidos para baixo) -->
+    <section>
+      <h2 class="text-2xl font-black text-white mb-6 text-center">Ou crie com ferramentas manuais:</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-pink-500/40 transition">
+          <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎛️</div>
+          <h3 class="text-lg font-bold">Modo Estúdio</h3>
+          <p class="text-slate-400 text-sm">Personalize o estilo do vídeo (Unboxing, Review, Problema/Solução) e escolha o tom ideal da narração.</p>
+          <a href="estudio.html" class="text-xs text-pink-400 font-bold hover:underline inline-block pt-2">Ir para o Estúdio &rarr;</a>
         </div>
 
-        <!-- Produto 4: Mini Liquidificador -->
-        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-cyan-500/50 transition-all flex flex-col overflow-hidden group">
-          <div class="h-40 w-full relative overflow-hidden bg-slate-800">
-            <img src="https://images.unsplash.com/photo-1600271801401-65f5aa9675cb?auto=format&fit=crop&w=400&q=80" alt="Liquidificador Portatil" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
-            <div class="absolute top-2 left-2 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase">Shopee</div>
-            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">🏋️ Fitness</div>
-          </div>
-          <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
-            <div>
-              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Mini Liquidificador Portátil USB Recarregável</h3>
-              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
-                <span class="animate-pulse">📈</span> +1.950 vendas (7 dias)
-              </div>
-            </div>
-            <div class="flex gap-2 pt-2">
-              <a href="https://shopee.com.br/search?keyword=mini%20liquidificador%20portatil" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
-                🔗
-              </a>
-              <button onclick="gerarDireto('Mini Liquidificador Portatil Copo USB Recarregavel para fazer shakes, vitaminas e sucos em qualquer lugar.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
-                ⚡ Criar Roteiro
-              </button>
-            </div>
-          </div>
+        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-cyan-500/40 transition">
+          <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center text-2xl font-bold">⚡</div>
+          <h3 class="text-lg font-bold">Modo Express (URL)</h3>
+          <p class="text-slate-400 text-sm">Cole o link de qualquer e-commerce. O robô mina as avaliações e cria um roteiro para quebrar objeções.</p>
+          <a href="express.html" class="text-xs text-cyan-400 font-bold hover:underline inline-block pt-2">Usar Modo Express &rarr;</a>
         </div>
 
+        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/80 space-y-3 hover:border-purple-500/40 transition">
+          <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl font-bold">🎭</div>
+          <h3 class="text-lg font-bold">Influencer IA</h3>
+          <p class="text-slate-400 text-sm">Crie ensaios fotográficos e vídeos para modelos virtuais vestindo suas roupas ou acessórios.</p>
+          <a href="influencer.html" class="text-xs text-purple-400 font-bold hover:underline inline-block pt-2">Criar Influencer IA &rarr;</a>
+        </div>
       </div>
     </section>
 
@@ -219,11 +172,5 @@
     <p>© 2026 AdFlow - Ideias que viram vendas. Todos os direitos reservados.</p>
   </footer>
 
-  <script>
-    // Função para enviar os dados diretamente para a aba "Estúdio" com URL Params
-    function gerarDireto(descricaoProduto) {
-      window.location.href = `estudio.html?produto=${encodeURIComponent(descricaoProduto)}`;
-    }
-  </script>
 </body>
 </html>
