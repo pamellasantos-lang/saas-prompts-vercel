@@ -40,10 +40,21 @@
         </div>
       </a>
 
-      <!-- Botão de Login Conectado à Tela de Autenticação -->
-      <a href="login.html" class="px-5 py-2.5 border border-slate-600 font-bold text-xs sm:text-sm rounded-xl hover:bg-slate-800 transition shadow-lg flex items-center gap-2">
-        👤 Entrar
-      </a>
+      <!-- Botão Dinâmico de Autenticação -->
+      <div id="auth-header-container">
+        <a href="login.html" id="btn-entrar-padrao" class="px-5 py-2.5 border border-slate-600 font-bold text-xs sm:text-sm rounded-xl hover:bg-slate-800 transition shadow-lg flex items-center gap-2">
+          👤 Entrar
+        </a>
+        <div id="user-logged-menu" class="hidden flex items-center gap-2">
+          <button onclick="abrirPerfil()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 font-bold text-xs sm:text-sm rounded-xl transition shadow flex items-center gap-2">
+            👤 <span id="header-user-name">Minha Conta</span>
+          </button>
+          <button onclick="fazerLogout()" class="px-3 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-800 transition text-red-400 hover:text-red-300">
+            🚪 Sair
+          </button>
+        </div>
+      </div>
+
     </div>
   </header>
 
@@ -61,7 +72,6 @@
         O AdFlow cria roteiros persuasivos com quebra de objeções e prompts visuais para IAs em segundos, além de rastrear os produtos que mais vendem no Brasil.
       </p>
 
-      <!-- Botões de Ação Principais -->
       <div class="flex flex-col sm:flex-row justify-center gap-4 pt-4">
         <a href="express.html" class="px-8 py-4 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl text-center shadow-lg hover:scale-105 transition">
           ⚡ Gerar por Link do Produto
@@ -75,7 +85,6 @@
     <!-- Módulos de Criação -->
     <section class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
       
-      <!-- Card Modo Estúdio -->
       <a href="estudio.html" class="group flex flex-col bg-slate-800/60 rounded-2xl border border-slate-700/80 hover:border-pink-500/50 transition-all overflow-hidden shadow-lg hover:shadow-pink-500/20 hover:-translate-y-1">
         <div class="h-44 w-full relative overflow-hidden bg-slate-800">
           <img src="https://images.unsplash.com/photo-1616423640778-28d1b53229bd?auto=format&fit=crop&w=600&q=80" alt="Modo Estúdio" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition duration-500 group-hover:scale-105">
@@ -88,7 +97,6 @@
         </div>
       </a>
 
-      <!-- Card Modo Express -->
       <a href="express.html" class="group flex flex-col bg-slate-800/60 rounded-2xl border border-slate-700/80 hover:border-cyan-500/50 transition-all overflow-hidden shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-1">
         <div class="h-44 w-full relative overflow-hidden bg-slate-800">
           <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80" alt="Modo Express" class="w-full h-full object-cover opacity-60 group-hover:opacity-90 transition duration-500 group-hover:scale-105">
@@ -101,7 +109,6 @@
         </div>
       </a>
 
-      <!-- Card Influencer IA -->
       <a href="influencer.html" class="group flex flex-col bg-slate-800/60 rounded-2xl border border-slate-700/80 hover:border-purple-500/50 transition-all overflow-hidden shadow-lg hover:shadow-purple-500/20 hover:-translate-y-1">
         <div class="h-44 w-full relative overflow-hidden bg-slate-800">
           <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?auto=format&fit=crop&w=600&q=80" alt="Influencer IA" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition duration-500 group-hover:scale-105">
@@ -188,10 +195,116 @@
 
   </main>
 
-  <!-- Footer -->
+  <!-- Modal Área do Membro / Meu Plano -->
+  <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
+      <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+        <div>
+          <h3 class="text-xl font-bold text-white" id="modal-nome">Carregando...</h3>
+          <p class="text-xs text-slate-400" id="modal-email">---</p>
+        </div>
+        <button onclick="fecharPerfil()" class="text-slate-400 hover:text-white font-bold text-lg p-1">✕</button>
+      </div>
+
+      <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700/80 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Plano Atual:</span>
+          <span id="modal-plano" class="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs font-bold uppercase">GRÁTIS</span>
+        </div>
+        <hr class="border-slate-800">
+        <h4 class="text-xs font-bold text-slate-300 uppercase">Criações Disponíveis:</h4>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Estúdio</span>
+            <strong id="cred-estudio" class="text-pink-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Express</span>
+            <strong id="cred-express" class="text-cyan-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Influencer</span>
+            <strong id="cred-influencer" class="text-purple-400 text-sm">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <a href="planos.html" class="block w-full py-3.5 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-center text-xs rounded-xl shadow hover:opacity-90 transition">
+          ⚡ Ver / Mudar de Plano
+        </a>
+        <button onclick="fecharPerfil()" class="w-full py-3 bg-slate-700 hover:bg-slate-600 font-bold text-xs rounded-xl transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <footer class="border-t border-slate-800 py-6 text-center text-slate-500 text-xs mt-auto">
     <p>© 2026 AdFlow - Ideias que viram vendas. Todos os direitos reservados.</p>
   </footer>
 
+  <!-- SCRIPT DO HEADER DINÂMICO -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
+      authDomain: "adflow-1e5b8.firebaseapp.com",
+      projectId: "adflow-1e5b8",
+      storageBucket: "adflow-1e5b8.firebasestorage.app",
+      messagingSenderId: "517881206433",
+      appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      const btnEntrar = document.getElementById('btn-entrar-padrao');
+      const menuLogged = document.getElementById('user-logged-menu');
+
+      if (user) {
+        btnEntrar?.classList.add('hidden');
+        menuLogged?.classList.remove('hidden');
+
+        try {
+          const docRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const nomeCompleto = data.nome || user.email.split('@')[0];
+            const primeiroNome = nomeCompleto.split(' ')[0];
+
+            document.getElementById('header-user-name').innerText = `Olá, ${primeiroNome}`;
+            document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
+            document.getElementById('modal-email').innerText = data.email || user.email;
+            document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
+            document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
+            document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
+            document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+          }
+        } catch (err) {
+          console.error("Erro ao carregar dados:", err);
+        }
+      } else {
+        btnEntrar?.classList.remove('hidden');
+        menuLogged?.classList.add('hidden');
+      }
+    });
+
+    window.abrirPerfil = () => document.getElementById('modal-perfil')?.classList.remove('hidden');
+    window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
+    
+    window.fazerLogout = function() {
+      signOut(auth).then(() => {
+        window.location.reload();
+      });
+    }
+  </script>
 </body>
 </html>
