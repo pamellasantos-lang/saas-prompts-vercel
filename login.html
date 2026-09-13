@@ -6,13 +6,13 @@
   <title>AdFlow - Área de Membros</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4 relative overflow-y-auto">
 
   <!-- Efeito de fundo visual -->
-  <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-pink-600/20 blur-[120px] rounded-full pointer-events-none"></div>
-  <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-cyan-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="fixed top-[-10%] left-[-10%] w-96 h-96 bg-pink-600/20 blur-[120px] rounded-full pointer-events-none"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-96 h-96 bg-cyan-600/20 blur-[120px] rounded-full pointer-events-none"></div>
 
-  <div class="max-w-md w-full bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-slate-700/80 z-10 my-6">
+  <div class="max-w-md w-full bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-slate-700/80 z-10 my-8">
     
     <!-- Logo Vetorial -->
     <div class="flex justify-center mb-6">
@@ -182,7 +182,6 @@
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
 
-          // Cálculo exato de créditos por plano/avulso
           let creditosIniciais = { estudio: 1, express: 1, influencer: 1 };
           if (plano === 'avulso_10') creditosIniciais = { estudio: 1, express: 1, influencer: 1 };
           if (plano === 'avulso_20') creditosIniciais = { estudio: 2, express: 2, influencer: 2 };
