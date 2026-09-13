@@ -194,7 +194,7 @@
 
       const promptMaster = `
         Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
-        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais técnicos em inglês para o produto.
+        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais técnicos em inglês com tradução detalhada para o produto.
 
         DADOS EXTRAÍDOS DO PRODUTO:
         ${produto}
@@ -206,6 +206,7 @@
         1. FALE ESTRITAMENTE SOBRE O PRODUTO MENCIONADO ACIMA.
         2. SEPARE CADA UMA DAS 3 SEÇÕES USANDO O DELIMITADOR EXATO '---'.
         3. NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO COMO "digite aqui".
+        4. EM CADA PROMPT VISUAL, INCLUA O BLOCO DE CÓDIGO EM INGLÊS E LOGO ABAIXO A TRADUÇÃO EXPLICATIVA EM PORTUGUÊS.
 
         RETORNE ESTRITAMENTE NESTE FORMATO:
 
@@ -234,16 +235,19 @@
         \`\`\`text
         Detailed technical prompt in English for initial scene showing the exact product, 4k resolution, 9:16 vertical ratio, photorealistic, cinematic lighting
         \`\`\`
+        > 🇧🇷 **Tradução em Português:** (Explicação em português traduzindo o que a IA vai gerar nesta cena)
 
         **Prompt Visual - Cena 2:**
         \`\`\`text
         Detailed technical prompt in English showing the exact product in use resolving buyer objection, close-up details, 4k, 9:16 vertical ratio
         \`\`\`
+        > 🇧🇷 **Tradução em Português:** (Explicação em português traduzindo o que a IA vai gerar nesta cena)
 
         **Prompt Visual - Cena 3:**
         \`\`\`text
         Detailed technical prompt in English for call-to-action scene with the product, 4k, 9:16 vertical ratio
         \`\`\`
+        > 🇧🇷 **Tradução em Português:** (Explicação em português traduzindo o que a IA vai gerar nesta cena)
       `;
 
       let textoGerado = null;
@@ -264,7 +268,7 @@
               messages: [
                 {
                   role: "system",
-                  content: "Você é um gerador de roteiros comerciais de alta conversão. Escreva obrigatoriamente a análise de objeções e o roteiro sobre o produto especificado."
+                  content: "Você é um gerador de roteiros comerciais de alta conversão. Escreva obrigatoriamente a análise de objeções, o roteiro e os prompts técnicos acompanhados da tradução em português."
                 },
                 {
                   role: "user",
@@ -291,7 +295,6 @@
       if (textoGerado) {
         const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
         
-        // Divide o resultado em caixas separadas usando o separador ---
         const secoes = textoGerado.split('---');
         let htmlResultado = avisoSucesso;
 
