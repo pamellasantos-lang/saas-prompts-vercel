@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -73,7 +73,7 @@
     </div>
 
     <!-- Área do Resultado -->
-    <div id="resultado" class="mt-8 space-y-4 text-sm bg-slate-900 p-6 rounded-xl border border-slate-700 hidden overflow-x-auto prose prose-invert prose-p:leading-relaxed prose-pre:bg-slate-950 prose-pre:border prose-pre:border-slate-700 prose-pre:relative">
+    <div id="resultado" class="mt-8 space-y-4 text-sm bg-slate-900 p-6 rounded-xl border border-slate-700 hidden prose prose-invert prose-p:leading-relaxed">
     </div>
   </div>
 
@@ -101,7 +101,6 @@
       }
     }
 
-    // Busca dinâmica diretamente dos modelos ativos e disponíveis na conta Groq
     async function obterModelosValidosGroq(apiKey) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/models", {
@@ -121,7 +120,6 @@
                      !lower.includes("audio");
             });
 
-          // Prioriza os modelos mais recentes da família Llama 3
           modelosFiltrados.sort((a, b) => {
             if (a.includes("llama-3.3")) return -1;
             if (b.includes("llama-3.3")) return 1;
@@ -273,26 +271,33 @@
       btn.classList.remove('opacity-50');
     }
 
+    // Formata o container do prompt com quebra de linha perfeita e botão fixado no topo
     function adicionarBotoesDeCopiar(container) {
       const blocosCodigo = container.querySelectorAll('pre');
       blocosCodigo.forEach((pre) => {
+        pre.className = 'relative bg-slate-950 p-4 pt-12 rounded-xl border border-slate-700 my-4 text-xs font-mono text-slate-200 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
+        
         const btnCopiar = document.createElement('button');
-        btnCopiar.className = 'absolute top-2 right-2 px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1';
+        btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
         btnCopiar.innerHTML = '📋 Copiar Prompt';
 
         btnCopiar.onclick = () => {
-          const codigoText = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
-          navigator.clipboard.writeText(codigoText.trim()).then(() => {
+          const codeEl = pre.querySelector('code');
+          const textoOriginal = codeEl ? codeEl.innerText : pre.innerText;
+          
+          // Filtra o rótulo do botão caso o innerText acabe incluindo o texto do elemento filho
+          const textoPrompt = textoOriginal.replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
+
+          navigator.clipboard.writeText(textoPrompt).then(() => {
             btnCopiar.innerHTML = '✅ Copiado!';
-            btnCopiar.className = 'absolute top-2 right-2 px-3 py-1 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1';
+            btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
             setTimeout(() => {
               btnCopiar.innerHTML = '📋 Copiar Prompt';
-              btnCopiar.className = 'absolute top-2 right-2 px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1';
+              btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
             }, 2000);
           });
         };
 
-        pre.classList.add('relative');
         pre.appendChild(btnCopiar);
       });
     }
