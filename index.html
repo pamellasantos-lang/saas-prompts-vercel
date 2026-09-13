@@ -16,7 +16,7 @@
     <div class="space-y-5">
       <div>
         <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
-        <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Mini Seladora de Embalagens a Pilha. Veda sacos de salgadinho em segundos..."></textarea>
+        <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Furadeira elétrica portátil sem fio com bateria de longa duração..."></textarea>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -101,45 +101,50 @@
       resDiv.classList.add('hidden');
 
       const promptMaster = `
-        Você é um especialista em marketing de resposta direta para TikTok Shop e Shopee.
-        Crie um roteiro de vídeo curto (15-30s) baseado nas informações do produto.
+        Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
+        Escreva o roteiro REAL de um vídeo curto de alta conversão (15 a 30 segundos) para o produto informado.
 
-        PRODUTO: ${produto}
-        ESTILO: ${estilo}
-        TOM: ${tom}
+        INFORMAÇÕES DO PRODUTO: ${produto}
+        ESTILO DO VÍDEO: ${estilo}
+        TOM DA NARRAÇÃO: ${tom}
 
-        FORMATO EXATO DE RESPOSTA EM MARKDOWN (MANTENHA ESTA ESTRUTURA):
+        REGRAS RÍGIDAS DE GERAÇÃO:
+        1. NUNCA use colchetes [ ], textos genéricos ou instruções como "digite aqui" ou "texto da cena".
+        2. Escreva o texto de narração COMPLETO e FINAL em Português do Brasil, pronto para ser lido ou dublado no CapCut.
+        3. Crie prompts visuais ultra detalhados em INGLÊS focados na geração por IA de vídeo (Kling AI, Luma, Runway), incluindo detalhes de iluminação, movimento de câmera, resolução 4k e proporção vertical 9:16.
+
+        RETORNE ESTRITAMENTE NESTE FORMATO MARKDOWN:
 
         ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
 
         **Cena 1 (0-3s) - Gancho Viral:**
-        🗣️ [Texto da narração informal]
+        🗣️ Narração: (Escreva aqui a frase chocante ou curiosa para prender o espectador)
 
-        **Cena 2 (3-12s) - Demonstração & Objeção:**
-        🗣️ [Texto da narração informal]
+        **Cena 2 (3-12s) - Demonstração & Solução:**
+        🗣️ Narração: (Escreva aqui a explicação persuasiva mostrando o benefício do produto)
 
         **Cena 3 (12-15s) - Chamada para Ação:**
-        🗣️ [Texto da narração informal]
+        🗣️ Narração: (Escreva aqui a chamada final para clicar no carrinho amarelo/link da bio)
 
         ---
 
         ## 🎬 PROMPTS VISUAIS (PRONTOS PARA COPIAR E COLAR)
 
-        > 💡 *Copie cada bloco de código abaixo e cole direto nas IAs de Vídeo (Kling AI, Luma Dream Machine ou Runway):*
+        > 💡 *Copie cada bloco de código abaixo e cole nas IAs de Vídeo:*
 
         **Prompt Visual - Cena 1:**
         \`\`\`text
-        [Prompt em inglês técnico ultra detalhado: 4k, hyper-realistic, 9:16 vertical ratio, lighting, camera movement]
+        (Escreva o prompt técnico em inglês detalhando a cena inicial em 9:16, 4k, hyper-realistic)
         \`\`\`
 
         **Prompt Visual - Cena 2:**
         \`\`\`text
-        [Prompt em inglês técnico ultra detalhado]
+        (Escreva o prompt técnico em inglês detalhando o produto em uso em 9:16, 4k)
         \`\`\`
 
         **Prompt Visual - Cena 3:**
         \`\`\`text
-        [Prompt em inglês técnico ultra detalhado]
+        (Escreva o prompt técnico em inglês detalhando a cena de oferta/fechamento em 9:16)
         \`\`\`
       `;
 
@@ -156,11 +161,15 @@
             model: modeloId,
             messages: [
               {
+                role: "system",
+                content: "Você é um gerador de roteiros comerciais que nunca produz textos marcadores de posição (placeholders) ou colchetes. Toda resposta deve conter cópia real e pronta."
+              },
+              {
                 role: "user",
                 content: promptMaster
               }
             ],
-            temperature: 0.7
+            temperature: 0.6
           })
         });
 
