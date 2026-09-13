@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Proteção Anti-Cache do Navegador -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -34,10 +33,8 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
 
-  <!-- CONTEÚDO INICIA OCULTO E SÓ É EXIBIDO APÓS CONFIRMAÇÃO DO FIREBASE -->
   <div id="app-container" class="hidden max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
     
-    <!-- Topo / Cabeçalho com Logo Clicável e Área de Membro -->
     <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
       <a href="index.html" class="flex items-center gap-2 group" title="Voltar ao início">
         <span class="text-2xl font-black tracking-tight text-white group-hover:opacity-80 transition">
@@ -54,7 +51,6 @@
       </div>
     </div>
 
-    <!-- Navegação Entre Ferramentas (Sem a opção Início) -->
     <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
       <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         🎛️ Estúdio
@@ -69,7 +65,7 @@
     
     <div class="space-y-4">
       <div class="p-3 bg-purple-500/10 border border-purple-500/30 rounded-xl text-purple-300 text-xs">
-        ✨ <strong>Módulo Influencer IA:</strong> Crie prompts de fotos e vídeos realistas focados na sua modelo virtual vestindo roupas, calçados, joias ou acessórios para campanhas de vendas.
+        ✨ <strong>Módulo Influencer IA:</strong> Prompts otimizados para <strong>Kling AI & Luma Dream Machine</strong> para modelos virtuais de moda e acessórios.
       </div>
 
       <div>
@@ -86,8 +82,8 @@
         <div>
           <label class="block text-sm font-semibold mb-2 text-slate-300">🖼️ Formato Desejado:</label>
           <select id="inf-formato" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-purple-400">
+            <option>Vídeo Comercial (Kling AI / Luma Dream Machine)</option>
             <option>Foto Ensaio (Midjourney / Flux / Fooocus)</option>
-            <option>Vídeo Comercial (Kling / Luma / Runway)</option>
           </select>
         </div>
         <div>
@@ -103,21 +99,17 @@
       </div>
 
       <button onclick="gerarPrompt()" id="btn" class="w-full py-4 mt-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl hover:opacity-90 transform transition hover:scale-[1.02] shadow-lg">
-        🚀 Gerar Prompts da Influencer
+        🚀 Gerar Prompts da Influencer (Kling AI & Luma)
       </button>
     </div>
 
-    <!-- Status de Carregamento -->
     <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-      <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
+      <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Gerando movimentos ultra-realistas de modelo para Kling & Luma... Aguarde!</p>
     </div>
 
-    <!-- Área do Resultado -->
-    <div id="resultado" class="mt-8 space-y-6 text-sm hidden">
-    </div>
+    <div id="resultado" class="mt-8 space-y-6 text-sm hidden"></div>
   </div>
 
-  <!-- Modal Área do Membro / Meu Plano -->
   <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
       <div class="flex justify-between items-center border-b border-slate-700 pb-4">
@@ -200,49 +192,49 @@
       btn.classList.add('opacity-50');
       loadDiv.classList.remove('hidden');
       resDiv.classList.add('hidden');
-      statusTexto.innerText = "🎭 Gerando ensaio visual e roteiro para a Influencer IA...";
+      statusTexto.innerText = "🎭 Gerando ensaio de vídeo otimizado para Kling AI & Luma...";
 
       const promptMaster = `
-        Você é um diretor de arte e engenheiro de prompt de topo focado em Influencers Virtuais de IA (Moda e Acessórios).
-        Crie o pacote de prompts visuais técnicos e a legenda viral de vendas para redes sociais.
+        Você é um diretor de arte especialista em Influencers Virtuais de IA e geradores de vídeo por IA (Kling AI e Luma Dream Machine).
+        Crie o pacote de prompts visuais técnicos em inglês com comandos de movimento de modelo e câmera, mais a legenda pronta de vendas.
 
         PERFIL DA INFLUENCER: ${perfil}
-        PRODUTO / PEÇA DE ROUPA / ACESSÓRIO: ${produtoModa}
-        FORMATO DESEJADO: ${formato}
-        CENÁRIO / AMBIENTAÇÃO: ${cenario}
+        PRODUTO / PEÇA: ${produtoModa}
+        FORMATO: ${formato}
+        CENÁRIO: ${cenario}
 
         REGRAS DE FORMATO:
-        1. SEPARE AS 3 SEÇÕES USANDO O DELIMITADOR '---'.
-        2. NÃO USE COLCHETES [ ].
+        1. SEPARE AS 3 SEÇÕES COM '---'.
+        2. OS PROMPTS DEVEM CONTER COMANDOS ESPECÍFICOS PARA KLING AI & LUMA DREAM MACHINE (Camera: Slow Panning, Camera: Tracking Shot, Model Motion: Walking gracefully, Vertical 9:16).
 
         FORMATO EXATO:
 
         ## 💃 CONCEITO DA CAMPANHA & LOOK
-        * **✨ Estilo do Ensaio:** (Conceito visual do look/acessório na influencer)
+        * **✨ Estilo do Ensaio:** (Conceito visual do look na influencer)
         * **🎯 Gatilho de Desejo:** (Por que este look gera vendas)
 
         ---
 
         ## 📱 LEGENDA VIRAL PARA REELS / TIKTOK (PT-BR)
-        🗣️ **Legenda Pronta:** (Legenda completa com emojis e call to action para vender a peça, ex: "Link do look na bio!")
+        🗣️ **Legenda Pronta:** (Legenda persuasiva com emojis e call to action)
 
         ---
 
-        ## 🎬 PROMPTS VISUAIS DA INFLUENCER (PRONTOS PARA COPIAR E COLAR)
+        ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA DREAM MACHINE
 
-        ### 📸 Prompt 1: Ensaio de Corpo Inteiro (Full Body Shot)
+        ### 📸 Prompt 1: Ensaio em Movimento (Full Body Motion)
         \`\`\`text
-        Photorealistic 8k vertical 9:16 shot of ${perfil} wearing ${produtoModa}, set in ${cenario}. Ultra detailed fabric texture, natural skin pores, 85mm portrait lens, f/1.8 depth of field, natural sunlight, cinematic color grading, hyper-realistic, photorealistic
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. ${perfil} wearing ${produtoModa}, located in ${cenario}. Model motion: Walking gracefully towards camera while turning slightly to display outfit fit. Camera: Smooth tracking backward movement. Realistic fabric motion, natural skin texture, cinematic golden hour lighting, photorealistic 8k, 60fps.
         \`\`\`
         > 🇧🇷 **Tradução em Português (Prompt 1):**
-        > Descrição em português da pose de corpo inteiro exibindo a peça.
+        > Tradução e detalhes de movimento da modelo explicados em português.
 
-        ### 🔎 Prompt 2: Close-up de Detalhes do Produto (Close-Up Shot)
+        ### 🔎 Prompt 2: Close-up de Detalhes do Acessório / Tecido
         \`\`\`text
-        Close-up macro shot vertical 9:16 of ${perfil} showcasing the intricate details of ${produtoModa}, set in ${cenario}, soft bokeh background, sharp focus on fabric texture and jewelry polish, 4k, hyper-realistic
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Close-up macro video shot of ${perfil} adjusting ${produtoModa}. Camera: Slow tilt-up shot focused on fabric weave and metallic reflections. Shallow depth of field, soft bokeh, 4k photorealistic render.
         \`\`\`
         > 🇧🇷 **Tradução em Português (Prompt 2):**
-        > Descrição em português focada no zoom dos detalhes e texturas da peça.
+        > Tradução e detalhes do zoom explicados em português.
       `;
 
       let textoGerado = null;
@@ -272,7 +264,7 @@
       }
 
       if (textoGerado) {
-        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompts de Influencer otimizados para Kling AI & Luma!</div>`;
         const secoes = textoGerado.split('---');
         let htmlResultado = avisoSucesso;
         secoes.forEach(secao => {
@@ -314,7 +306,6 @@
     }
   </script>
 
-  <!-- FIREBASE AUTH & ÁREA DO MEMBRO -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -359,15 +350,10 @@
           document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
           document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
         }
-      } catch (err) {
-        console.error("Erro ao carregar dados do usuário:", err);
-      }
+      } catch (err) { console.error("Erro ao carregar dados:", err); }
     }
 
-    onAuthStateChanged(auth, (user) => {
-      carregarPerfil(user);
-    });
-
+    onAuthStateChanged(auth, (user) => { carregarPerfil(user); });
     window.addEventListener('pageshow', (event) => {
       if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         carregarPerfil(auth.currentUser);
@@ -378,9 +364,7 @@
     window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
     
     window.fazerLogout = function() {
-      signOut(auth).then(() => {
-        window.location.replace("index.html");
-      });
+      signOut(auth).then(() => { window.location.replace("index.html"); });
     }
   </script>
 </body>
