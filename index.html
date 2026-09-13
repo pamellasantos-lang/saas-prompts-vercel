@@ -87,73 +87,140 @@
     </section>
 
     <!-- Radar de Produtos Virais em Alta -->
-    <section class="bg-slate-800/40 p-6 sm:p-8 rounded-2xl border border-slate-700/80 space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+    <section class="bg-slate-800/40 p-6 sm:p-8 rounded-3xl border border-slate-700/80 space-y-6">
+      
+      <!-- Cabeçalho do Radar -->
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold text-white flex items-center gap-2">🔥 Radar de Produtos Virais</h2>
-          <p class="text-xs text-slate-400">Produtos com alta demanda de vendas na Shopee, TikTok e Mercado Livre.</p>
+          <h2 class="text-2xl font-black text-white flex items-center gap-2">🔥 Radar de Mineração</h2>
+          <p class="text-sm text-slate-400 mt-1">Produtos validados com alto volume de vendas na última semana. Escolha o seu nicho.</p>
         </div>
-        <span class="text-xs font-semibold px-2.5 py-1 bg-pink-500/20 text-pink-400 rounded-full border border-pink-500/30">Atualizado Semanalmente</span>
+        
+        <!-- Filtros de Nicho (Visuais para agregar valor) -->
+        <div class="flex flex-wrap gap-2">
+          <button class="px-3 py-1.5 bg-slate-700 text-white text-xs font-bold rounded-lg hover:bg-slate-600 transition">Todos</button>
+          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg hover:text-white transition">💄 Beleza</button>
+          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg hover:text-white transition">🏠 Casa</button>
+          <button class="px-3 py-1.5 bg-slate-900 border border-slate-700 text-slate-400 text-xs font-bold rounded-lg hover:text-white transition">🔌 Tech</button>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Produto 1 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded border border-orange-500/30">Shopee Virais</span>
-            <h3 class="font-bold text-sm text-slate-200">Mini Seladora de Embalagens Portátil</h3>
-            <p class="text-xs text-slate-400">Veda sacos plásticos em segundos por aquecimento a pilha.</p>
+      <!-- Grid de Produtos -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+        
+        <!-- Produto 1: Seladora -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-orange-500/50 transition-all flex flex-col overflow-hidden group">
+          <div class="h-40 w-full relative overflow-hidden bg-slate-800">
+            <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80" alt="Seladora" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="absolute top-2 left-2 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase">Shopee</div>
+            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">🏠 Casa</div>
           </div>
-          <button onclick="gerarDireto('Mini Seladora de Embalagens Portátil a Pilha. Veda sacos de salgadinho e alimentos em segundos por aquecimento.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar em 1 Clique
-          </button>
+          <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Mini Seladora de Embalagens Portátil</h3>
+              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
+                <span class="animate-pulse">📈</span> +2.140 vendas (7 dias)
+              </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+              <a href="https://shopee.com.br/search?keyword=mini%20seladora%20embalagem" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
+                🔗
+              </a>
+              <button onclick="gerarDireto('Mini Seladora de Embalagens Portátil a Pilha. Veda sacos de salgadinho e alimentos em segundos por aquecimento.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
+                ⚡ Criar Roteiro
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Produto 2 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded border border-cyan-500/30">TikTok Trends</span>
-            <h3 class="font-bold text-sm text-slate-200">Projetor Luminária Astronauta Galáxia</h3>
-            <p class="text-xs text-slate-400">Luminária laser com efeitos nebulosos 3D e controle remoto.</p>
+        <!-- Produto 2: Projetor Galáxia -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-cyan-500/50 transition-all flex flex-col overflow-hidden group">
+          <div class="h-40 w-full relative overflow-hidden bg-slate-800">
+            <img src="https://images.unsplash.com/photo-1614729939124-03290b8ffa58?auto=format&fit=crop&w=400&q=80" alt="Projetor" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="absolute top-2 left-2 bg-black text-white text-[10px] font-black px-2 py-1 rounded shadow-lg flex items-center gap-1 border border-slate-700">
+              <span class="text-cyan-400">🎵</span> TikTok Shop
+            </div>
+            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">🔌 Tech</div>
           </div>
-          <button onclick="gerarDireto('Projetor Luminaria Astronauta Galaxia Laser com efeitos de nebulosa 3D para quarto, controle remoto e timer.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar em 1 Clique
-          </button>
+          <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Projetor Luminária Astronauta Galáxia 3D</h3>
+              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
+                <span class="animate-pulse">📈</span> +4.500 vendas (7 dias)
+              </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+              <a href="https://shopee.com.br/search?keyword=projetor%20astronauta%20galaxia" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
+                🔗
+              </a>
+              <button onclick="gerarDireto('Projetor Luminaria Astronauta Galaxia Laser com efeitos de nebulosa 3D para quarto, controle remoto e timer.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
+                ⚡ Criar Roteiro
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Produto 3 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded border border-yellow-500/30">Mercado Livre</span>
-            <h3 class="font-bold text-sm text-slate-200">Cadeirinha Infantil ISOFIX (9-36kg)</h3>
-            <p class="text-xs text-slate-400">Assento veicular seguro com cinto de 5 pontos e reclinamento.</p>
+        <!-- Produto 3: Escova Secadora -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col overflow-hidden group">
+          <div class="h-40 w-full relative overflow-hidden bg-slate-800">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80" alt="Escova" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="absolute top-2 left-2 bg-yellow-500 text-slate-900 text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase">Mercado Livre</div>
+            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">💄 Beleza</div>
           </div>
-          <button onclick="gerarDireto('Cadeirinha de Bebe para Automovel com sistema ISOFIX, cinto de segurança de 5 pontos, reclinavel para crianças de 9kg a 36kg.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar em 1 Clique
-          </button>
+          <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Escova Secadora Modeladora 3 em 1 de Cerâmica</h3>
+              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
+                <span class="animate-pulse">📈</span> +3.820 vendas (7 dias)
+              </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+              <a href="https://lista.mercadolivre.com.br/escova-secadora-3-em-1" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
+                🔗
+              </a>
+              <button onclick="gerarDireto('Escova Secadora Modeladora 3 em 1 Multifuncional com revestimento ceramico, alisa, seca e da volume rapidamente.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
+                ⚡ Criar Roteiro
+              </button>
+            </div>
+          </div>
         </div>
 
-        <!-- Produto 4 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700/80 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div class="space-y-2">
-            <span class="text-[10px] font-bold px-2 py-0.5 bg-pink-500/20 text-pink-400 rounded border border-pink-500/30">TikTok Virais</span>
-            <h3 class="font-bold text-sm text-slate-200">Escova Secadora Modeladora 3 em 1</h3>
-            <p class="text-xs text-slate-400">Seca, alisa e dá volume em minutos com revestimento cerâmico.</p>
+        <!-- Produto 4: Mini Liquidificador -->
+        <div class="bg-slate-900 rounded-2xl border border-slate-700/80 hover:border-cyan-500/50 transition-all flex flex-col overflow-hidden group">
+          <div class="h-40 w-full relative overflow-hidden bg-slate-800">
+            <img src="https://images.unsplash.com/photo-1600271801401-65f5aa9675cb?auto=format&fit=crop&w=400&q=80" alt="Liquidificador Portatil" class="object-cover w-full h-full group-hover:scale-105 transition duration-500 opacity-80">
+            <div class="absolute top-2 left-2 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded shadow-lg uppercase">Shopee</div>
+            <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-700">🏋️ Fitness</div>
           </div>
-          <button onclick="gerarDireto('Escova Secadora Modeladora 3 em 1 Multifuncional com revestimento ceramico, alisa, seca e da volume rapidamente.')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar em 1 Clique
-          </button>
+          <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
+            <div>
+              <h3 class="font-bold text-sm text-slate-100 leading-snug line-clamp-2">Mini Liquidificador Portátil USB Recarregável</h3>
+              <div class="mt-2 inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-xs font-bold border border-emerald-500/20">
+                <span class="animate-pulse">📈</span> +1.950 vendas (7 dias)
+              </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+              <a href="https://shopee.com.br/search?keyword=mini%20liquidificador%20portatil" target="_blank" class="w-10 flex items-center justify-center bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-xl transition" title="Ver produto na loja">
+                🔗
+              </a>
+              <button onclick="gerarDireto('Mini Liquidificador Portatil Copo USB Recarregavel para fazer shakes, vitaminas e sucos em qualquer lugar.')" class="flex-1 py-2.5 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-pink-600 hover:to-cyan-500 text-slate-300 hover:text-white text-xs font-bold rounded-xl border border-slate-600 hover:border-transparent transition-all shadow-md">
+                ⚡ Criar Roteiro
+              </button>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
 
   </main>
 
-  <footer class="border-t border-slate-800 py-6 text-center text-slate-500 text-xs">
+  <footer class="border-t border-slate-800 py-6 text-center text-slate-500 text-xs mt-auto">
     <p>© 2026 AdFlow - Ideias que viram vendas. Todos os direitos reservados.</p>
   </footer>
 
   <script>
+    // Função para enviar os dados diretamente para a aba "Estúdio" com URL Params
     function gerarDireto(descricaoProduto) {
       window.location.href = `estudio.html?produto=${encodeURIComponent(descricaoProduto)}`;
     }
