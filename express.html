@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptCraft AI - Modo Express</title>
+  <title>AdFlow - Modo Express</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
@@ -30,18 +30,31 @@
 <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
 
   <div class="max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
-    <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent">⚡ PromptCraft AI</h1>
-    <p class="text-center text-slate-400 text-sm mt-2 mb-6">Gere roteiros virais e prompts visuais para TikTok, Shopee e Influencers IA.</p>
+    
+    <!-- Topo / Cabeçalho com Logout -->
+    <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="text-2xl font-black tracking-tight text-white">
+          Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
+        </span>
+      </a>
+      <button onclick="fazerLogout()" class="px-4 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-700 transition text-red-400 hover:text-red-300 flex items-center gap-1">
+        🚪 Sair
+      </button>
+    </div>
 
-    <!-- Navegação por Páginas (Header Links) -->
+    <!-- Navegação Superior Entre Páginas -->
     <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
-      <a href="index.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+      <a href="index.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        🏠 Início
+      </a>
+      <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         🎛️ Estúdio
       </a>
-      <a href="express.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
+      <a href="express.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
         ⚡ Express (URL)
       </a>
-      <a href="influencer.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+      <a href="influencer.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         🎭 Influencer IA
       </a>
     </nav>
@@ -58,47 +71,6 @@
       </button>
     </div>
 
-    <!-- Radar de Produtos Virais -->
-    <div class="mt-10 pt-8 border-t border-slate-700/80">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">🔥 Radar de Produtos Virais</h2>
-          <p class="text-xs text-slate-400">Produtos com alta taxa de conversão na Shopee e TikTok Shop nesta semana.</p>
-        </div>
-        <span class="text-xs font-semibold px-2.5 py-1 bg-pink-500/20 text-pink-400 rounded-full border border-pink-500/30">Atualizado</span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded border border-orange-500/30">Shopee Virais</span>
-              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +45k vendas</span>
-            </div>
-            <h3 class="font-bold text-sm text-slate-200">Mini Seladora de Embalagens Portátil</h3>
-            <p class="text-xs text-slate-400 mt-1">Veda sacos plásticos em segundos por aquecimento a pilha.</p>
-          </div>
-          <button onclick="usarProdutoEmAlta('https://shopee.com.br/mini-seladora-de-embalagens-portatil-pilha')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar Roteiro em 1 Clique
-          </button>
-        </div>
-
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded border border-cyan-500/30">TikTok Trends</span>
-              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +12k vendas</span>
-            </div>
-            <h3 class="font-bold text-sm text-slate-200">Projetor Luminária Astronauta Galáxia</h3>
-            <p class="text-xs text-slate-400 mt-1">Luminária laser com efeitos nebulosos e controle remoto.</p>
-          </div>
-          <button onclick="usarProdutoEmAlta('https://shopee.com.br/projetor-luminaria-astronauta-galaxia-laser')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar Roteiro em 1 Clique
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- Status de Carregamento -->
     <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
       <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
@@ -111,12 +83,6 @@
 
   <script>
     const API_KEY = "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";
-
-    function usarProdutoEmAlta(url) {
-      document.getElementById('url-produto').value = url;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      gerarPrompt();
-    }
 
     async function obterModelosValidosGroq(apiKey) {
       try {
@@ -279,6 +245,38 @@
           });
         };
         pre.appendChild(btnCopiar);
+      });
+    }
+  </script>
+
+  <!-- SCRIPT DO CADEADO (FIREBASE) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
+      authDomain: "adflow-1e5b8.firebaseapp.com",
+      projectId: "adflow-1e5b8",
+      storageBucket: "adflow-1e5b8.firebasestorage.app",
+      messagingSenderId: "517881206433",
+      appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Proteção de rota
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+
+    // Logout global
+    window.fazerLogout = function() {
+      signOut(auth).then(() => {
+        window.location.href = "index.html"; 
       });
     }
   </script>
