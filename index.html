@@ -83,17 +83,17 @@
             
             <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-center flex flex-col justify-center gap-1">
               <span class="text-xs text-slate-400">Estúdio</span>
-              <span id="cred-estudio" class="text-2xl font-black text-pink-500">0</span>
+              <span id="cred-estudio" class="text-2xl font-black text-pink-500">1</span>
             </div>
             
             <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-center flex flex-col justify-center gap-1">
               <span class="text-xs text-slate-400">Express</span>
-              <span id="cred-express" class="text-2xl font-black text-cyan-400">0</span>
+              <span id="cred-express" class="text-2xl font-black text-cyan-400">1</span>
             </div>
             
             <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700 text-center flex flex-col justify-center gap-1">
               <span class="text-xs text-slate-400">Influencer</span>
-              <span id="cred-influencer" class="text-2xl font-black text-purple-400">0</span>
+              <span id="cred-influencer" class="text-2xl font-black text-purple-400">1</span>
             </div>
 
           </div>
@@ -178,12 +178,10 @@
       const menuLogged = document.getElementById('user-logged-menu');
 
       if (user) {
-        // Logado
         if (btnEntrar) btnEntrar.classList.add('hidden');
         if (menuLogged) menuLogged.classList.remove('hidden');
 
         try {
-          // Busca no banco de dados
           const docRef = doc(db, "users", user.uid);
           const docSnap = await getDoc(docRef);
 
@@ -192,18 +190,17 @@
           if (docSnap.exists()) {
             data = docSnap.data();
           } else {
-            // SE FOR NOVO: Cria o documento com 0 créditos
+            // CRIA CONTA NOVA COM 1 CRÉDITO GRATUITO POR OPÇÃO
             data = {
               email: user.email,
               nome: user.displayName || user.email.split('@')[0],
               plano: 'gratis',
-              creditos: { estudio: 0, express: 0, influencer: 0 },
+              creditos: { estudio: 1, express: 1, influencer: 1 },
               criadoEm: new Date()
             };
             await setDoc(docRef, data);
           }
 
-          // Atualiza a interface
           const nomeCompleto = data.nome || user.email.split('@')[0];
           const primeiroNome = nomeCompleto.split(' ')[0];
 
@@ -220,13 +217,13 @@
             document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
           }
           if(document.getElementById('cred-estudio')) {
-            document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
+            document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 1;
           }
           if(document.getElementById('cred-express')) {
-            document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
+            document.getElementById('cred-express').innerText = data.creditos?.express ?? 1;
           }
           if(document.getElementById('cred-influencer')) {
-            document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+            document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 1;
           }
 
         } catch (err) {
@@ -236,7 +233,6 @@
           }
         }
       } else {
-        // Deslogado
         if (btnEntrar) btnEntrar.classList.remove('hidden');
         if (menuLogged) menuLogged.classList.add('hidden');
       }
