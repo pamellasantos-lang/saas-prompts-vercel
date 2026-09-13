@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptCraft AI - TikTok & Shopee</title>
+  <title>PromptCraft AI - Modo Estúdio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
@@ -33,92 +33,43 @@
     <h1 class="text-3xl font-extrabold text-center bg-gradient-to-r from-pink-500 to-cyan-400 bg-clip-text text-transparent">⚡ PromptCraft AI</h1>
     <p class="text-center text-slate-400 text-sm mt-2 mb-6">Gere roteiros virais e prompts visuais para TikTok, Shopee e Influencers IA.</p>
 
-    <!-- Alternador de Modos (Tabs) -->
-    <div class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1">
-      <button id="tab-estudio" onclick="alternarModo('estudio')" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
+    <!-- Navegação por Páginas (Header Links) -->
+    <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
+      <a href="index.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
         🎛️ Estúdio
-      </button>
-      <button id="tab-express" onclick="alternarModo('express')" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-400 hover:text-white">
+      </a>
+      <a href="express.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         ⚡ Express (URL)
-      </button>
-      <button id="tab-influencer" onclick="alternarModo('influencer')" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-400 hover:text-white">
+      </a>
+      <a href="influencer.html" class="flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         🎭 Influencer IA
-      </button>
-    </div>
+      </a>
+    </nav>
     
     <div class="space-y-5">
-      <!-- Painel Modo Estúdio -->
-      <div id="painel-estudio" class="space-y-5">
-        <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
-          <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="3" placeholder="Ex: Cadeirinha de bebê para automóvel com reclinamento..."></textarea>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-semibold mb-2 text-slate-300">🎬 Estilo do Vídeo:</label>
-            <select id="estilo" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-              <option>Review Sincero</option>
-              <option>Achadinho Irresistível</option>
-              <option>Problema vs Solução</option>
-              <option>Unboxing</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-semibold mb-2 text-slate-300">🗣️ Tom da Narração:</label>
-            <select id="tom" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
-              <option>Entusiasta</option>
-              <option>Curioso/Alerta</option>
-              <option>Humorado</option>
-              <option>Direto ao Ponto</option>
-            </select>
-          </div>
-        </div>
+      <div>
+        <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
+        <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Cadeirinha de bebê para automóvel com reclinamento..."></textarea>
       </div>
 
-      <!-- Painel Modo Express (Link do Produto) -->
-      <div id="painel-express" class="hidden space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, Amazon):</label>
-          <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/cadeirinha-de-bebe-para-auto..." />
-          <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para extrair automaticamente título, objeções e gerar os prompts.</p>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🎬 Estilo do Vídeo:</label>
+          <select id="estilo" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
+            <option>Review Sincero</option>
+            <option>Achadinho Irresistível</option>
+            <option>Problema vs Solução</option>
+            <option>Unboxing</option>
+          </select>
         </div>
-      </div>
-
-      <!-- MÓDULO NOVO: Painel Modo Influencer IA -->
-      <div id="painel-influencer" class="hidden space-y-4">
-        <div class="p-3 bg-purple-500/10 border border-purple-500/30 rounded-xl text-purple-300 text-xs">
-          ✨ <strong>Módulo Influencer IA:</strong> Crie prompts de fotos e vídeos realistas focados na sua modelo virtual vestindo roupas, calçados, joias ou acessórios para campanhas de vendas.
-        </div>
-
         <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">👩‍🦰 Perfil da Influencer IA:</label>
-          <input type="text" id="inf-perfil" class="w-full p-3.5 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-purple-400 transition-colors placeholder-slate-500" placeholder="Ex: Mulher brasileira, 24 anos, cabelos cacheados morenos, estilo lifestyle urbano..." />
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold mb-2 text-slate-300">👗 Roupa / Acessório a Vender:</label>
-          <input type="text" id="inf-produto" class="w-full p-3.5 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-purple-400 transition-colors placeholder-slate-500" placeholder="Ex: Vestido de linho bege com decote V e cinto de couro, ou Relógio minimalista dourado..." />
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-semibold mb-2 text-slate-300">🖼️ Formato Desejado:</label>
-            <select id="inf-formato" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-purple-400">
-              <option>Foto Ensaio (Midjourney / Flux / Fooocus)</option>
-              <option>Vídeo Comercial (Kling / Luma / Runway)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-semibold mb-2 text-slate-300">🌆 Cenário / Ambientação:</label>
-            <select id="inf-cenario" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-purple-400">
-              <option>Espelho / Provador de Loja (Estilo UGC)</option>
-              <option>Rua de Cidade Moderna (Streetwear)</option>
-              <option>Café / Restaurante Sofisticado</option>
-              <option>Estúdio Fotográfico Minimalista</option>
-              <option>Praia / Sunset Ao Ar Livre</option>
-            </select>
-          </div>
+          <label class="block text-sm font-semibold mb-2 text-slate-300">🗣️ Tom da Narração:</label>
+          <select id="tom" class="w-full p-3 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500">
+            <option>Entusiasta</option>
+            <option>Curioso/Alerta</option>
+            <option>Humorado</option>
+            <option>Direto ao Ponto</option>
+          </select>
         </div>
       </div>
 
@@ -127,122 +78,18 @@
       </button>
     </div>
 
-    <!-- SEÇÃO: Radar de Produtos Virais em Alta -->
-    <div class="mt-10 pt-8 border-t border-slate-700/80">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">🔥 Radar de Produtos Virais</h2>
-          <p class="text-xs text-slate-400">Produtos com alta taxa de conversão na Shopee e TikTok Shop nesta semana.</p>
-        </div>
-        <span class="text-xs font-semibold px-2.5 py-1 bg-pink-500/20 text-pink-400 rounded-full border border-pink-500/30">Atualizado</span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Produto 1 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded border border-orange-500/30">Shopee Virais</span>
-              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +45k vendas</span>
-            </div>
-            <h3 class="font-bold text-sm text-slate-200">Mini Seladora de Embalagens Portátil</h3>
-            <p class="text-xs text-slate-400 mt-1">Veda sacos plásticos em segundos por aquecimento a pilha.</p>
-          </div>
-          <button onclick="usarProdutoEmAlta('https://shopee.com.br/mini-seladora-de-embalagens-portatil-pilha')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar Roteiro em 1 Clique
-          </button>
-        </div>
-
-        <!-- Produto 2 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 bg-cyan-500/20 text-cyan-400 rounded border border-cyan-500/30">TikTok Trends</span>
-              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +12k vendas</span>
-            </div>
-            <h3 class="font-bold text-sm text-slate-200">Projetor Luminária Astronauta Galáxia</h3>
-            <p class="text-xs text-slate-400 mt-1">Luminária laser com efeitos nebulosos e controle remoto.</p>
-          </div>
-          <button onclick="usarProdutoEmAlta('https://shopee.com.br/projetor-luminaria-astronauta-galaxia-laser')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar Roteiro em 1 Clique
-          </button>
-        </div>
-
-        <!-- Produto 3 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded border border-yellow-500/30">Mercado Livre</span>
-              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +30k vendas</span>
-            </div>
-            <h3 class="font-bold text-sm text-slate-200">Cadeirinha Infantil ISOFIX (9-36kg)</h3>
-            <p class="text-xs text-slate-400 mt-1">Assento veicular com cinto de 5 pontos e reclinamento.</p>
-          </div>
-          <button onclick="usarProdutoEmAlta('https://produto.mercadolivre.com.br/MLB-cadeirinha-infantil-isofix-auto')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar Roteiro em 1 Clique
-          </button>
-        </div>
-
-        <!-- Produto 4 -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-all flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-[10px] font-bold px-2 py-0.5 bg-pink-500/20 text-pink-400 rounded border border-pink-500/30">TikTok Virais</span>
-              <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">⚡ +85k vendas</span>
-            </div>
-            <h3 class="font-bold text-sm text-slate-200">Escova Secadora Modeladora 3 em 1</h3>
-            <p class="text-xs text-slate-400 mt-1">Seca, alisa e dá volume em minutos com revestimento cerâmico.</p>
-          </div>
-          <button onclick="usarProdutoEmAlta('https://shopee.com.br/escova-secadora-modeladora-3-em-1-multifuncional')" class="mt-4 w-full py-2 bg-slate-800 hover:bg-cyan-600 text-cyan-300 hover:text-white text-xs font-bold rounded-lg border border-slate-600 hover:border-cyan-500 transition-all">
-            ⚡ Gerar Roteiro em 1 Clique
-          </button>
-        </div>
-      </div>
-    </div>
-
     <!-- Status de Carregamento -->
     <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
       <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
     </div>
 
-    <!-- Área do Resultado (Container de Cards) -->
+    <!-- Área do Resultado -->
     <div id="resultado" class="mt-8 space-y-6 text-sm hidden">
     </div>
   </div>
 
   <script>
     const API_KEY = "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";
-    let modoAtual = 'estudio';
-
-    function alternarModo(modo) {
-      modoAtual = modo;
-      const tabEstudio = document.getElementById('tab-estudio');
-      const tabExpress = document.getElementById('tab-express');
-      const tabInfluencer = document.getElementById('tab-influencer');
-      
-      const painelEstudio = document.getElementById('painel-estudio');
-      const painelExpress = document.getElementById('painel-express');
-      const painelInfluencer = document.getElementById('painel-influencer');
-
-      const activeClass = "flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow";
-      const inactiveClass = "flex-1 min-w-[120px] py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-400 hover:text-white";
-
-      tabEstudio.className = modo === 'estudio' ? activeClass : inactiveClass;
-      tabExpress.className = modo === 'express' ? activeClass : inactiveClass;
-      tabInfluencer.className = modo === 'influencer' ? activeClass : inactiveClass;
-
-      painelEstudio.classList.toggle('hidden', modo !== 'estudio');
-      painelExpress.classList.toggle('hidden', modo !== 'express');
-      painelInfluencer.classList.toggle('hidden', modo !== 'influencer');
-    }
-
-    function usarProdutoEmAlta(url) {
-      alternarModo('express');
-      const inputUrl = document.getElementById('url-produto');
-      inputUrl.value = url;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      gerarPrompt();
-    }
 
     async function obterModelosValidosGroq(apiKey) {
       try {
@@ -250,31 +97,15 @@
           headers: { "Authorization": `Bearer ${apiKey}` }
         });
         const data = await response.json();
-        
         if (data && data.data && data.data.length > 0) {
-          const modelosFiltrados = data.data
-            .map(m => m.id)
-            .filter(id => {
-              const lower = id.toLowerCase();
-              return !lower.includes("whisper") && 
-                     !lower.includes("guard") && 
-                     !lower.includes("vision") && 
-                     !lower.includes("embed") &&
-                     !lower.includes("audio");
-            });
-
-          modelosFiltrados.sort((a, b) => {
-            if (a.includes("llama-3.3")) return -1;
-            if (b.includes("llama-3.3")) return 1;
-            if (a.includes("llama-3.1")) return -1;
-            if (b.includes("llama-3.1")) return 1;
-            return 0;
+          const modelosFiltrados = data.data.map(m => m.id).filter(id => {
+            const lower = id.toLowerCase();
+            return !lower.includes("whisper") && !lower.includes("guard") && !lower.includes("vision") && !lower.includes("embed");
           });
-
           if (modelosFiltrados.length > 0) return modelosFiltrados;
         }
       } catch (e) {
-        console.warn("Erro ao buscar modelos da API.", e);
+        console.warn("Erro ao buscar modelos.", e);
       }
       return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
     }
@@ -283,146 +114,23 @@
       const btn = document.getElementById('btn');
       const resDiv = document.getElementById('resultado');
       const loadDiv = document.getElementById('loading');
-      const statusTexto = document.getElementById('status-texto');
+      const produto = document.getElementById('produto').value;
+      const estilo = document.getElementById('estilo').value;
+      const tom = document.getElementById('tom').value;
 
-      let promptMaster = "";
+      if (!produto.trim()) {
+        alert('⚠️ Por favor, insira os dados do produto.');
+        return;
+      }
 
       btn.disabled = true;
       btn.classList.add('opacity-50');
       loadDiv.classList.remove('hidden');
       resDiv.classList.add('hidden');
 
-      if (modoAtual === 'estudio') {
-        const produto = document.getElementById('produto').value;
-        const estilo = document.getElementById('estilo').value;
-        const tom = document.getElementById('tom').value;
-
-        if (!produto.trim()) {
-          alert('⚠️ Por favor, insira os dados do produto.');
-          loadDiv.classList.add('hidden');
-          btn.disabled = false;
-          btn.classList.remove('opacity-50');
-          return;
-        }
-        statusTexto.innerText = "🤖 Conectando à IA e gerando seu roteiro... Aguarde!";
-
-        promptMaster = construirPromptEstudio(produto, estilo, tom);
-
-      } else if (modoAtual === 'express') {
-        const urlInput = document.getElementById('url-produto').value;
-        if (!urlInput.trim()) {
-          alert('⚠️ Por favor, cole a URL do produto.');
-          loadDiv.classList.add('hidden');
-          btn.disabled = false;
-          btn.classList.remove('opacity-50');
-          return;
-        }
-
-        statusTexto.innerText = "🔍 Minando avaliações, pontos fortes e objeções do link...";
-        let produtoExtraido = "";
-
-        try {
-          const scrapeRes = await fetch(`/api/scrape?url=${encodeURIComponent(urlInput)}`);
-          const scrapeData = await scrapeRes.json();
-          produtoExtraido = scrapeRes.ok && scrapeData.extractedData ? scrapeData.extractedData : "PRODUTO: " + urlInput;
-        } catch (e) {
-          produtoExtraido = "PRODUTO: " + urlInput;
-        }
-
-        statusTexto.innerText = "🤖 Estruturando a quebra de objeções e roteiro...";
-        promptMaster = construirPromptEstudio(produtoExtraido, "Achadinho Irresistível", "Entusiasta");
-
-      } else if (modoAtual === 'influencer') {
-        const perfil = document.getElementById('inf-perfil').value;
-        const produtoModa = document.getElementById('inf-produto').value;
-        const formato = document.getElementById('inf-formato').value;
-        const cenario = document.getElementById('inf-cenario').value;
-
-        if (!perfil.trim() || !produtoModa.trim()) {
-          alert('⚠️ Por favor, preencha o Perfil da Influencer e o Produto/Acessório.');
-          loadDiv.classList.add('hidden');
-          btn.disabled = false;
-          btn.classList.remove('opacity-50');
-          return;
-        }
-
-        statusTexto.innerText = "🎭 Gerando ensaio visual e roteiro para a Influencer IA...";
-        promptMaster = construirPromptInfluencer(perfil, produtoModa, formato, cenario);
-      }
-
-      let textoGerado = null;
-      let erroUltimo = "";
-      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
-
-      for (const modeloId of modelosDisponiveis) {
-        try {
-          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${API_KEY}`
-            },
-            body: JSON.stringify({
-              model: modeloId,
-              messages: [
-                {
-                  role: "system",
-                  content: "Você é um especialista em marketing de resposta direta e engenharia de prompt visual para e-commerce e Influencers Virtuais de IA. Jamais produza marcadores de posição ou colchetes."
-                },
-                {
-                  role: "user",
-                  content: promptMaster
-                }
-              ],
-              temperature: 0.4
-            })
-          });
-
-          const data = await response.json();
-
-          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
-            textoGerado = data.choices[0].message.content;
-            break;
-          } else {
-            erroUltimo = data.error?.message || 'Erro desconhecido';
-          }
-        } catch (e) {
-          erroUltimo = e.message;
-        }
-      }
-
-      if (textoGerado) {
-        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
-        const secoes = textoGerado.split('---');
-        let htmlResultado = avisoSucesso;
-
-        secoes.forEach(secao => {
-          if (secao.trim()) {
-            htmlResultado += `
-              <div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert prose-p:leading-relaxed max-w-none">
-                ${marked.parse(secao.trim())}
-              </div>
-            `;
-          }
-        });
-
-        resDiv.innerHTML = htmlResultado;
-        adicionarBotoesDeCopiar(resDiv);
-        resDiv.classList.remove('hidden');
-        resDiv.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        alert('❌ Erro na API Groq: ' + erroUltimo);
-      }
-
-      loadDiv.classList.add('hidden');
-      btn.disabled = false;
-      btn.classList.remove('opacity-50');
-    }
-
-    function construirPromptEstudio(produto, estilo, tom) {
-      return `
+      const promptMaster = `
         Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
-        Crie uma análise minuciosa de mercado, um roteiro comercial em português e prompts visuais técnicos em inglês.
+        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais técnicos em inglês para o produto.
 
         DADOS DO PRODUTO: ${produto}
         ESTILO: ${estilo}
@@ -430,7 +138,7 @@
 
         REGRAS ABSOLUTAS:
         1. SEPARE AS 3 SEÇÕES USANDO O DELIMITADOR '---'.
-        2. NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO COMO "digite aqui".
+        2. NÃO USE COLCHETES [ ].
 
         FORMATO:
         ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
@@ -475,68 +183,62 @@
         > 🇧🇷 **Tradução em Português (Cena 3):**
         > Tradução e detalhes em português do prompt da Cena 3.
       `;
-    }
 
-    function construirPromptInfluencer(perfil, produtoModa, formato, cenario) {
-      return `
-        Você é um diretor de arte e engenheiro de prompt de topo focado em Influencers Virtuais de IA (Moda e Acessórios).
-        Crie o pacote de prompts visuais técnicos e a legenda viral de vendas para redes sociais.
+      let textoGerado = null;
+      let erroUltimo = "";
+      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
 
-        PERFIL DA INFLUENCER: ${perfil}
-        PRODUTO / PEÇA DE ROUPA / ACESSÓRIO: ${produtoModa}
-        FORMATO DESEJADO: ${formato}
-        CENÁRIO / AMBIENTAÇÃO: ${cenario}
+      for (const modeloId of modelosDisponiveis) {
+        try {
+          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+            body: JSON.stringify({
+              model: modeloId,
+              messages: [
+                { role: "system", content: "Você é um gerador de roteiros comerciais. Jamais produza colchetes ou marcadores genéricos." },
+                { role: "user", content: promptMaster }
+              ],
+              temperature: 0.4
+            })
+          });
+          const data = await response.json();
+          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
+            textoGerado = data.choices[0].message.content;
+            break;
+          } else { erroUltimo = data.error?.message || 'Erro desconhecido'; }
+        } catch (e) { erroUltimo = e.message; }
+      }
 
-        REGRAS DE FORMATO:
-        1. SEPARE AS 3 SEÇÕES USANDO O DELIMITADOR '---'.
-        2. NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO.
-        3. OS PROMPTS TÉCNICOS DEVEM SER EM INGLÊS EXTREMAMENTE DETALHADOS (8k resolution, photorealistic skin texture, fabric weave details, 85mm lens, f/1.8 depth of field, 9:16 aspect ratio).
+      if (textoGerado) {
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
+        const secoes = textoGerado.split('---');
+        let htmlResultado = avisoSucesso;
+        secoes.forEach(secao => {
+          if (secao.trim()) {
+            htmlResultado += `<div class="bg-slate-950/80 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert max-w-none">${marked.parse(secao.trim())}</div>`;
+          }
+        });
+        resDiv.innerHTML = htmlResultado;
+        adicionarBotoesDeCopiar(resDiv);
+        resDiv.classList.remove('hidden');
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+      } else { alert('❌ Erro na API Groq: ' + erroUltimo); }
 
-        FORMATO EXATO:
-
-        ## 💃 CONCEITO DA CAMPANHA & LOOK
-        * **✨ Estilo do Ensaio:** (Descrição do conceito visual do look/acessório na influencer)
-        * **🎯 Gatilho de Desejo:** (Por que este look/acessório gera vendas e engajamento)
-
-        ---
-
-        ## 📱 LEGENDA VIRAL PARA REELS / TIKTOK (PT-BR)
-        🗣️ **Legenda Pronta:** (Escreva uma legenda completa com emojis e call to action para vender a peça, ex: "Link do look na bio!")
-
-        ---
-
-        ## 🎬 PROMPTS VISUAIS DA INFLUENCER (PRONTOS PARA COPIAR E COLAR)
-
-        ### 📸 Prompt 1: Ensaio de Corpo Inteiro (Full Body Shot)
-        \`\`\`text
-        Photorealistic 8k vertical 9:16 shot of ${perfil} wearing ${produtoModa}, set in ${cenario}. Ultra detailed fabric texture, natural skin pores, 85mm portrait lens, f/1.8 depth of field, natural sunlight, cinematic color grading, hyper-realistic, photorealistic
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Prompt 1):**
-        > Descrição em português da pose de corpo inteiro exibindo a peça.
-
-        ### 🔎 Prompt 2: Close-up de Detalhes do Produto (Close-Up Shot)
-        \`\`\`text
-        Close-up macro shot vertical 9:16 of ${perfil} showcasing the intricate details of ${produtoModa}, set in ${cenario}, soft bokeh background, sharp focus on fabric texture and jewelry polish, 4k, hyper-realistic
-        \`\`\`
-        > 🇧🇷 **Tradução em Português (Prompt 2):**
-        > Descrição em português focada no zoom dos detalhes e texturas da peça.
-      `;
+      loadDiv.classList.add('hidden');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
     }
 
     function adicionarBotoesDeCopiar(container) {
-      const blocosCodigo = container.querySelectorAll('pre');
-      blocosCodigo.forEach((pre) => {
+      container.querySelectorAll('pre').forEach((pre) => {
         pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
-        
         const btnCopiar = document.createElement('button');
         btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
         btnCopiar.innerHTML = '📋 Copiar Prompt';
-
         btnCopiar.onclick = () => {
           const codeEl = pre.querySelector('code');
-          const textoOriginal = codeEl ? codeEl.innerText : pre.innerText;
-          const textoPrompt = textoOriginal.replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
-
+          const textoPrompt = (codeEl ? codeEl.innerText : pre.innerText).replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
           navigator.clipboard.writeText(textoPrompt).then(() => {
             btnCopiar.innerHTML = '✅ Copiado!';
             btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
@@ -546,7 +248,6 @@
             }, 2000);
           });
         };
-
         pre.appendChild(btnCopiar);
       });
     }
