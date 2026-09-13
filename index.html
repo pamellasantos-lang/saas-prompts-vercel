@@ -6,6 +6,27 @@
   <title>PromptCraft AI - TikTok & Shopee</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* Estilização customizada para a tradução em português e blocos */
+    .prose blockquote {
+      background-color: rgba(15, 23, 42, 0.7);
+      border-left-color: #06b6d4;
+      border-left-width: 4px;
+      padding: 12px 16px;
+      border-radius: 0 12px 12px 0;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      color: #e2e8f0;
+      font-style: normal;
+    }
+    .prose h3 {
+      color: #38bdf8;
+      margin-top: 28px !important;
+      margin-bottom: 12px !important;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+      padding-bottom: 6px;
+    }
+  </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
 
@@ -58,7 +79,7 @@
         <div>
           <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, Amazon):</label>
           <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/cadeirinha-de-bebe-para-auto..." />
-          <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para extrair automaticamente título, objeções e gerar os prompts visuais.</p>
+          <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para extrair automaticamente pontos fortes, objeções e gerar os prompts.</p>
         </div>
       </div>
 
@@ -174,7 +195,7 @@
           return;
         }
 
-        statusTexto.innerText = "🔍 Minando avaliações e objeções do link...";
+        statusTexto.innerText = "🔍 Minando avaliações, pontos fortes e objeções do link...";
         
         try {
           const scrapeRes = await fetch(`/api/scrape?url=${encodeURIComponent(urlInput)}`);
@@ -194,7 +215,7 @@
 
       const promptMaster = `
         Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
-        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais técnicos em inglês com tradução detalhada para o produto.
+        Crie uma análise minuciosa de mercado (pontos fortes e negativos), um roteiro comercial em português e prompts visuais técnicos em inglês com tradução destacada.
 
         DADOS EXTRAÍDOS DO PRODUTO:
         ${produto}
@@ -206,13 +227,20 @@
         1. FALE ESTRITAMENTE SOBRE O PRODUTO MENCIONADO ACIMA.
         2. SEPARE CADA UMA DAS 3 SEÇÕES USANDO O DELIMITADOR EXATO '---'.
         3. NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO COMO "digite aqui".
-        4. EM CADA PROMPT VISUAL, INCLUA O BLOCO DE CÓDIGO EM INGLÊS E LOGO ABAIXO A TRADUÇÃO EXPLICATIVA EM PORTUGUÊS.
+        4. EM CADA PROMPT VISUAL, COLOQUE O CÓDIGO EM INGLÊS PRIMEIRO E LOGO ABAIXO A TRADUÇÃO EM UM BLOCO DE CITAÇÃO (>).
 
         RETORNE ESTRITAMENTE NESTE FORMATO:
 
-        ## 🔍 OBJEÇÕES & INSIGHTS MINERADOS
-        - **Principais Objeções/Dúvidas:** (Liste 2 medos reais sobre este produto)
-        - **Ponto Forte de Destaque:** (Liste o maior benefício percebido)
+        ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
+
+        * **👍 Pontos Fortes (O que os compradores mais amam):**
+          - Explicar os 2 maiores elogios ou recursos de destaque do produto.
+
+        * **⚠️ Pontos Negativos & Objeções (Principais dúvidas/reclamações):**
+          - Explicar as 2 maiores dúvidas, medos ou reclamações de compradores.
+
+        * **🎯 Estratégia de Venda do Roteiro:**
+          - Resumo de como o roteiro abaixo usa os pontos fortes para destruir as objeções.
 
         ---
 
@@ -231,23 +259,32 @@
 
         ## 🎬 PROMPTS VISUAIS (PRONTOS PARA COPIAR E COLAR)
 
-        **Prompt Visual - Cena 1:**
+        ### 🟢 Cena 1: Prompt Visual (Gancho Initial)
+
         \`\`\`text
         Detailed technical prompt in English for initial scene showing the exact product, 4k resolution, 9:16 vertical ratio, photorealistic, cinematic lighting
         \`\`\`
-        > 🇧🇷 **Tradução em Português:** (Explicação em português traduzindo o que a IA vai gerar nesta cena)
 
-        **Prompt Visual - Cena 2:**
+        > 🇧🇷 **Tradução em Português (Cena 1):**
+        > Tradução detalhada e explicação visual em português do que a IA vai gerar na Cena 1.
+
+        ### 🔵 Cena 2: Prompt Visual (Demonstração e Benefícios)
+
         \`\`\`text
         Detailed technical prompt in English showing the exact product in use resolving buyer objection, close-up details, 4k, 9:16 vertical ratio
         \`\`\`
-        > 🇧🇷 **Tradução em Português:** (Explicação em português traduzindo o que a IA vai gerar nesta cena)
 
-        **Prompt Visual - Cena 3:**
+        > 🇧🇷 **Tradução em Português (Cena 2):**
+        > Tradução detalhada e explicação visual em português do que a IA vai gerar na Cena 2.
+
+        ### 🟣 Cena 3: Prompt Visual (Chamada para Ação)
+
         \`\`\`text
         Detailed technical prompt in English for call-to-action scene with the product, 4k, 9:16 vertical ratio
         \`\`\`
-        > 🇧🇷 **Tradução em Português:** (Explicação em português traduzindo o que a IA vai gerar nesta cena)
+
+        > 🇧🇷 **Tradução em Português (Cena 3):**
+        > Tradução detalhada e explicação visual em português do que a IA vai gerar na Cena 3.
       `;
 
       let textoGerado = null;
@@ -268,7 +305,7 @@
               messages: [
                 {
                   role: "system",
-                  content: "Você é um gerador de roteiros comerciais de alta conversão. Escreva obrigatoriamente a análise de objeções, o roteiro e os prompts técnicos acompanhados da tradução em português."
+                  content: "Você é um gerador de roteiros comerciais de alta conversão. Escreva obrigatoriamente os pontos fortes, pontos negativos (objeções), roteiro e os prompts técnicos com traduções separadas."
                 },
                 {
                   role: "user",
@@ -324,7 +361,7 @@
     function adicionarBotoesDeCopiar(container) {
       const blocosCodigo = container.querySelectorAll('pre');
       blocosCodigo.forEach((pre) => {
-        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-4 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
+        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
         
         const btnCopiar = document.createElement('button');
         btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
