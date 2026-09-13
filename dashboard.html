@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <title>AdFlow - Modo Express</title>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    .prose blockquote {
+      background-color: rgba(15, 23, 42, 0.7);
+      border-left-color: #06b6d4;
+      border-left-width: 4px;
+      padding: 12px 16px;
+      border-radius: 0 12px 12px 0;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      color: #e2e8f0;
+      font-style: normal;
+    }
+    .prose h3 {
+      color: #38bdf8;
+      margin-top: 28px !important;
+      margin-bottom: 12px !important;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+      padding-bottom: 6px;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+
+  <div id="app-container" class="hidden max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
+    
+    <!-- HEADER DA PÁGINA COM SALDOS DE TODOS OS MÓDULOS -->
+    <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
+      <a href="index.html" class="flex items-center gap-2 group" title="Voltar ao início">
+        <span class="text-2xl font-black tracking-tight text-white group-hover:opacity-80 transition">
+          Ad<span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">Flow</span>
+        </span>
+      </a>
+      
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- PAINEL SUPERIOR COM SALDO DOS 3 MÓDULOS -->
+        <div class="hidden sm:flex items-center gap-3 px-3.5 py-2 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-inner text-xs font-bold">
+          <span title="Créditos do Estúdio" class="flex items-center gap-1.5">
+            <span>🎛️</span>
+            <strong id="header-cred-estudio" class="text-pink-400 text-sm font-black">0</strong>
+          </span>
+          <span class="text-slate-700">|</span>
+          <span title="Créditos Express" class="flex items-center gap-1.5">
+            <span>⚡</span>
+            <strong id="header-cred-express" class="text-cyan-400 text-sm font-black">0</strong>
+          </span>
+          <span class="text-slate-700">|</span>
+          <span title="Créditos Influencer IA" class="flex items-center gap-1.5">
+            <span>🎭</span>
+            <strong id="header-cred-influencer" class="text-purple-400 text-sm font-black">0</strong>
+          </span>
+        </div>
+
+        <button onclick="abrirPerfil()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded-xl font-bold text-xs text-slate-200 transition flex items-center gap-2 shadow">
+          👤 <span id="user-display-name">Minha Conta</span>
+        </button>
+        <button onclick="fazerLogout()" class="px-3 py-2 border border-slate-600 font-bold text-xs rounded-xl hover:bg-slate-700 transition text-red-400 hover:text-red-300 flex items-center gap-1">
+          🚪 <span class="hidden sm:inline">Sair</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- NAVEGAÇÃO ENTRE MÓDULOS -->
+    <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
+      <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        🎛️ Estúdio
+      </a>
+      <a href="express.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-pink-600 to-cyan-500 text-white shadow">
+        ⚡ Express (URL)
+      </a>
+      <a href="influencer.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+        🎭 Influencer IA
+      </a>
+    </nav>
+    
+    <div class="space-y-5">
+      <div>
+        <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, Amazon):</label>
+        <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/cadeirinha-de-bebe-para-auto..." />
+        <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para extrair avaliações e gerar prompts otimizados para Kling AI e Luma.</p>
+      </div>
+
+      <button onclick="gerarPrompt()" id="btn" class="w-full py-4 mt-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl hover:opacity-90 transform transition hover:scale-[1.02] shadow-lg">
+        🚀 Extrair & Gerar Prompts para Kling AI & Luma
+      </button>
+    </div>
+
+    <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
+      <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
+    </div>
+
+    <div id="resultado" class="mt-8 space-y-6 text-sm hidden"></div>
+  </div>
+
+  <!-- MODAL DE PERFIL -->
+  <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
+      <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+        <div>
+          <h3 class="text-xl font-bold text-white" id="modal-nome">Carregando...</h3>
+          <p class="text-xs text-slate-400" id="modal-email">---</p>
+        </div>
+        <button onclick="fecharPerfil()" class="text-slate-400 hover:text-white font-bold text-lg p-1">✕</button>
+      </div>
+
+      <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700/80 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Plano Atual:</span>
+          <span id="modal-plano" class="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs font-bold uppercase">GRÁTIS</span>
+        </div>
+        <hr class="border-slate-800">
+        <h4 class="text-xs font-bold text-slate-300 uppercase">Criações Disponíveis:</h4>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Estúdio</span>
+            <strong id="cred-estudio" class="text-pink-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Express</span>
+            <strong id="cred-express" class="text-cyan-400 text-sm">0</strong>
+          </div>
+          <div class="bg-slate-800 p-2.5 rounded-xl border border-slate-700">
+            <span class="block text-slate-400 text-[10px]">Influencer</span>
+            <strong id="cred-influencer" class="text-purple-400 text-sm">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <a href="planos.html" class="block w-full py-3.5 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold text-center text-xs rounded-xl shadow hover:opacity-90 transition">
+          ⚡ Ver / Mudar de Plano
+        </a>
+        <button onclick="fecharPerfil()" class="w-full py-3 bg-slate-700 hover:bg-slate-600 font-bold text-xs rounded-xl transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE & LÓGICA DO APP -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const API_KEY = "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";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAy-V6V3nz8cMuRj3nc9wqUN7RC5oAFFM",
+      authDomain: "adflow-1e5b8.firebaseapp.com",
+      projectId: "adflow-1e5b8",
+      storageBucket: "adflow-1e5b8.firebasestorage.app",
+      messagingSenderId: "517881206433",
+      appId: "1:517881206433:web:b30f35d837f6ee8ea4c2e0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const container = document.getElementById('app-container');
+
+    async function carregarPerfil(user) {
+      if (!user) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      if (container) container.classList.remove('hidden');
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        let data;
+        if (docSnap.exists()) {
+          data = docSnap.data();
+        } else {
+          data = {
+            email: user.email,
+            nome: user.displayName || user.email.split('@')[0],
+            plano: 'gratis',
+            creditos: { estudio: 1, express: 1, influencer: 1 },
+            criadoEm: new Date()
+          };
+          await setDoc(docRef, data);
+        }
+
+        const nomeCompleto = data.nome || user.email.split('@')[0];
+        const primeiroNome = nomeCompleto.split(' ')[0];
+
+        // Atualiza UI Geral
+        document.getElementById('user-display-name').innerText = `Olá, ${primeiroNome}`;
+        document.getElementById('modal-nome').innerText = `Olá, ${nomeCompleto}`;
+        document.getElementById('modal-email').innerText = data.email || user.email;
+        document.getElementById('modal-plano').innerText = (data.plano || 'gratis').toUpperCase();
+        
+        // Atualiza os Créditos no Modal
+        document.getElementById('cred-estudio').innerText = data.creditos?.estudio ?? 0;
+        document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
+        document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
+
+        // Atualiza os Créditos na Barra Superior (Header)
+        if(document.getElementById('header-cred-estudio')) {
+          document.getElementById('header-cred-estudio').innerText = data.creditos?.estudio ?? 0;
+        }
+        if(document.getElementById('header-cred-express')) {
+          document.getElementById('header-cred-express').innerText = data.creditos?.express ?? 0;
+        }
+        if(document.getElementById('header-cred-influencer')) {
+          document.getElementById('header-cred-influencer').innerText = data.creditos?.influencer ?? 0;
+        }
+
+      } catch (err) { 
+        console.error("Erro ao carregar dados:", err); 
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => { carregarPerfil(user); });
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        carregarPerfil(auth.currentUser);
+      }
+    });
+
+    window.abrirPerfil = () => document.getElementById('modal-perfil')?.classList.remove('hidden');
+    window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
+    window.fazerLogout = function() {
+      signOut(auth).then(() => { window.location.replace("index.html"); });
+    }
+
+    async function obterModelosValidosGroq(apiKey) {
+      try {
+        const response = await fetch("https://api.groq.com/openai/v1/models", { headers: { "Authorization": `Bearer ${apiKey}` } });
+        const data = await response.json();
+        if (data && data.data && data.data.length > 0) {
+          const modelosFiltrados = data.data.map(m => m.id).filter(id => {
+            const lower = id.toLowerCase();
+            return !lower.includes("whisper") && !lower.includes("guard") && !lower.includes("vision") && !lower.includes("embed");
+          });
+          if (modelosFiltrados.length > 0) return modelosFiltrados;
+        }
+      } catch (e) { console.warn("Erro ao buscar modelos.", e); }
+      return ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+    }
+
+    window.gerarPrompt = async function() {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("⚠️ Você precisa estar logado para gerar prompts.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const urlInput = document.getElementById('url-produto').value;
+      if (!urlInput.trim()) {
+        alert('⚠️ Por favor, cole a URL do produto.');
+        return;
+      }
+
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      
+      if (!userDocSnap.exists()) {
+        alert("Erro ao carregar seu perfil. Tente recarregar a página.");
+        return;
+      }
+
+      const userData = userDocSnap.data();
+      const creditosExpress = userData.creditos?.express ?? 0;
+
+      if (creditosExpress <= 0) {
+        alert("⚠️ Seus créditos do módulo Express acabaram! Faça um upgrade para continuar criando vídeos.");
+        window.location.href = "planos.html";
+        return;
+      }
+
+      const btn = document.getElementById('btn');
+      const resDiv = document.getElementById('resultado');
+      const loadDiv = document.getElementById('loading');
+      const statusTexto = document.getElementById('status-texto');
+
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      loadDiv.classList.remove('hidden');
+      resDiv.classList.add('hidden');
+      statusTexto.innerText = "🔍 Minando avaliações e extraindo dados...";
+
+      let produtoExtraido = "";
+      try {
+        const scrapeRes = await fetch(`/api/scrape?url=${encodeURIComponent(urlInput)}`);
+        const scrapeData = await scrapeRes.json();
+        produtoExtraido = scrapeRes.ok && scrapeData.extractedData ? scrapeData.extractedData : "URL DO PRODUTO: " + urlInput;
+      } catch (e) { produtoExtraido = "URL DO PRODUTO: " + urlInput; }
+
+      statusTexto.innerText = "🤖 Analisando o mercado e gerando seus prompts...";
+
+      const promptMaster = `
+        Você é um Diretor de Criação de Vídeos de E-commerce.
+        Sua tarefa é preencher o template abaixo baseado no produto fornecido.
+
+        DADOS EXTRAÍDOS DO PRODUTO: ${produtoExtraido}
+
+        REGRA DE OURO: Se os "Dados Extraídos" informarem que a página não foi encontrada ou exigiu login, NÃO peça mais informações. Em vez disso, DEDUZA o tipo de produto pela URL ou INVENTE um roteiro altamente conversivo para um produto de e-commerce genérico incrível. NUNCA diga que faltam dados.
+
+        Siga ESTE FORMATO EXATO, substituindo APENAS o texto que está entre colchetes [ ] pelo seu conteúdo. Não escreva nada fora desta estrutura:
+
+        ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
+        * **👍 Pontos Fortes:** [Escreva 2 pontos fortes]
+        * **⚠️ Dores e Objeções:** [Escreva 2 dores do cliente]
+        * **🎯 Estratégia do Vídeo:** [Escreva a estratégia de conversão]
+
+        ---
+
+        ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
+        **Cena 1 (0-3s) - Gancho:** [Escreva a fala de impacto em português]
+        **Cena 2 (3-12s) - Demonstração:** [Escreva a fala narrando os benefícios]
+        **Cena 3 (12-15s) - CTA:** [Escreva a chamada para ação]
+
+        ---
+
+        ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA
+        ### 🟢 Cena 1: Prompt Visual
+        \`\`\`text
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k. [Descreva a Cena 1 em INGLÊS aqui]
+        \`\`\`
+        > 🇧🇷 **Tradução:** [Escreva a tradução exata do prompt acima para o português, como texto normal sem usar blocos de código]
+
+        ### 🔵 Cena 2: Prompt Visual
+        \`\`\`text
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k. [Descreva a Cena 2 em INGLÊS aqui]
+        \`\`\`
+        > 🇧🇷 **Tradução:** [Escreva a tradução exata do prompt acima para o português, como texto normal sem usar blocos de código]
+
+        ### 🟣 Cena 3: Prompt Visual
+        \`\`\`text
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k. [Descreva a Cena 3 em INGLÊS aqui]
+        \`\`\`
+        > 🇧🇷 **Tradução:** [Escreva a tradução exata do prompt acima para o português, como texto normal sem usar blocos de código]
+      `;
+
+      let textoGerado = null;
+      let erroUltimo = "";
+      const modelosDisponiveis = await obterModelosValidosGroq(API_KEY);
+
+      for (const modeloId of modelosDisponiveis) {
+        try {
+          const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_KEY}` },
+            body: JSON.stringify({
+              model: modeloId,
+              messages: [
+                { role: "system", content: "Você é um especialista. Aja como solicitado, substituindo os colchetes pelo conteúdo. Jamais pule uma seção." },
+                { role: "user", content: promptMaster }
+              ],
+              temperature: 0.4,
+              max_tokens: 4000
+            })
+          });
+          const data = await response.json();
+          if (response.ok && data.choices && data.choices[0] && data.choices[0].message.content) {
+            textoGerado = data.choices[0].message.content;
+            break;
+          } else { erroUltimo = data.error?.message || 'Erro desconhecido'; }
+        } catch (e) { erroUltimo = e.message; }
+      }
+
+      if (textoGerado) {
+        const secoes = textoGerado.split('---');
+        
+        if(secoes.length >= 3) {
+          const novoSaldo = Math.max(0, creditosExpress - 1);
+          try {
+            await updateDoc(userDocRef, { "creditos.express": novoSaldo });
+            
+            // Atualiza os créditos do Express nos 2 lugares em tempo real!
+            document.getElementById('cred-express').innerText = novoSaldo;
+            if(document.getElementById('header-cred-express')) {
+              document.getElementById('header-cred-express').innerText = novoSaldo;
+            }
+          } catch (dbErr) { console.error("Erro ao atualizar créditos:", dbErr); }
+        }
+
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Estratégia e Prompts gerados com sucesso!</div>`;
+        
+        const instrucoesUso = `
+          <div class="mb-6 p-5 bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-cyan-500/30 rounded-2xl shadow-lg">
+            <h4 class="text-cyan-400 font-bold text-lg mb-3 flex items-center gap-2">💡 Como criar seus vídeos agora:</h4>
+            <ul class="text-slate-300 text-sm space-y-3">
+              <li class="flex items-start gap-2">
+                <span class="bg-cyan-500/20 text-cyan-300 px-2 rounded font-bold text-xs mt-0.5">1</span>
+                <span>Copie os prompts em <strong>inglês</strong> (as caixas mais escuras abaixo) clicando no botão "Copiar Prompt".</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-cyan-500/20 text-cyan-300 px-2 rounded font-bold text-xs mt-0.5">2</span>
+                <span>Acesse o <a href="https://klingai.com/" target="_blank" class="text-pink-400 hover:text-pink-300 underline font-bold transition">Kling AI</a> ou o <a href="https://lumalabs.ai/dream-machine" target="_blank" class="text-purple-400 hover:text-purple-300 underline font-bold transition">Luma Dream Machine</a>.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-cyan-500/20 text-cyan-300 px-2 rounded font-bold text-xs mt-0.5">3</span>
+                <span>Cole o prompt copiado. <strong>Dica de ouro:</strong> Anexe uma foto real do seu produto junto com o prompt lá na ferramenta para o vídeo ficar perfeitamente fiel ao seu produto!</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-cyan-500/20 text-cyan-300 px-2 rounded font-bold text-xs mt-0.5">4</span>
+                <span>Gere os vídeos e junte tudo no CapCut adicionando o texto da narração que geramos para você.</span>
+              </li>
+            </ul>
+          </div>
+        `;
+
+        let htmlResultado = avisoSucesso + instrucoesUso;
+        
+        secoes.forEach(secao => {
+          if (secao.trim()) {
+            htmlResultado += `<div class="bg-slate-950/90 p-6 rounded-2xl border border-slate-700/80 shadow-xl prose prose-invert prose-p:leading-relaxed prose-li:marker:text-cyan-400 max-w-none">${marked.parse(secao.trim())}</div>`;
+          }
+        });
+        
+        resDiv.innerHTML = htmlResultado;
+        adicionarBotoesDeCopiar(resDiv);
+        resDiv.classList.remove('hidden');
+        resDiv.scrollIntoView({ behavior: 'smooth' });
+      } else { 
+        alert('❌ Erro na API Groq: ' + erroUltimo); 
+      }
+
+      loadDiv.classList.add('hidden');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+    };
+
+    function adicionarBotoesDeCopiar(container) {
+      container.querySelectorAll('pre').forEach((pre) => {
+        pre.className = 'relative bg-slate-900 p-4 pt-12 rounded-xl border border-slate-700/70 my-3 text-xs font-mono text-cyan-300 whitespace-pre-wrap break-words overflow-hidden shadow-inner';
+        const btnCopiar = document.createElement('button');
+        btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+        btnCopiar.innerHTML = '📋 Copiar Prompt';
+        btnCopiar.onclick = () => {
+          const codeEl = pre.querySelector('code');
+          const textoPrompt = (codeEl ? codeEl.innerText : pre.innerText).replace(/📋 Copiar Prompt|✅ Copiado!/g, '').trim();
+          navigator.clipboard.writeText(textoPrompt).then(() => {
+            btnCopiar.innerHTML = '✅ Copiado!';
+            btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10';
+            setTimeout(() => {
+              btnCopiar.innerHTML = '📋 Copiar Prompt';
+              btnCopiar.className = 'absolute top-2.5 right-2.5 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold rounded-lg shadow transition-all flex items-center gap-1 z-10 cursor-pointer';
+            }, 2000);
+          });
+        };
+        pre.appendChild(btnCopiar);
+      });
+    }
+  </script>
+</body>
+</html>
