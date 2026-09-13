@@ -28,7 +28,7 @@
       <div id="painel-estudio" class="space-y-5">
         <div>
           <label class="block text-sm font-semibold mb-2 text-slate-300">📦 Dados do Produto:</label>
-          <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Furadeira elétrica portátil sem fio com bateria de longa duração..."></textarea>
+          <textarea id="produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-pink-500 transition-colors placeholder-slate-500" rows="4" placeholder="Ex: Cadeirinha de bebê para automóvel com reclinamento..."></textarea>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -57,8 +57,8 @@
       <div id="painel-express" class="hidden space-y-4">
         <div>
           <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, Amazon):</label>
-          <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/produto-exemplo-123456" />
-          <p class="text-xs text-slate-400 mt-2">💡 Cole a URL do produto para extrair os detalhes e objeções de compradores automaticamente.</p>
+          <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/cadeirinha-de-bebe-para-auto..." />
+          <p class="text-xs text-slate-400 mt-2">💡 Cole a URL do produto para gerar o roteiro e os prompts automaticamente.</p>
         </div>
       </div>
 
@@ -174,7 +174,7 @@
           return;
         }
 
-        statusTexto.innerText = "🔍 Raspando dados e objeções da página do produto...";
+        statusTexto.innerText = "🔍 Identificando o produto a partir do link...";
         
         try {
           const scrapeRes = await fetch(`/api/scrape?url=${encodeURIComponent(urlInput)}`);
@@ -183,10 +183,10 @@
           if (scrapeRes.ok && scrapeData.extractedData) {
             produto = scrapeData.extractedData;
           } else {
-            produto = "Link do produto informado: " + urlInput;
+            produto = "PRODUTO: " + urlInput;
           }
         } catch (e) {
-          produto = "Link do produto informado: " + urlInput;
+          produto = "PRODUTO: " + urlInput;
         }
 
         statusTexto.innerText = "🤖 Gerando roteiro e prompts visuais...";
@@ -194,31 +194,32 @@
 
       const promptMaster = `
         Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
-        Crie um roteiro comercial em português e prompts visuais técnicos em inglês para o produto.
+        Crie o roteiro comercial de um vídeo curto (15 a 30s) EXCLUSIVAMENTE para o produto especificado abaixo.
 
-        DADOS EXTRAÍDOS DO PRODUTO:
+        DADOS DO PRODUTO INFORMADO:
         ${produto}
 
         ESTILO: ${estilo}
         TOM DA NARRAÇÃO: ${tom}
 
-        INSTRUÇÕES RÍGIDAS:
-        - NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO COMO "digite aqui", "promo", "vídeo" OU "ligação destacada".
-        - ESCREVA O TEXTO DE NARRAÇÃO FINAL COMPLETO EM PORTUGUÊS BRASILEIRO.
-        - CRIE PROMPTS VISUAIS TÉCNICOS E DETALHADOS EM INGLÊS (4k, 9:16 vertical, photorealistic, cinematic lighting).
+        REGRAS ABSOLUTAS:
+        1. FALE ESTRITAMENTE SOBRE O PRODUTO MENCIONADO ACIMA. NUNCA INVENTE OUTRO PRODUTO (COMO ALIMENTOS, PIPOCAS OU OUTROS ITENS DE TESTE).
+        2. NÃO USE COLCHETES [ ] OU TEXTOS DE INSTRUÇÃO COMO "digite aqui".
+        3. ESCREVA A NARRAÇÃO COMPLETA EM PORTUGUÊS BRASILEIRO.
+        4. ESCREVA OS PROMPTS VISUAIS TÉCNICOS EM INGLÊS (4k, 9:16 vertical ratio, photorealistic, cinematic lighting).
 
         RETORNE ESTRITAMENTE NESTE FORMATO MARKDOWN:
 
         ## 📜 ROTEIRO DE VÍDEO & NARRAÇÃO
 
         **Cena 1 (0-3s) - Gancho Viral:**
-        🗣️ Narração: Frase chocante ou curiosa em português para prender o espectador nos primeiros 3 segundos.
+        🗣️ Narração: Frase chamativa em português focada nos primeiros 3 segundos deste produto especificamente.
 
         **Cena 2 (3-12s) - Demonstração & Solução:**
-        🗣️ Narração: Explicação persuasiva mostrando os benefícios reais e quebrando objeções do produto.
+        🗣️ Narração: Demonstração persuasiva em português destacando os benefícios reais deste produto.
 
         **Cena 3 (12-15s) - Chamada para Ação:**
-        🗣️ Narração: Chamada final clara direcionando o público para o link da bio ou carrinho amarelo.
+        🗣️ Narração: Chamada em português para clicar no link da bio ou carrinho amarelo.
 
         ---
 
@@ -226,17 +227,17 @@
 
         **Prompt Visual - Cena 1:**
         \`\`\`text
-        Detailed technical prompt in English for initial scene, 4k resolution, 9:16 vertical ratio, photorealistic, cinematic lighting
+        Detailed technical prompt in English for initial scene showing the exact product, 4k resolution, 9:16 vertical ratio, photorealistic, cinematic lighting
         \`\`\`
 
         **Prompt Visual - Cena 2:**
         \`\`\`text
-        Detailed technical prompt in English showing product in use, close-up details, 4k, 9:16 vertical ratio
+        Detailed technical prompt in English showing the exact product in use, close-up details, 4k, 9:16 vertical ratio
         \`\`\`
 
         **Prompt Visual - Cena 3:**
         \`\`\`text
-        Detailed technical prompt in English for call-to-action scene, 4k, 9:16 vertical ratio
+        Detailed technical prompt in English for call-to-action scene with the product, 4k, 9:16 vertical ratio
         \`\`\`
       `;
 
@@ -258,14 +259,14 @@
               messages: [
                 {
                   role: "system",
-                  content: "Você é um gerador de roteiros comerciais de alta conversão. Jamais produza marcadores de posição, colchetes ou textos genéricos. Retorne apenas narração real em português e prompts técnicos em inglês."
+                  content: "Você é um gerador de roteiros comerciais de alta conversão. Escreva obrigatoriamente sobre o produto especificado pelo usuário. Jamais substitua o produto por itens genéricos como alimentos ou pipocas."
                 },
                 {
                   role: "user",
                   content: promptMaster
                 }
               ],
-              temperature: 0.5
+              temperature: 0.4
             })
           });
 
