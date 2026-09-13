@@ -138,9 +138,9 @@
               </li>
               <li class="flex items-center gap-2">🚀 Radar de Mineração <strong>Full Time</strong></li>
               <li class="flex items-center gap-2">💬 Suporte Disponível <strong>(WhatsApp)</strong></li>
-              <li class="flex items-center gap-2">⚡ Gerador Turbo <strong>(Processamento sem filas)</strong></li>
+              <li class="flex items-center gap-2">⚡ Gerador Turbo <strong>(Sem filas)</strong></li>
               <li class="flex items-center gap-2">🎯 Prompts otimizados para <strong>Kling AI & Luma</strong></li>
-              <li class="flex items-center gap-2">🧪 Acesso antecipado a <strong>Novas IAs (BETA)</strong></li>
+              <li class="flex items-center gap-2">🧪 Acesso antecipado a <strong>Novas IAs</strong></li>
             </ul>
           </div>
           <button onclick="comprar('plano_avancado')" class="w-full py-3.5 bg-slate-700 hover:bg-slate-600 font-bold rounded-xl text-xs transition">
@@ -231,8 +231,33 @@
       }
     });
 
+    // Mapeamento dos Links da Kiwify (Deixe assim por enquanto, depois você cola os reais aqui)
+    const linksKiwify = {
+      'plano_basico': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
+      'plano_intermediario': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
+      'plano_avancado': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
+      'avulso_10': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI',
+      'avulso_20': 'https://pay.kiwify.com.br/COLOQUE_SEU_LINK_AQUI'
+    };
+
     window.comprar = function(item) {
-      alert(`Você selecionou a opção: ${item.toUpperCase()}.\nEm breve integraremos com o checkout seguro!`);
+      const user = auth.currentUser;
+      
+      if (!user) {
+        alert("Crie sua conta ou faça login antes de assinar!");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const linkCheckout = linksKiwify[item];
+      
+      if (linkCheckout.includes("COLOQUE_SEU_LINK_AQUI")) {
+        alert(`Você selecionou: ${item.toUpperCase()}.\nEm breve redirecionaremos para a página de checkout seguro!`);
+        return;
+      }
+
+      // Redireciona e preenche o e-mail automaticamente na Kiwify
+      window.location.href = `${linkCheckout}?email=${encodeURIComponent(user.email)}`;
     }
   </script>
 </body>
