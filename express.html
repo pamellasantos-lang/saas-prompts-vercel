@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Proteção Anti-Cache do Navegador -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -34,10 +33,8 @@
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
 
-  <!-- CONTEÚDO INICIA OCULTO E SÓ É EXIBIDO APÓS CONFIRMAÇÃO DO FIREBASE -->
   <div id="app-container" class="hidden max-w-3xl w-full bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-700 my-6">
     
-    <!-- Topo / Cabeçalho com Logo Clicável e Área de Membro -->
     <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/60">
       <a href="index.html" class="flex items-center gap-2 group" title="Voltar ao início">
         <span class="text-2xl font-black tracking-tight text-white group-hover:opacity-80 transition">
@@ -54,7 +51,6 @@
       </div>
     </div>
 
-    <!-- Navegação Entre Ferramentas (Sem a opção Início) -->
     <nav class="flex flex-wrap sm:flex-nowrap bg-slate-900 p-1.5 rounded-xl border border-slate-700 mb-6 gap-1 text-center">
       <a href="estudio.html" class="flex-1 min-w-[100px] py-2.5 rounded-lg text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
         🎛️ Estúdio
@@ -71,25 +67,21 @@
       <div>
         <label class="block text-sm font-semibold mb-2 text-slate-300">🔗 Link do Produto (Shopee, Mercado Livre, Amazon):</label>
         <input type="url" id="url-produto" class="w-full p-4 bg-slate-900 border border-slate-600 rounded-xl text-sm focus:outline-none focus:border-cyan-400 transition-colors placeholder-slate-500" placeholder="https://shopee.com.br/cadeirinha-de-bebe-para-auto..." />
-        <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para extrair automaticamente título, objeções e gerar os prompts.</p>
+        <p class="text-xs text-slate-400 mt-2">💡 Cole a URL para extrair avaliações e gerar prompts otimizados para Kling AI e Luma.</p>
       </div>
 
       <button onclick="gerarPrompt()" id="btn" class="w-full py-4 mt-2 bg-gradient-to-r from-pink-600 to-cyan-500 font-bold rounded-xl hover:opacity-90 transform transition hover:scale-[1.02] shadow-lg">
-        🚀 Extrair & Gerar Roteiro
+        🚀 Extrair & Gerar Prompts para Kling AI & Luma
       </button>
     </div>
 
-    <!-- Status de Carregamento -->
     <div id="loading" class="hidden text-center mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700">
       <p id="status-texto" class="text-cyan-400 font-semibold animate-pulse">🤖 Conectando à IA e gerando seu roteiro... Aguarde!</p>
     </div>
 
-    <!-- Área do Resultado -->
-    <div id="resultado" class="mt-8 space-y-6 text-sm hidden">
-    </div>
+    <div id="resultado" class="mt-8 space-y-6 text-sm hidden"></div>
   </div>
 
-  <!-- Modal Área do Membro / Meu Plano -->
   <div id="modal-perfil" class="fixed inset-0 z-50 hidden bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-slate-800 border border-slate-700 p-6 sm:p-8 rounded-3xl max-w-md w-full space-y-6 shadow-2xl relative">
       <div class="flex justify-between items-center border-b border-slate-700 pb-4">
@@ -168,7 +160,7 @@
       btn.classList.add('opacity-50');
       loadDiv.classList.remove('hidden');
       resDiv.classList.add('hidden');
-      statusTexto.innerText = "🔍 Minando avaliações, pontos fortes e objeções do link...";
+      statusTexto.innerText = "🔍 Minando avaliações e otimizando movimentos para Kling AI & Luma...";
 
       let produtoExtraido = "";
       try {
@@ -177,23 +169,23 @@
         produtoExtraido = scrapeRes.ok && scrapeData.extractedData ? scrapeData.extractedData : "PRODUTO: " + urlInput;
       } catch (e) { produtoExtraido = "PRODUTO: " + urlInput; }
 
-      statusTexto.innerText = "🤖 Estruturando a quebra de objeções e roteiro...";
+      statusTexto.innerText = "🤖 Estruturando parâmetros de vídeo 9:16 e rotação de câmera...";
 
       const promptMaster = `
-        Você é um copywriter sênior de resposta direta especializado em TikTok Shop e Shopee.
-        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais técnicos em inglês.
+        Você é um especialista em geração de vídeo por inteligência artificial (Kling AI e Luma Dream Machine).
+        Crie uma análise de objeções, um roteiro comercial em português e prompts visuais de vídeo em inglês com comandos de movimento de câmera avançados.
 
         DADOS EXTRAÍDOS DO PRODUTO: ${produtoExtraido}
 
         REGRAS ABSOLUTAS:
-        1. SEPARE AS 3 SEÇÕES USANDO O DELIMITADOR '---'.
-        2. NÃO USE COLCHETES [ ].
+        1. SEPARE AS 3 SEÇÕES COM '---'.
+        2. OS PROMPTS DEVEM SER NO FORMATO 9:16 E INCLUIR MOVEMENT TAGS (Camera: Dolly in, Camera: Orbit 360, Camera: Pan left).
 
         FORMATO:
         ## 🔍 ANÁLISE DE MERCADO & INSIGHTS
         * **👍 Pontos Fortes:** (2 destaques reais)
-        * **⚠️ Pontos Negativos & Objeções:** (2 dúvidas ou queixas comuns)
-        * **🎯 Estratégia de Venda:** (Como o roteiro vence as objeções)
+        * **⚠️ Pontos Negativos & Objeções:** (2 dúvidas comuns)
+        * **🎯 Estratégia de Venda:** (Como o vídeo vence objeções)
 
         ---
 
@@ -209,28 +201,28 @@
 
         ---
 
-        ## 🎬 PROMPTS VISUAIS (PRONTOS PARA COPIAR E COLAR)
+        ## 🎬 PROMPTS OTIMIZADOS PARA KLING AI & LUMA DREAM MACHINE
 
-        ### 🟢 Cena 1: Prompt Visual (Gancho Inicial)
+        ### 🟢 Cena 1: Prompt Visual (Kling AI & Luma)
         \`\`\`text
-        Detailed technical prompt in English for initial scene showing the exact product, 4k resolution, 9:16 vertical ratio, photorealistic, cinematic lighting
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Dramatic opening shot. Camera: Slow forward dolly zoom. High speed macro close up, studio volumetric lighting, photorealistic 60fps render, crisp reflections, 4k.
         \`\`\`
         > 🇧🇷 **Tradução em Português (Cena 1):**
-        > Tradução e detalhes em português do prompt da Cena 1.
+        > Tradução e movimento de câmera explicados em português para a Cena 1.
 
-        ### 🔵 Cena 2: Prompt Visual (Demonstração e Benefícios)
+        ### 🔵 Cena 2: Prompt Visual (Kling AI & Luma)
         \`\`\`text
-        Detailed technical prompt in English showing product in use, close-up details, 4k, 9:16 vertical ratio
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Product demonstration solving buyer objection. Camera: Smooth 180 degree orbit pan around the product. Natural physics motion, realistic lighting, 4k.
         \`\`\`
         > 🇧🇷 **Tradução em Português (Cena 2):**
-        > Tradução e detalhes em português do prompt da Cena 2.
+        > Tradução e movimento de câmera explicados em português para a Cena 2.
 
-        ### 🟣 Cena 3: Prompt Visual (Chamada para Ação)
+        ### 🟣 Cena 3: Prompt Visual (Kling AI & Luma)
         \`\`\`text
-        Detailed technical prompt in English for call-to-action scene with product, 4k, 9:16 vertical ratio
+        Kling AI / Luma Dream Machine 9:16 vertical prompt. Call-to-action closing scene. Camera: Fast tilt-down shot highlighting the product logo. Aesthetic gradient lighting backdrop, cinematic, 4k.
         \`\`\`
         > 🇧🇷 **Tradução em Português (Cena 3):**
-        > Tradução e detalhes em português do prompt da Cena 3.
+        > Tradução e movimento de câmera explicados em português para a Cena 3.
       `;
 
       let textoGerado = null;
@@ -245,7 +237,7 @@
             body: JSON.stringify({
               model: modeloId,
               messages: [
-                { role: "system", content: "Você é um gerador de roteiros comerciais de alta conversão." },
+                { role: "system", content: "Você é um gerador de roteiros e prompts de vídeo de alta conversão." },
                 { role: "user", content: promptMaster }
               ],
               temperature: 0.4
@@ -260,7 +252,7 @@
       }
 
       if (textoGerado) {
-        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompt gerado com sucesso!</div>`;
+        const avisoSucesso = `<div class="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center font-bold mb-4 text-base animate-bounce">✅ Prompts otimizados para Kling AI & Luma com sucesso!</div>`;
         const secoes = textoGerado.split('---');
         let htmlResultado = avisoSucesso;
         secoes.forEach(secao => {
@@ -302,7 +294,6 @@
     }
   </script>
 
-  <!-- FIREBASE AUTH & ÁREA DO MEMBRO -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -347,15 +338,10 @@
           document.getElementById('cred-express').innerText = data.creditos?.express ?? 0;
           document.getElementById('cred-influencer').innerText = data.creditos?.influencer ?? 0;
         }
-      } catch (err) {
-        console.error("Erro ao carregar dados do usuário:", err);
-      }
+      } catch (err) { console.error("Erro ao carregar dados:", err); }
     }
 
-    onAuthStateChanged(auth, (user) => {
-      carregarPerfil(user);
-    });
-
+    onAuthStateChanged(auth, (user) => { carregarPerfil(user); });
     window.addEventListener('pageshow', (event) => {
       if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         carregarPerfil(auth.currentUser);
@@ -366,9 +352,7 @@
     window.fecharPerfil = () => document.getElementById('modal-perfil')?.classList.add('hidden');
     
     window.fazerLogout = function() {
-      signOut(auth).then(() => {
-        window.location.replace("index.html");
-      });
+      signOut(auth).then(() => { window.location.replace("index.html"); });
     }
   </script>
 </body>
